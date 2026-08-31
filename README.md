@@ -1,7 +1,7 @@
-# <img width="2432" height="1750" alt="rag_studio_logo" src="https://github.com/user-attachments/assets/4a77e8ee-b2df-43eb-aebf-04a776ed285c" /> RAG Studio
+# <img width="150" height="150" alt="Square150x150Logo" src="https://github.com/user-attachments/assets/77de194d-26f8-4844-b184-cfe1af0e4d4c" /> RAG Studio
 
 <p align="center">
-  <img width="1120" height="1120" alt="logo_transparent" src="https://github.com/user-attachments/assets/dc1a22cc-8525-40e7-8c3d-a9b1496e496d" />
+  <img width="512" height="512" alt="icon" src="https://github.com/user-attachments/assets/048bca28-9921-4a20-bdba-95f2d2724b06" />
 </p>
 
 <p align="center">
