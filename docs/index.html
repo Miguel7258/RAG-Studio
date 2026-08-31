@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAG Studio — IA Local e RAG Autónomo de Alta Performance</title>
+  <meta name="description" content="Plataforma desktop local de Inteligência Artificial e RAG autónomo com aceleração por hardware (GPU/NPU) e privacidade total." />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0c0d0e;
+      color: #e3e3e3;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .glow-cyan {
+      box-shadow: 0 0 35px -5px rgba(6, 182, 212, 0.25);
+    }
+    .glow-purple {
+      box-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.25);
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-black">
+
+  <!-- BARRA DE NAVEGAÇÃO -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-[#0c0d0e]/80 border-b border-[#202124]">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold font-mono">
+          R
+        </div>
+        <span class="text-lg font-bold tracking-wide text-white">RAG Studio</span>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#18191b] border border-[#2d2f31] text-cyan-400">v2.8.0</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-[#9aa0a6]">
+        <a href="#capacidades" class="hover:text-cyan-400 transition-colors">Capacidades</a>
+        <a href="#arquitetura" class="hover:text-cyan-400 transition-colors">Motor Dual-IA</a>
+        <a href="#download" class="hover:text-cyan-400 transition-colors">Download</a>
+        <a href="#sugestoes" class="hover:text-cyan-400 transition-colors">Sugestões</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/Miguel7258/RAG-Studio" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-[#18191b] hover:bg-[#202124] text-xs font-semibold text-white border border-[#2d2f31] transition-all flex items-center gap-2">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>GitHub</span>
+        </a>
+        <a href="#apoiar" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black text-xs font-bold transition-all shadow-[0_0_15px_rgba(245,158,11,0.3)] flex items-center gap-1.5">
+          <i data-lucide="heart" class="w-3.5 h-3.5 fill-black"></i>
+          <span>Apoiar</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-20 pb-16 overflow-hidden">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-6">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+        100% Local • Zero Telemetria • Aceleração GPU & NPU
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+        Inteligência Artificial Local e RAG Privado de <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-400">Alta Performance</span>
+      </h1>
+      <p class="text-base sm:text-lg text-[#9aa0a6] max-w-3xl mx-auto mb-10 leading-relaxed">
+        Executa modelos GGUF avançados no teu computador com aceleração por hardware, conversa com documentos locais em modo isolado e usufrui de um motor Dual-IA com telemetria em tempo real.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#download" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm transition-all shadow-[0_0_25px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Descarregar Grátis (v2.8.0)</span>
+        </a>
+        <a href="https://github.com/Miguel7258/RAG-Studio" target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#161719] hover:bg-[#202124] text-white font-semibold text-sm border border-[#2d2f31] transition-all flex items-center justify-center gap-2">
+          <i data-lucide="git-branch" class="w-4 h-4 text-[#9aa0a6]"></i>
+          <span>Código-Fonte no GitHub</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPACIDADES DETALHADAS -->
+  <section id="capacidades" class="py-20 bg-[#101113] border-y border-[#1e1f20]">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-white mb-3">Capacidades e Funcionalidades</h2>
+        <p class="text-sm text-[#9aa0a6]">Tudo o que precisas para executar IA avançada sem depender da cloud.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-cyan-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2">100% Privado e Offline</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed">
+            Nenhuma informação sai do teu computador. As conversas, parâmetros e documentos indexados ficam guardados exclusivamente em pastas locais.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-emerald-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="database" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2">Sandbox Documental RAG</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed">
+            Adiciona ficheiros PDF, DOCX, TXT, MD e CSV. O motor indexa o texto em blocos semânticos e responde a perguntas com referências precisas aos teus ficheiros.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-purple-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="cpu" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2">Motor Dual-IA (NPU / CPU)</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed">
+            Orquestração paralela com um modelo SLM leve a correr na NPU/CPU para refinar o prompt e extrair palavras-chave antes da GPU principal responder.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-amber-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="gauge" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2">Telemetria de Hardware</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed">
+            Monitoriza em tempo real a velocidade em Tokens/segundo (T/s), distinguindo picos de Raciocínio (🧠) e Resposta (⚡), consumo de VRAM, RAM e temperatura.
+          </p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-blue-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2">Explorador Hugging Face</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed">
+            Pesquisa e descarrega modelos GGUF com diagnóstico preditivo de compatibilidade de memória (VRAM/RAM) antes de efetuar o download.
+          </p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-rose-500/40 transition-all group">
+          <div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="globe" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2">6 Idiomas (i18n)</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed">
+            Interface integralmente traduzida em Português (PT), Inglês (EN), Francês (FR), Espanhol (ES), Alemão (DE) e Italiano (IT).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECÇÃO DE DOWNLOAD -->
+  <section id="download" class="py-20">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold text-white mb-3">Transferir RAG Studio</h2>
+      <p class="text-sm text-[#9aa0a6] mb-10">Compatível com Windows 10 e Windows 11 (64-bit). Escolhe o formato pretendido:</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
+        <!-- Instalador -->
+        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold">RECOMENDADO</div>
+              <span class="text-xs text-[#6e7175] font-mono">v2.8.0</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Instalador Windows (.exe)</h3>
+            <p class="text-xs text-[#9aa0a6] mb-6">
+              Assistente de instalação automático com criação de atalhos no Menu Iniciar e Ambiente de Trabalho.
+            </p>
+          </div>
+          <a href="https://github.com/Miguel7258/RAG-Studio/releases/download/v2.8.0/RAG-Studio_2.8.0_x64-setup.exe" class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold text-center transition-all flex items-center justify-center gap-2">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Descarregar Instalador</span>
+          </a>
+        </div>
+
+        <!-- Portátil -->
+        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="px-2.5 py-1 rounded bg-[#1e1f20] text-[#9aa0a6] text-xs font-mono font-bold">PORTABLE</div>
+              <span class="text-xs text-[#6e7175] font-mono">v2.8.0</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Versão Portátil (.zip)</h3>
+            <p class="text-xs text-[#9aa0a6] mb-6">
+              Basta extrair e executar. Ideal para correr a partir de uma pen drive ou sem privilégios de administrador.
+            </p>
+          </div>
+          <a href="https://github.com/Miguel7258/RAG-Studio/releases/download/v2.8.0/RAG_Studio_v2.8.0_Portable.zip" class="w-full py-3 rounded-xl bg-[#1e1f20] hover:bg-[#28292c] text-white border border-[#303134] text-xs font-bold text-center transition-all flex items-center justify-center gap-2">
+            <i data-lucide="archive" class="w-4 h-4"></i>
+            <span>Descarregar ZIP Portátil</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULÁRIO DE SUGESTÕES PRIVADAS -->
+  <section id="sugestoes" class="py-20 bg-[#101113] border-t border-[#1e1f20]">
+    <div class="max-w-2xl mx-auto px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl font-bold text-white mb-2">Sugestões e Melhorias</h2>
+        <p class="text-xs text-[#9aa0a6]">
+          Tens uma ideia ou encontraste um problema? As tuas sugestões são enviadas de forma 100% privada diretamente para o meu email.
+        </p>
+      </div>
+
+      <!-- Substitui O_TEU_EMAIL@GMAIL.COM pelo teu endereço real de email -->
+      <form action="https://formsubmit.co/sousa.jose7258@gmail.com" method="POST" class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] space-y-4">
+        <!-- Configurações do FormSubmit -->
+        <input type="hidden" name="_subject" value="Nova Sugestão - RAG Studio" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="text" name="_honey" style="display:none" />
+
+        <div>
+          <label class="block text-xs font-semibold text-[#9aa0a6] mb-1">O teu Nome ou Pseudónimo (Opcional)</label>
+          <input type="text" name="nome" placeholder="Ex: João" class="w-full px-3.5 py-2.5 rounded-xl bg-[#1e1f20] border border-[#2d2f31] text-xs text-white placeholder-[#6e7175] focus:outline-none focus:border-cyan-400" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#9aa0a6] mb-1">O teu Email de Contacto (Opcional para resposta)</label>
+          <input type="email" name="email" placeholder="nome@exemplo.com" class="w-full px-3.5 py-2.5 rounded-xl bg-[#1e1f20] border border-[#2d2f31] text-xs text-white placeholder-[#6e7175] focus:outline-none focus:border-cyan-400" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#9aa0a6] mb-1">A tua Sugestão ou Feedback *</label>
+          <textarea name="mensagem" required rows="4" placeholder="Descreve detalhadamente a melhoria ou ideia que gostarias de ver implementada..." class="w-full px-3.5 py-2.5 rounded-xl bg-[#1e1f20] border border-[#2d2f31] text-xs text-white placeholder-[#6e7175] focus:outline-none focus:border-cyan-400"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold transition-all flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Enviar Sugestão Privada</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- SECÇÃO DE APOIO / DOAÇÃO -->
+  <section id="apoiar" class="py-20 text-center">
+    <div class="max-w-xl mx-auto px-6">
+      <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mx-auto mb-4">
+        <i data-lucide="coffee" class="w-6 h-6"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-white mb-2">Apoiar o Projeto</h2>
+      <p class="text-xs text-[#9aa0a6] mb-8 leading-relaxed">
+        O <strong>RAG Studio</strong> é gratuito e de código aberto. Se a plataforma te é útil e queres incentivar o desenvolvimento contínuo de novas funcionalidades, podes apoiar através do PayPal ou Ko-fi.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <!-- Substitui pelo teu link real do PayPal ou Ko-fi -->
+        <a href="https://paypal.me/oseunome" target="_blank" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#0070ba] hover:bg-[#005ea6] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-lg">
+          <i data-lucide="credit-card" class="w-4 h-4"></i>
+          <span>Apoiar via PayPal</span>
+        </a>
+        <a href="https://ko-fi.com/oseunome" target="_blank" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#ff5e5b] hover:bg-[#e04e4b] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-lg">
+          <i data-lucide="heart" class="w-4 h-4 fill-white"></i>
+          <span>Apoiar via Ko-fi</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer class="py-8 border-t border-[#1e1f20] text-center text-xs text-[#6e7175]">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 RAG Studio. Criado por Miguel em colaboração com Antigravity (Gemini).</p>
+      <div class="flex items-center gap-6">
+        <a href="https://github.com/Miguel7258/RAG-Studio" class="hover:text-white transition-colors">GitHub</a>
+        <a href="https://github.com/Miguel7258/RAG-Studio/blob/main/LICENSE" class="hover:text-white transition-colors">Licença MIT</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
