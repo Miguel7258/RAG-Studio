@@ -1,4 +1,4 @@
-# <img width="128" height="128" alt="128x128" src="https://github.com/user-attachments/assets/1fb12682-3f1a-4ed8-be93-838e1abe357d" /> RAG Studio
+# <img width="32" height="32" alt="32x32" src="https://github.com/user-attachments/assets/319ddecd-b5ec-4f1c-bead-47d59e69862b" /> RAG Studio
 
 <p align="center">
   <img width="256" height="256" alt="128x128@2x" src="https://github.com/user-attachments/assets/0a9ce147-1325-49ab-aeaa-27d9a940a906" />
