@@ -5,54 +5,125 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RAG Studio — IA Local e RAG Autónomo de Alta Performance</title>
   <meta name="description" content="Plataforma desktop local de Inteligência Artificial e RAG autónomo com aceleração por hardware (GPU/NPU) e privacidade total." />
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #0c0d0e;
+      background-color: #090a0b;
       color: #e3e3e3;
+      scroll-behavior: smooth;
     }
+    
     .font-mono {
       font-family: 'JetBrains Mono', monospace;
     }
-    .glow-cyan {
-      box-shadow: 0 0 35px -5px rgba(6, 182, 212, 0.25);
+
+    /* Glows e Efeitos Modernos */
+    .feature-card {
+      background: radial-gradient(circle at 50% 0%, rgba(30, 32, 38, 0.7) 0%, rgba(16, 17, 20, 0.9) 100%);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .glow-purple {
-      box-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.25);
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px -10px rgba(6, 182, 212, 0.18);
+    }
+    
+    .glass-nav {
+      background: rgba(9, 10, 11, 0.85);
+      backdrop-filter: blur(14px);
     }
   </style>
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-black">
 
-  <!-- BARRA DE NAVEGAÇÃO -->
-  <header class="sticky top-0 z-50 backdrop-blur-md bg-[#0c0d0e]/80 border-b border-[#202124]">
+  <!-- CABEÇALHO / NAVBAR -->
+  <header class="sticky top-0 z-50 glass-nav border-b border-[#1f2125]">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold font-mono">
-          R
-        </div>
-        <span class="text-lg font-bold tracking-wide text-white">RAG Studio</span>
-        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#18191b] border border-[#2d2f31] text-cyan-400">v2.8.0</span>
-      </div>
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-[#9aa0a6]">
-        <a href="#capacidades" class="hover:text-cyan-400 transition-colors">Capacidades</a>
-        <a href="#arquitetura" class="hover:text-cyan-400 transition-colors">Motor Dual-IA</a>
-        <a href="#download" class="hover:text-cyan-400 transition-colors">Download</a>
-        <a href="#sugestoes" class="hover:text-cyan-400 transition-colors">Sugestões</a>
+      
+      <!-- LOGO + NOME DO PROGRAMA -->
+      <a href="#" class="flex items-center gap-3 group">
+        <img 
+          src="https://raw.githubusercontent.com/Miguel7258/RAG-Studio/main/assets/rag_studio_logo.jpg" 
+          alt="RAG Studio Logo" 
+          class="w-9 h-9 rounded-xl object-cover border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.3)] group-hover:scale-105 transition-transform"
+          onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/Miguel7258/RAG-Studio/main/assets/logo.png';"
+        />
+        <span class="text-lg font-bold tracking-tight text-white group-hover:text-cyan-400 transition-colors">RAG Studio</span>
+      </a>
+
+      <!-- LINKS DE NAVEGAÇÃO -->
+      <nav class="hidden md:flex items-center gap-7 text-xs font-medium text-[#9aa0a6]">
+        <a href="#capacidades" data-i18n="nav_features" class="hover:text-cyan-400 transition-colors">Capacidades</a>
+        <a href="#motor-dual-ia" data-i18n="nav_dual_ai" class="hover:text-cyan-400 transition-colors">Motor Dual-IA</a>
+        <a href="#download" data-i18n="nav_download" class="hover:text-cyan-400 transition-colors">Download</a>
+        <a href="#sugestoes" data-i18n="nav_feedback" class="hover:text-cyan-400 transition-colors">Sugestões</a>
       </nav>
-      <div class="flex items-center gap-3">
-        <a href="https://github.com/Miguel7258/RAG-Studio" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-[#18191b] hover:bg-[#202124] text-xs font-semibold text-white border border-[#2d2f31] transition-all flex items-center gap-2">
-          <i data-lucide="github" class="w-4 h-4"></i>
-          <span>GitHub</span>
+
+      <!-- BOTÕES DE AÇÃO: IDIOMA, GITHUB E APOIAR -->
+      <div class="flex items-center gap-2.5">
+        
+        <!-- SELETOR DE IDIOMAS (i18n) -->
+        <div class="relative" id="langDropdownWrapper">
+          <button 
+            id="langToggleBtn" 
+            type="button" 
+            class="px-2.5 py-1.5 rounded-xl bg-[#141517] hover:bg-[#1d1f23] text-xs font-semibold text-[#cbd5e1] border border-[#2b2d31] transition-all flex items-center gap-1.5"
+            aria-label="Selecionar Idioma"
+          >
+            <i data-lucide="languages" class="w-3.5 h-3.5 text-cyan-400"></i>
+            <span id="currentLangLabel">PT</span>
+            <i data-lucide="chevron-down" class="w-3 h-3 text-[#6e7175]"></i>
+          </button>
+          
+          <div id="langMenu" class="hidden absolute right-0 mt-2 w-36 rounded-xl bg-[#141517] border border-[#2b2d31] shadow-2xl py-1 z-50">
+            <button onclick="changeLanguage('pt')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between">
+              <span>Português</span> <span class="font-mono text-[10px] text-[#6e7175]">PT</span>
+            </button>
+            <button onclick="changeLanguage('en')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between">
+              <span>English</span> <span class="font-mono text-[10px] text-[#6e7175]">EN</span>
+            </button>
+            <button onclick="changeLanguage('es')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between">
+              <span>Español</span> <span class="font-mono text-[10px] text-[#6e7175]">ES</span>
+            </button>
+            <button onclick="changeLanguage('fr')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between">
+              <span>Français</span> <span class="font-mono text-[10px] text-[#6e7175]">FR</span>
+            </button>
+            <button onclick="changeLanguage('de')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between">
+              <span>Deutsch</span> <span class="font-mono text-[10px] text-[#6e7175]">DE</span>
+            </button>
+            <button onclick="changeLanguage('it')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between">
+              <span>Italiano</span> <span class="font-mono text-[10px] text-[#6e7175]">IT</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- GITHUB -->
+        <a 
+          href="https://github.com/Miguel7258/RAG-Studio" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="px-3 py-1.5 rounded-xl bg-[#141517] hover:bg-[#1d1f23] text-xs font-semibold text-white border border-[#2b2d31] transition-all flex items-center gap-1.5"
+        >
+          <i data-lucide="github" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">GitHub</span>
         </a>
-        <a href="#apoiar" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black text-xs font-bold transition-all shadow-[0_0_15px_rgba(245,158,11,0.3)] flex items-center gap-1.5">
+
+        <!-- BOTÃO APOIAR -->
+        <a 
+          href="https://ko-fi.com/miguel7258" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black text-xs font-bold transition-all shadow-[0_0_15px_rgba(245,158,11,0.3)] flex items-center gap-1.5 active:scale-95"
+        >
           <i data-lucide="heart" class="w-3.5 h-3.5 fill-black"></i>
-          <span>Apoiar</span>
+          <span data-i18n="btn_support">Apoiar</span>
         </a>
       </div>
     </div>
@@ -61,232 +132,730 @@
   <!-- HERO SECTION -->
   <section class="relative pt-20 pb-16 overflow-hidden">
     <div class="max-w-5xl mx-auto px-6 text-center">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-6">
-        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-        100% Local • Zero Telemetria • Aceleração GPU & NPU
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-6">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+        <span data-i18n="hero_badge">100% Local • Zero Telemetria • Aceleração GPU & NPU</span>
       </div>
+      
       <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-        Inteligência Artificial Local e RAG Privado de <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-400">Alta Performance</span>
+        <span data-i18n="hero_title_1">Inteligência Artificial Local e RAG Privado de</span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-400" data-i18n="hero_title_highlight"> Alta Performance</span>
       </h1>
-      <p class="text-base sm:text-lg text-[#9aa0a6] max-w-3xl mx-auto mb-10 leading-relaxed">
-        Executa modelos GGUF avançados no teu computador com aceleração por hardware, conversa com documentos locais em modo isolado e usufrui de um motor Dual-IA com telemetria em tempo real.
+      
+      <p class="text-sm sm:text-base text-[#9aa0a6] max-w-2xl mx-auto mb-10 leading-relaxed" data-i18n="hero_subtitle">
+        Executa modelos GGUF avançados diretamente no teu hardware, conversa com os teus documentos com privacidade rigorosa e usufrui de orquestração Dual-IA em tempo real.
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="#download" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-sm transition-all shadow-[0_0_25px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2">
+        <a href="#download" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_25px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 active:scale-95">
           <i data-lucide="download" class="w-4 h-4"></i>
-          <span>Descarregar Grátis (v2.8.0)</span>
+          <span data-i18n="btn_download_now">Descarregar Agora</span>
         </a>
-        <a href="https://github.com/Miguel7258/RAG-Studio" target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#161719] hover:bg-[#202124] text-white font-semibold text-sm border border-[#2d2f31] transition-all flex items-center justify-center gap-2">
+        <a href="https://github.com/Miguel7258/RAG-Studio" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#141517] hover:bg-[#1d1f23] text-white font-semibold text-xs border border-[#2b2d31] transition-all flex items-center justify-center gap-2 active:scale-95">
           <i data-lucide="git-branch" class="w-4 h-4 text-[#9aa0a6]"></i>
-          <span>Código-Fonte no GitHub</span>
+          <span data-i18n="btn_view_github">Ver no GitHub</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- CAPACIDADES DETALHADAS -->
-  <section id="capacidades" class="py-20 bg-[#101113] border-y border-[#1e1f20]">
+  <!-- CAPACIDADES E FUNCIONALIDADES (MODERNIZADO) -->
+  <section id="capacidades" class="py-20 bg-[#0d0e10] border-y border-[#1a1c1e]">
     <div class="max-w-6xl mx-auto px-6">
+      
       <div class="text-center mb-16">
-        <h2 class="text-3xl font-bold text-white mb-3">Capacidades e Funcionalidades</h2>
-        <p class="text-sm text-[#9aa0a6]">Tudo o que precisas para executar IA avançada sem depender da cloud.</p>
+        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[11px] font-mono mb-3">
+          <i data-lucide="sparkles" class="w-3 h-3"></i>
+          <span data-i18n="feat_section_badge">ARQUITETURA AVANÇADA</span>
+        </div>
+        <h2 class="text-3xl font-extrabold text-white mb-3" data-i18n="feat_section_title">Capacidades e Funcionalidades</h2>
+        <p class="text-xs sm:text-sm text-[#9aa0a6] max-w-xl mx-auto" data-i18n="feat_section_desc">Desenvolvido de raiz para unir máxima segurança, velocidade de inferência e precisão documental.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Card 1 -->
-        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-cyan-500/40 transition-all group">
-          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition-transform">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- CARD 1: PRIVACIDADE -->
+        <div class="feature-card p-6 rounded-2xl border border-[#24262b] hover:border-cyan-500/50 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/15 transition-all"></div>
+          <div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center text-cyan-400 mb-5 group-hover:scale-110 transition-transform">
             <i data-lucide="shield-check" class="w-5 h-5"></i>
           </div>
-          <h3 class="text-base font-bold text-white mb-2">100% Privado e Offline</h3>
-          <p class="text-xs text-[#9aa0a6] leading-relaxed">
-            Nenhuma informação sai do teu computador. As conversas, parâmetros e documentos indexados ficam guardados exclusivamente em pastas locais.
+          <h3 class="text-base font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors" data-i18n="card_1_title">100% Local e Privado</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed" data-i18n="card_1_desc">
+            Zero telemetria ou envio de dados para a nuvem. Todas as conversas, ficheiros e pesos de IA ficam encriptados e isolados no teu computador.
           </p>
         </div>
 
-        <!-- Card 2 -->
-        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-emerald-500/40 transition-all group">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="database" class="w-5 h-5"></i>
+        <!-- CARD 2: RAG SANDBOX -->
+        <div class="feature-card p-6 rounded-2xl border border-[#24262b] hover:border-emerald-500/50 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/15 transition-all"></div>
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 mb-5 group-hover:scale-110 transition-transform">
+            <i data-lucide="folder-search" class="w-5 h-5"></i>
           </div>
-          <h3 class="text-base font-bold text-white mb-2">Sandbox Documental RAG</h3>
-          <p class="text-xs text-[#9aa0a6] leading-relaxed">
-            Adiciona ficheiros PDF, DOCX, TXT, MD e CSV. O motor indexa o texto em blocos semânticos e responde a perguntas com referências precisas aos teus ficheiros.
+          <h3 class="text-base font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors" data-i18n="card_2_title">Sandbox Documental RAG</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed" data-i18n="card_2_desc">
+            Indexação inteligente de PDFs, DOCX, TXT, CSV e Markdown com segmentação em blocos vetoriais e recuperação precisa com citação de fontes.
           </p>
         </div>
 
-        <!-- Card 3 -->
-        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-purple-500/40 transition-all group">
-          <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="cpu" class="w-5 h-5"></i>
+        <!-- CARD 3: MOTOR LLaMA -->
+        <div class="feature-card p-6 rounded-2xl border border-[#24262b] hover:border-amber-500/50 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/15 transition-all"></div>
+          <div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 mb-5 group-hover:scale-110 transition-transform">
+            <i data-lucide="zap" class="w-5 h-5"></i>
           </div>
-          <h3 class="text-base font-bold text-white mb-2">Motor Dual-IA (NPU / CPU)</h3>
-          <p class="text-xs text-[#9aa0a6] leading-relaxed">
-            Orquestração paralela com um modelo SLM leve a correr na NPU/CPU para refinar o prompt e extrair palavras-chave antes da GPU principal responder.
+          <h3 class="text-base font-bold text-white mb-2 group-hover:text-amber-400 transition-colors" data-i18n="card_3_title">Motor LLaMA Otimizado</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed" data-i18n="card_3_desc">
+            Suporte nativo para Flash Attention, quantização de KV Cache (q8_0) para poupança de VRAM e descarregamento dinâmico de camadas GPU.
           </p>
         </div>
 
-        <!-- Card 4 -->
-        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-amber-500/40 transition-all group">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition-transform">
+        <!-- CARD 4: HUGGING FACE EXPLORER -->
+        <div class="feature-card p-6 rounded-2xl border border-[#24262b] hover:border-blue-500/50 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/15 transition-all"></div>
+          <div class="w-11 h-11 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center text-blue-400 mb-5 group-hover:scale-110 transition-transform">
+            <i data-lucide="boxes" class="w-5 h-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-white mb-2 group-hover:text-blue-400 transition-colors" data-i18n="card_4_title">Explorador Hugging Face</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed" data-i18n="card_4_desc">
+            Pesquisa qualquer modelo GGUF no repositório oficial com diagnóstico preditivo de memória RAM/VRAM antes de iniciar o descarregamento.
+          </p>
+        </div>
+
+        <!-- CARD 5: TELEMETRIA -->
+        <div class="feature-card p-6 rounded-2xl border border-[#24262b] hover:border-purple-500/50 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl group-hover:bg-purple-500/15 transition-all"></div>
+          <div class="w-11 h-11 rounded-xl bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-400 mb-5 group-hover:scale-110 transition-transform">
             <i data-lucide="gauge" class="w-5 h-5"></i>
           </div>
-          <h3 class="text-base font-bold text-white mb-2">Telemetria de Hardware</h3>
-          <p class="text-xs text-[#9aa0a6] leading-relaxed">
-            Monitoriza em tempo real a velocidade em Tokens/segundo (T/s), distinguindo picos de Raciocínio (🧠) e Resposta (⚡), consumo de VRAM, RAM e temperatura.
+          <h3 class="text-base font-bold text-white mb-2 group-hover:text-purple-400 transition-colors" data-i18n="card_5_title">Telemetria em Tempo Real</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed" data-i18n="card_5_desc">
+            Velocímetro de Tokens/segundo com distinção clara entre Raciocínio (🧠) e Resposta (⚡), além de monitorização de VRAM, RAM e temperatura.
           </p>
         </div>
 
-        <!-- Card 5 -->
-        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-blue-500/40 transition-all group">
-          <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4 group-hover:scale-110 transition-transform">
-            <i data-lucide="sparkles" class="w-5 h-5"></i>
-          </div>
-          <h3 class="text-base font-bold text-white mb-2">Explorador Hugging Face</h3>
-          <p class="text-xs text-[#9aa0a6] leading-relaxed">
-            Pesquisa e descarrega modelos GGUF com diagnóstico preditivo de compatibilidade de memória (VRAM/RAM) antes de efetuar o download.
-          </p>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] hover:border-rose-500/40 transition-all group">
-          <div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-4 group-hover:scale-110 transition-transform">
+        <!-- CARD 6: INTERNACIONALIZAÇÃO -->
+        <div class="feature-card p-6 rounded-2xl border border-[#24262b] hover:border-rose-500/50 relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-full blur-2xl group-hover:bg-rose-500/15 transition-all"></div>
+          <div class="w-11 h-11 rounded-xl bg-rose-500/10 border border-rose-500/25 flex items-center justify-center text-rose-400 mb-5 group-hover:scale-110 transition-transform">
             <i data-lucide="globe" class="w-5 h-5"></i>
           </div>
-          <h3 class="text-base font-bold text-white mb-2">6 Idiomas (i18n)</h3>
-          <p class="text-xs text-[#9aa0a6] leading-relaxed">
-            Interface integralmente traduzida em Português (PT), Inglês (EN), Francês (FR), Espanhol (ES), Alemão (DE) e Italiano (IT).
+          <h3 class="text-base font-bold text-white mb-2 group-hover:text-rose-400 transition-colors" data-i18n="card_6_title">Interface Multilingue (6 Idiomas)</h3>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed" data-i18n="card_6_desc">
+            Tradução completa e intuitiva disponível em Português, Inglês, Espanhol, Francês, Alemão e Italiano.
           </p>
         </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECÇÃO DEDICADA: MOTOR DUAL-IA -->
+  <section id="motor-dual-ia" class="py-20 relative">
+    <div class="max-w-6xl mx-auto px-6">
+      
+      <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#131519] to-[#0d0e11] border border-[#252830] relative overflow-hidden shadow-2xl">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/25 text-purple-400 text-xs font-mono mb-4">
+              <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+              <span data-i18n="dual_badge">PIPELINE COOPERATIVO</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-4" data-i18n="dual_title">Arquitetura de Motor Dual-IA</h2>
+            <p class="text-xs sm:text-sm text-[#9aa0a6] leading-relaxed mb-6" data-i18n="dual_desc">
+              O RAG Studio orquestra dois modelos de IA em paralelo para atingir a máxima eficiência: enquanto a tua <strong>NPU ou CPU</strong> executa um modelo ultra-rápido (SLM de 1B a 3B) para reformular a pergunta e extrair termos de pesquisa, a <strong>GPU principal</strong> dedica-se a gerar a resposta de alta fidelidade com os documentos recuperados.
+            </p>
+
+            <div class="space-y-3 font-mono text-xs">
+              <div class="p-3 rounded-xl bg-[#181a1f] border border-[#2d3037] flex items-center justify-between">
+                <span class="text-[#cbd5e1] flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                  <span data-i18n="dual_step_1">Etapa 1: SLM (NPU/CPU)</span>
+                </span>
+                <span class="text-purple-400 text-[11px]" data-i18n="dual_step_1_time">~30ms (Query Reformulation)</span>
+              </div>
+              <div class="p-3 rounded-xl bg-[#181a1f] border border-[#2d3037] flex items-center justify-between">
+                <span class="text-[#cbd5e1] flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span data-i18n="dual_step_2">Etapa 2: Recuperação Vetorial</span>
+                </span>
+                <span class="text-emerald-400 text-[11px]" data-i18n="dual_step_2_time">~15ms (Chunk Matching)</span>
+              </div>
+              <div class="p-3 rounded-xl bg-[#181a1f] border border-[#2d3037] flex items-center justify-between">
+                <span class="text-[#cbd5e1] flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                  <span data-i18n="dual_step_3">Etapa 3: LLM Principal (GPU)</span>
+                </span>
+                <span class="text-cyan-400 text-[11px]" data-i18n="dual_step_3_time">Streaming com Flash Attention</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-[#0a0b0d] border border-[#1f2126] font-mono text-xs text-[#9aa0a6] space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-[#1f2126]">
+              <span class="text-white font-bold flex items-center gap-2">
+                <i data-lucide="terminal" class="w-4 h-4 text-cyan-400"></i>
+                Dual-Engine Telemetry
+              </span>
+              <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">ONLINE</span>
+            </div>
+            <div class="text-[11px] space-y-1 text-[#cbd5e1]">
+              <p><span class="text-[#6e7175]">Prompt Original:</span> "Qual a garantia do contrato?"</p>
+              <p><span class="text-purple-400">⚡ SLM Query Engine:</span> "termo garantia contratual vigencia clausula 8"</p>
+              <p><span class="text-emerald-400">📚 Chunks Extraídos:</span> 3 fragmentos de contrato_2026.pdf</p>
+              <p><span class="text-cyan-400">🧠 LLM GPU Output:</span> "Nos termos da cláusula 8..."</p>
+            </div>
+            <div class="pt-2 border-t border-[#1f2126] flex items-center justify-between text-[10px] text-[#6e7175]">
+              <span>Throughput: 68.4 T/s</span>
+              <span>VRAM: 3.4 / 8.0 GB</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
   <!-- SECÇÃO DE DOWNLOAD -->
-  <section id="download" class="py-20">
+  <section id="download" class="py-20 bg-[#0d0e10] border-y border-[#1a1c1e]">
     <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold text-white mb-3">Transferir RAG Studio</h2>
-      <p class="text-sm text-[#9aa0a6] mb-10">Compatível com Windows 10 e Windows 11 (64-bit). Escolhe o formato pretendido:</p>
+      <h2 class="text-3xl font-extrabold text-white mb-3" data-i18n="dl_title">Transferir RAG Studio</h2>
+      <p class="text-xs sm:text-sm text-[#9aa0a6] mb-12" data-i18n="dl_desc">Compatível com Windows 10 e Windows 11 (64-bit). Escolhe a tua versão preferida:</p>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-        <!-- Instalador -->
-        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] flex flex-col justify-between">
+        
+        <!-- CARD INSTALADOR -->
+        <div class="p-6 rounded-2xl bg-[#131518] border border-[#24262b] hover:border-cyan-500/50 transition-all flex flex-col justify-between group">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <div class="px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold">RECOMENDADO</div>
+              <span class="px-2.5 py-1 rounded bg-cyan-500/10 text-cyan-400 text-[10px] font-mono font-bold" data-i18n="dl_recommended">RECOMENDADO</span>
               <span class="text-xs text-[#6e7175] font-mono">v2.8.0</span>
             </div>
-            <h3 class="text-lg font-bold text-white mb-2">Instalador Windows (.exe)</h3>
-            <p class="text-xs text-[#9aa0a6] mb-6">
-              Assistente de instalação automático com criação de atalhos no Menu Iniciar e Ambiente de Trabalho.
+            <h3 class="text-lg font-bold text-white mb-2" data-i18n="dl_installer_title">Instalador Windows (.exe)</h3>
+            <p class="text-xs text-[#9aa0a6] mb-6 leading-relaxed" data-i18n="dl_installer_desc">
+              Instalação guiada rápida com criação automática de atalhos no Ambiente de Trabalho e Menu Iniciar.
             </p>
           </div>
-          <a href="https://github.com/Miguel7258/RAG-Studio/releases/download/v2.8.0/RAG-Studio_2.8.0_x64-setup.exe" class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold text-center transition-all flex items-center justify-center gap-2">
+          <a 
+            href="https://github.com/Miguel7258/RAG-Studio/releases/download/v2.8.0/RAG-Studio_2.8.0_x64-setup.exe" 
+            class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold text-center transition-all flex items-center justify-center gap-2 active:scale-95 shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+          >
             <i data-lucide="download" class="w-4 h-4"></i>
-            <span>Descarregar Instalador</span>
+            <span data-i18n="btn_dl_installer">Descarregar Instalador</span>
           </a>
         </div>
 
-        <!-- Portátil -->
-        <div class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] flex flex-col justify-between">
+        <!-- CARD PORTABLE -->
+        <div class="p-6 rounded-2xl bg-[#131518] border border-[#24262b] hover:border-[#383a42] transition-all flex flex-col justify-between group">
           <div>
             <div class="flex items-center justify-between mb-4">
-              <div class="px-2.5 py-1 rounded bg-[#1e1f20] text-[#9aa0a6] text-xs font-mono font-bold">PORTABLE</div>
+              <span class="px-2.5 py-1 rounded bg-[#1e2024] text-[#9aa0a6] text-[10px] font-mono font-bold" data-i18n="dl_portable">PORTÁTIL</span>
               <span class="text-xs text-[#6e7175] font-mono">v2.8.0</span>
             </div>
-            <h3 class="text-lg font-bold text-white mb-2">Versão Portátil (.zip)</h3>
-            <p class="text-xs text-[#9aa0a6] mb-6">
-              Basta extrair e executar. Ideal para correr a partir de uma pen drive ou sem privilégios de administrador.
+            <h3 class="text-lg font-bold text-white mb-2" data-i18n="dl_portable_title">Versão Portátil (.zip)</h3>
+            <p class="text-xs text-[#9aa0a6] mb-6 leading-relaxed" data-i18n="dl_portable_desc">
+              Zero instalação. Basta extrair os ficheiros e executar a partir de qualquer pasta ou pen drive.
             </p>
           </div>
-          <a href="https://github.com/Miguel7258/RAG-Studio/releases/download/v2.8.0/RAG_Studio_v2.8.0_Portable.zip" class="w-full py-3 rounded-xl bg-[#1e1f20] hover:bg-[#28292c] text-white border border-[#303134] text-xs font-bold text-center transition-all flex items-center justify-center gap-2">
-            <i data-lucide="archive" class="w-4 h-4"></i>
-            <span>Descarregar ZIP Portátil</span>
+          <a 
+            href="https://github.com/Miguel7258/RAG-Studio/releases/download/v2.8.0/RAG_Studio_v2.8.0_Portable.zip" 
+            class="w-full py-3 rounded-xl bg-[#1c1e22] hover:bg-[#25282e] text-white border border-[#2e3138] text-xs font-bold text-center transition-all flex items-center justify-center gap-2 active:scale-95"
+          >
+            <i data-lucide="archive" class="w-4 h-4 text-[#9aa0a6]"></i>
+            <span data-i18n="btn_dl_portable">Descarregar ZIP Portátil</span>
           </a>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- FORMULÁRIO DE SUGESTÕES PRIVADAS -->
-  <section id="sugestoes" class="py-20 bg-[#101113] border-t border-[#1e1f20]">
-    <div class="max-w-2xl mx-auto px-6">
-      <div class="text-center mb-10">
-        <h2 class="text-2xl font-bold text-white mb-2">Sugestões e Melhorias</h2>
-        <p class="text-xs text-[#9aa0a6]">
-          Tens uma ideia ou encontraste um problema? As tuas sugestões são enviadas de forma 100% privada diretamente para o meu email.
+  <!-- FORMULÁRIO DE SUGESTÕES (TOKEN ANÓNIMO ATIVADO) -->
+  <section id="sugestoes" class="py-20">
+    <div class="max-w-xl mx-auto px-6">
+      
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-extrabold text-white mb-2" data-i18n="feedback_title">Sugestões e Melhorias</h2>
+        <p class="text-xs text-[#9aa0a6]" data-i18n="feedback_desc">
+          Tens ideias ou feedback sobre o RAG Studio? Envia uma mensagem privada diretamente para o desenvolvedor.
         </p>
       </div>
 
-      <!-- Substitui O_TEU_EMAIL@GMAIL.COM pelo teu endereço real de email -->
-      <form action="https://formsubmit.co/b6e704362f0b3a88236e7ca0445d1b13" method="POST" class="p-6 rounded-2xl bg-[#141517] border border-[#26272a] space-y-4">
-        <!-- Configurações do FormSubmit -->
+      <form 
+        action="https://formsubmit.co/b6e704362f0b3a88236e7ca0445d1b13" 
+        method="POST" 
+        class="p-6 rounded-2xl bg-[#131518] border border-[#24262b] space-y-4 shadow-xl"
+      >
         <input type="hidden" name="_subject" value="Nova Sugestão - RAG Studio" />
         <input type="hidden" name="_captcha" value="false" />
         <input type="text" name="_honey" style="display:none" />
 
         <div>
-          <label class="block text-xs font-semibold text-[#9aa0a6] mb-1">O teu Nome ou Pseudónimo (Opcional)</label>
-          <input type="text" name="nome" placeholder="Ex: João" class="w-full px-3.5 py-2.5 rounded-xl bg-[#1e1f20] border border-[#2d2f31] text-xs text-white placeholder-[#6e7175] focus:outline-none focus:border-cyan-400" />
+          <label class="block text-xs font-semibold text-[#9aa0a6] mb-1" data-i18n="form_name_label">O teu Nome ou Pseudónimo (Opcional)</label>
+          <input 
+            type="text" 
+            name="nome" 
+            placeholder="Ex: Pedro" 
+            class="w-full px-3.5 py-2.5 rounded-xl bg-[#1b1c20] border border-[#2b2d31] text-xs text-white placeholder-[#55585e] focus:outline-none focus:border-cyan-400 transition-colors" 
+          />
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-[#9aa0a6] mb-1">O teu Email de Contacto (Opcional para resposta)</label>
-          <input type="email" name="email" placeholder="nome@exemplo.com" class="w-full px-3.5 py-2.5 rounded-xl bg-[#1e1f20] border border-[#2d2f31] text-xs text-white placeholder-[#6e7175] focus:outline-none focus:border-cyan-400" />
+          <label class="block text-xs font-semibold text-[#9aa0a6] mb-1" data-i18n="form_email_label">Email de Contacto (Opcional para resposta)</label>
+          <input 
+            type="email" 
+            name="email" 
+            placeholder="nome@exemplo.com" 
+            class="w-full px-3.5 py-2.5 rounded-xl bg-[#1b1c20] border border-[#2b2d31] text-xs text-white placeholder-[#55585e] focus:outline-none focus:border-cyan-400 transition-colors" 
+          />
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-[#9aa0a6] mb-1">A tua Sugestão ou Feedback *</label>
-          <textarea name="mensagem" required rows="4" placeholder="Descreve detalhadamente a melhoria ou ideia que gostarias de ver implementada..." class="w-full px-3.5 py-2.5 rounded-xl bg-[#1e1f20] border border-[#2d2f31] text-xs text-white placeholder-[#6e7175] focus:outline-none focus:border-cyan-400"></textarea>
+          <label class="block text-xs font-semibold text-[#9aa0a6] mb-1" data-i18n="form_msg_label">A tua Sugestão ou Ideia *</label>
+          <textarea 
+            name="mensagem" 
+            required 
+            rows="4" 
+            placeholder="Descreve detalhadamente a funcionalidade ou melhoria que gostarias de ver..." 
+            class="w-full px-3.5 py-2.5 rounded-xl bg-[#1b1c20] border border-[#2b2d31] text-xs text-white placeholder-[#55585e] focus:outline-none focus:border-cyan-400 transition-colors"
+          ></textarea>
         </div>
 
-        <button type="submit" class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold transition-all flex items-center justify-center gap-2">
+        <button 
+          type="submit" 
+          class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold transition-all flex items-center justify-center gap-2 active:scale-95 shadow-[0_0_15px_rgba(6,182,212,0.25)]"
+        >
           <i data-lucide="send" class="w-4 h-4"></i>
-          <span>Enviar Sugestão Privada</span>
+          <span data-i18n="btn_send_feedback">Enviar Sugestão Privada</span>
         </button>
       </form>
+
     </div>
   </section>
 
-  <!-- SECÇÃO DE APOIO / DOAÇÃO -->
-  <section id="apoiar" class="py-20 text-center">
+  <!-- SECÇÃO DE APOIO -->
+  <section id="apoiar" class="py-20 bg-[#0d0e10] border-t border-[#1a1c1e] text-center">
     <div class="max-w-xl mx-auto px-6">
-      <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mx-auto mb-4">
+      
+      <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 mx-auto mb-4">
         <i data-lucide="coffee" class="w-6 h-6"></i>
       </div>
-      <h2 class="text-2xl font-bold text-white mb-2">Apoiar o Projeto</h2>
-      <p class="text-xs text-[#9aa0a6] mb-8 leading-relaxed">
-        O <strong>RAG Studio</strong> é gratuito e de código aberto. Se a plataforma te é útil e queres incentivar o desenvolvimento contínuo de novas funcionalidades, podes apoiar através do PayPal ou Ko-fi.
+      
+      <h2 class="text-2xl font-extrabold text-white mb-2" data-i18n="support_title">Apoiar o Desenvolvimento</h2>
+      <p class="text-xs text-[#9aa0a6] mb-8 leading-relaxed" data-i18n="support_desc">
+        O <strong>RAG Studio</strong> é um projeto gratuito e de código aberto. Se a aplicação te for útil e quiseres incentivar novas atualizações, podes oferecer um café e apoiar o trabalho independente!
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <!-- Substitui pelo teu link real do PayPal ou Ko-fi -->
-        <a href="https://paypal.me/oseunome" target="_blank" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#0070ba] hover:bg-[#005ea6] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-lg">
-          <i data-lucide="credit-card" class="w-4 h-4"></i>
-          <span>Apoiar via PayPal</span>
-        </a>
-        <a href="https://ko-fi.com/oseunome" target="_blank" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#ff5e5b] hover:bg-[#e04e4b] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-lg">
+        <a 
+          href="https://ko-fi.com/miguel7258" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="w-full sm:w-auto px-7 py-3 rounded-xl bg-[#ff5e5b] hover:bg-[#eb4f4c] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"
+        >
           <i data-lucide="heart" class="w-4 h-4 fill-white"></i>
-          <span>Apoiar via Ko-fi</span>
+          <span data-i18n="btn_kofi">Apoiar no Ko-fi (Cartão / Apple Pay / PayPal)</span>
         </a>
       </div>
+
     </div>
   </section>
 
   <!-- RODAPÉ -->
-  <footer class="py-8 border-t border-[#1e1f20] text-center text-xs text-[#6e7175]">
+  <footer class="py-8 border-t border-[#1a1c1e] text-center text-xs text-[#6e7175]">
     <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p>© 2026 RAG Studio. Criado por Miguel em colaboração com Antigravity (Gemini).</p>
+      <p data-i18n="footer_credits">© 2026 RAG Studio • Desenvolvido por Miguel com foco em privacidade total.</p>
       <div class="flex items-center gap-6">
-        <a href="https://github.com/Miguel7258/RAG-Studio" class="hover:text-white transition-colors">GitHub</a>
-        <a href="https://github.com/Miguel7258/RAG-Studio/blob/main/LICENSE" class="hover:text-white transition-colors">Licença MIT</a>
+        <a href="https://github.com/Miguel7258/RAG-Studio" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GitHub</a>
+        <a href="https://github.com/Miguel7258/RAG-Studio/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Licença MIT</a>
       </div>
     </div>
   </footer>
 
+  <!-- SISTEMA DE INTERNACIONALIZAÇÃO (i18n) EM JAVASCRIPT -->
   <script>
-    lucide.createIcons();
+    const translations = {
+      pt: {
+        nav_features: "Capacidades",
+        nav_dual_ai: "Motor Dual-IA",
+        nav_download: "Download",
+        nav_feedback: "Sugestões",
+        btn_support: "Apoiar",
+        hero_badge: "100% Local • Zero Telemetria • Aceleração GPU & NPU",
+        hero_title_1: "Inteligência Artificial Local e RAG Privado de",
+        hero_title_highlight: " Alta Performance",
+        hero_subtitle: "Executa modelos GGUF avançados diretamente no teu hardware, conversa com os teus documentos com privacidade rigorosa e usufrui de orquestração Dual-IA em tempo real.",
+        btn_download_now: "Descarregar Agora",
+        btn_view_github: "Ver no GitHub",
+        feat_section_badge: "ARQUITETURA AVANÇADA",
+        feat_section_title: "Capacidades e Funcionalidades",
+        feat_section_desc: "Desenvolvido de raiz para unir máxima segurança, velocidade de inferência e precisão documental.",
+        card_1_title: "100% Local e Privado",
+        card_1_desc: "Zero telemetria ou envio de dados para a nuvem. Todas as conversas, ficheiros e pesos de IA ficam encriptados e isolados no teu computador.",
+        card_2_title: "Sandbox Documental RAG",
+        card_2_desc: "Indexação inteligente de PDFs, DOCX, TXT, CSV e Markdown com segmentação em blocos vetoriais e recuperação precisa com citação de fontes.",
+        card_3_title: "Motor LLaMA Otimizado",
+        card_3_desc: "Suporte nativo para Flash Attention, quantização de KV Cache (q8_0) para poupança de VRAM e descarregamento dinâmico de camadas GPU.",
+        card_4_title: "Explorador Hugging Face",
+        card_4_desc: "Pesquisa qualquer modelo GGUF no repositório oficial com diagnóstico preditivo de memória RAM/VRAM antes de iniciar o descarregamento.",
+        card_5_title: "Telemetria em Tempo Real",
+        card_5_desc: "Velocímetro de Tokens/segundo com distinção clara entre Raciocínio (🧠) e Resposta (⚡), além de monitorização de VRAM, RAM e temperatura.",
+        card_6_title: "Interface Multilingue (6 Idiomas)",
+        card_6_desc: "Tradução completa e intuitiva disponível em Português, Inglês, Espanhol, Francês, Alemão e Italiano.",
+        dual_badge: "PIPELINE COOPERATIVO",
+        dual_title: "Arquitetura de Motor Dual-IA",
+        dual_desc: "O RAG Studio orquestra dois modelos de IA em paralelo para atingir a máxima eficiência: enquanto a tua NPU ou CPU executa um modelo ultra-rápido (SLM de 1B a 3B) para reformular a pergunta e extrair termos de pesquisa, a GPU principal dedica-se a gerar a resposta de alta fidelidade com os documentos recuperados.",
+        dual_step_1: "Etapa 1: SLM (NPU/CPU)",
+        dual_step_1_time: "~30ms (Query Reformulation)",
+        dual_step_2: "Etapa 2: Recuperação Vetorial",
+        dual_step_2_time: "~15ms (Chunk Matching)",
+        dual_step_3: "Etapa 3: LLM Principal (GPU)",
+        dual_step_3_time: "Streaming com Flash Attention",
+        dl_title: "Transferir RAG Studio",
+        dl_desc: "Compatível com Windows 10 e Windows 11 (64-bit). Escolhe a tua versão preferida:",
+        dl_recommended: "RECOMENDADO",
+        dl_portable: "PORTÁTIL",
+        dl_installer_title: "Instalador Windows (.exe)",
+        dl_installer_desc: "Instalação guiada rápida com criação automática de atalhos no Ambiente de Trabalho e Menu Iniciar.",
+        btn_dl_installer: "Descarregar Instalador",
+        dl_portable_title: "Versão Portátil (.zip)",
+        dl_portable_desc: "Zero instalação. Basta extrair os ficheiros e executar a partir de qualquer pasta ou pen drive.",
+        btn_dl_portable: "Descarregar ZIP Portátil",
+        feedback_title: "Sugestões e Melhorias",
+        feedback_desc: "Tens ideias ou feedback sobre o RAG Studio? Envia uma mensagem privada diretamente para o desenvolvedor.",
+        form_name_label: "O teu Nome ou Pseudónimo (Opcional)",
+        form_email_label: "Email de Contacto (Opcional para resposta)",
+        form_msg_label: "A tua Sugestão ou Ideia *",
+        btn_send_feedback: "Enviar Sugestão Privada",
+        support_title: "Apoiar o Desenvolvimento",
+        support_desc: "O RAG Studio é um projeto gratuito e de código aberto. Se a aplicação te for útil e quiseres incentivar novas atualizações, podes oferecer um café e apoiar o trabalho independente!",
+        btn_kofi: "Apoiar no Ko-fi (Cartão / Apple Pay / PayPal)",
+        footer_credits: "© 2026 RAG Studio • Desenvolvido por Miguel com foco em privacidade total."
+      },
+      en: {
+        nav_features: "Features",
+        nav_dual_ai: "Dual-AI Engine",
+        nav_download: "Download",
+        nav_feedback: "Feedback",
+        btn_support: "Support",
+        hero_badge: "100% Local • Zero Telemetry • GPU & NPU Accelerated",
+        hero_title_1: "High-Performance Local AI & Private RAG",
+        hero_title_highlight: " Studio",
+        hero_subtitle: "Run advanced GGUF models directly on your hardware, chat with local documents in strict privacy, and experience real-time Dual-AI orchestration.",
+        btn_download_now: "Download Now",
+        btn_view_github: "View on GitHub",
+        feat_section_badge: "ADVANCED ARCHITECTURE",
+        feat_section_title: "Features & Capabilities",
+        feat_section_desc: "Engineered from scratch to combine maximum privacy, inference speed, and document precision.",
+        card_1_title: "100% Local & Private",
+        card_1_desc: "Zero telemetry or cloud tracking. All chats, files, and AI model weights remain strictly isolated on your device.",
+        card_2_title: "RAG Document Sandbox",
+        card_2_desc: "Intelligent ingestion for PDFs, DOCX, TXT, CSV, and Markdown with vector chunking and exact source citations.",
+        card_3_title: "Optimized LLaMA Engine",
+        card_3_desc: "Native support for Flash Attention, KV Cache quantization (q8_0) to save VRAM, and dynamic GPU layer offloading.",
+        card_4_title: "Hugging Face Explorer",
+        card_4_desc: "Browse and download any GGUF model with predictive RAM/VRAM compatibility diagnostics before downloading.",
+        card_5_title: "Real-Time Telemetry",
+        card_5_desc: "Live Tokens/sec gauge distinguishing Reasoning (🧠) from Output (⚡) speeds, plus VRAM, RAM, and temperature tracking.",
+        card_6_title: "Multilingual UI (6 Languages)",
+        card_6_desc: "Fully localized interface in English, Portuguese, Spanish, French, German, and Italian.",
+        dual_badge: "COOPERATIVE PIPELINE",
+        dual_title: "Dual-AI Engine Architecture",
+        dual_desc: "RAG Studio orchestrates two AI models in parallel: while your NPU or CPU runs a lightning-fast SLM (1B-3B) to refine the query and extract RAG search terms, the main GPU generates the grounded final response.",
+        dual_step_1: "Stage 1: SLM (NPU/CPU)",
+        dual_step_1_time: "~30ms (Query Reformulation)",
+        dual_step_2: "Stage 2: Vector Retrieval",
+        dual_step_2_time: "~15ms (Chunk Matching)",
+        dual_step_3: "Stage 3: Main LLM (GPU)",
+        dual_step_3_time: "Streaming with Flash Attention",
+        dl_title: "Download RAG Studio",
+        dl_desc: "Compatible with Windows 10 and Windows 11 (64-bit). Choose your preferred format:",
+        dl_recommended: "RECOMMENDED",
+        dl_portable: "PORTABLE",
+        dl_installer_title: "Windows Installer (.exe)",
+        dl_installer_desc: "Quick wizard setup with automatic Desktop and Start Menu shortcut creation.",
+        btn_dl_installer: "Download Installer",
+        dl_portable_title: "Portable Version (.zip)",
+        dl_portable_desc: "Zero installation required. Extract and run from any local folder or USB drive.",
+        btn_dl_portable: "Download Portable ZIP",
+        feedback_title: "Suggestions & Feedback",
+        feedback_desc: "Have ideas or feedback? Send a private message directly to the developer.",
+        form_name_label: "Your Name or Handle (Optional)",
+        form_email_label: "Contact Email (Optional for reply)",
+        form_msg_label: "Your Suggestion or Idea *",
+        btn_send_feedback: "Send Private Feedback",
+        support_title: "Support the Project",
+        support_desc: "RAG Studio is a free, open-source project. If you find it useful and want to back continuous development, buy a coffee to support independent work!",
+        btn_kofi: "Support on Ko-fi (Card / Apple Pay / PayPal)",
+        footer_credits: "© 2026 RAG Studio • Built by Miguel with absolute focus on local privacy."
+      },
+      es: {
+        nav_features: "Funcionalidades",
+        nav_dual_ai: "Motor Dual-IA",
+        nav_download: "Descargar",
+        nav_feedback: "Sugerencias",
+        btn_support: "Apoyar",
+        hero_badge: "100% Local • Cero Telemetría • Aceleración GPU & NPU",
+        hero_title_1: "Inteligencia Artificial Local y RAG Privado de",
+        hero_title_highlight: " Alto Rendimiento",
+        hero_subtitle: "Ejecuta modelos GGUF avanzados localmente, conversa con tus documentos con total privacidad y disfruta de orquestación Dual-IA en tiempo real.",
+        btn_download_now: "Descargar Ahora",
+        btn_view_github: "Ver en GitHub",
+        feat_section_badge: "ARQUITECTURA AVANZADA",
+        feat_section_title: "Capacidades y Funcionalidades",
+        feat_section_desc: "Diseñado para unir la máxima privacidad, velocidad de inferencia y precisión documental.",
+        card_1_title: "100% Local y Privado",
+        card_1_desc: "Cero telemetría. Todas las conversaciones y documentos permanecen aislados en tu equipo.",
+        card_2_title: "Sandbox Documental RAG",
+        card_2_desc: "Indexación inteligente de PDFs, Word, TXT y CSV con recuperación vectorial precisa.",
+        card_3_title: "Motor LLaMA Optimizado",
+        card_3_desc: "Flash Attention, cuantización de KV Cache y descarga dinámica de capas GPU.",
+        card_4_title: "Explorador Hugging Face",
+        card_4_desc: "Descarga modelos GGUF con análisis predictivo de memoria VRAM/RAM.",
+        card_5_title: "Telemetría en Tiempo Real",
+        card_5_desc: "Velocímetro de Tokens/seg con desglose de Razonamiento (🧠) y Respuesta (⚡).",
+        card_6_title: "Interfaz Multilingüe",
+        card_6_desc: "Disponible en 6 idiomas con traducción completa.",
+        dual_badge: "PIPELINE COOPERATIVO",
+        dual_title: "Arquitectura Dual-IA",
+        dual_desc: "Orquestación en paralelo: SLM en NPU/CPU para reformular búsquedas y GPU principal para responder.",
+        dual_step_1: "Etapa 1: SLM (NPU/CPU)",
+        dual_step_1_time: "~30ms (Reformulación)",
+        dual_step_2: "Etapa 2: Búsqueda Vectorial",
+        dual_step_2_time: "~15ms (Recuperación)",
+        dual_step_3: "Etapa 3: LLM Principal (GPU)",
+        dual_step_3_time: "Streaming con Flash Attention",
+        dl_title: "Descargar RAG Studio",
+        dl_desc: "Compatible con Windows 10 y Windows 11 (64-bit):",
+        dl_recommended: "RECOMENDADO",
+        dl_portable: "PORTÁTIL",
+        dl_installer_title: "Instalador Windows (.exe)",
+        dl_installer_desc: "Instalación guiada con creación automática de accesos directos.",
+        btn_dl_installer: "Descargar Instalador",
+        dl_portable_title: "Versión Portátil (.zip)",
+        dl_portable_desc: "Sin instalación. Descomprime y ejecuta directamente.",
+        btn_dl_portable: "Descargar ZIP Portátil",
+        feedback_title: "Sugerencias y Mejoras",
+        feedback_desc: "¿Tienes ideas o sugerencias? Envía un mensaje privado al desarrollador.",
+        form_name_label: "Tu Nombre (Opcional)",
+        form_email_label: "Email de Contacto (Opcional)",
+        form_msg_label: "Tu Sugerencia o Idea *",
+        btn_send_feedback: "Enviar Sugerencia Privada",
+        support_title: "Apoyar el Proyecto",
+        support_desc: "RAG Studio es gratuito y open-source. ¡Apoya el desarrollo invitando a un café!",
+        btn_kofi: "Apoyar en Ko-fi (Tarjeta / Apple Pay / PayPal)",
+        footer_credits: "© 2026 RAG Studio • Creado por Miguel enfocado en la privacidad."
+      },
+      fr: {
+        nav_features: "Fonctionnalités",
+        nav_dual_ai: "Moteur Dual-IA",
+        nav_download: "Télécharger",
+        nav_feedback: "Suggestions",
+        btn_support: "Soutenir",
+        hero_badge: "100% Local • Zéro Télémétrie • Accélération GPU & NPU",
+        hero_title_1: "IA Locale et RAG Privé de",
+        hero_title_highlight: " Haute Performance",
+        hero_subtitle: "Exécutez des modèles GGUF sur votre matériel, interrogez vos documents en toute confidentialité et profitez du moteur Dual-IA en temps réel.",
+        btn_download_now: "Télécharger",
+        btn_view_github: "Voir sur GitHub",
+        feat_section_badge: "ARCHITECTURE AVANCÉE",
+        feat_section_title: "Capacités et Fonctionnalités",
+        feat_section_desc: "Conçu pour allier confidentialité absolue, vitesse d'inférence et précision documentaire.",
+        card_1_title: "100% Local et Privé",
+        card_1_desc: "Aucune donnée n'est envoyée dans le cloud. Vos conversations et fichiers restent sur votre PC.",
+        card_2_title: "Sandbox Documentaire RAG",
+        card_2_desc: "Indexation de PDF, DOCX, TXT et CSV avec découpage vectoriel et citations de sources.",
+        card_3_title: "Moteur LLaMA Optimisé",
+        card_3_desc: "Flash Attention, quantification KV Cache et déchargement dynamique sur GPU.",
+        card_4_title: "Explorateur Hugging Face",
+        card_4_desc: "Téléchargez des modèles GGUF avec diagnostic de mémoire RAM/VRAM en temps réel.",
+        card_5_title: "Télémétrie en Temps Réel",
+        card_5_desc: "Compteur de tokens/sec distinguant Raisonnement (🧠) et Réponse (⚡).",
+        card_6_title: "Interface en 6 Langues",
+        card_6_desc: "Traduction complète et fluide en 6 langues européennes.",
+        dual_badge: "PIPELINE COOPÉRATIF",
+        dual_title: "Architecture Dual-IA",
+        dual_desc: "SLM ultra-rapide sur NPU/CPU pour reformuler la recherche et grand LLM sur GPU pour répondre.",
+        dual_step_1: "Étape 1: SLM (NPU/CPU)",
+        dual_step_1_time: "~30ms (Reformulation)",
+        dual_step_2: "Étape 2: Recherche Vectorielle",
+        dual_step_2_time: "~15ms (Matching)",
+        dual_step_3: "Étape 3: LLM Principal (GPU)",
+        dual_step_3_time: "Streaming avec Flash Attention",
+        dl_title: "Télécharger RAG Studio",
+        dl_desc: "Compatible Windows 10 et Windows 11 (64-bit):",
+        dl_recommended: "RECOMMANDÉ",
+        dl_portable: "PORTABLE",
+        dl_installer_title: "Installateur Windows (.exe)",
+        dl_installer_desc: "Assistant d'installation avec raccourcis automatiques.",
+        btn_dl_installer: "Télécharger l'Installateur",
+        dl_portable_title: "Version Portable (.zip)",
+        dl_portable_desc: "Sans installation. Décompressez et lancez directement.",
+        btn_dl_portable: "Télécharger le ZIP Portable",
+        feedback_title: "Suggestions et Retours",
+        feedback_desc: "Une idée ou un retour ? Envoyez un message privé au développeur.",
+        form_name_label: "Votre Nom (Facultatif)",
+        form_email_label: "Email de Contact (Facultatif)",
+        form_msg_label: "Votre Suggestion *",
+        btn_send_feedback: "Envoyer la Suggestion Privée",
+        support_title: "Soutenir le Projet",
+        support_desc: "RAG Studio est gratuit et open-source. Offrez un café pour soutenir le développement continu !",
+        btn_kofi: "Soutenir sur Ko-fi (Carte / Apple Pay / PayPal)",
+        footer_credits: "© 2026 RAG Studio • Développé par Miguel avec priorité absolue à la vie privée."
+      },
+      de: {
+        nav_features: "Funktionen",
+        nav_dual_ai: "Dual-KI-Engine",
+        nav_download: "Download",
+        nav_feedback: "Feedback",
+        btn_support: "Unterstützen",
+        hero_badge: "100% Lokal • Keine Telemetrie • GPU- & NPU-Beschleunigt",
+        hero_title_1: "Lokale KI und Privates RAG mit",
+        hero_title_highlight: " Höchstleistung",
+        hero_subtitle: "Führen Sie GGUF-Modelle lokal aus, chatten Sie mit Ihren Dokumenten in absoluter Privatsphäre und nutzen Sie Dual-KI-Orchestrierung.",
+        btn_download_now: "Jetzt Herunterladen",
+        btn_view_github: "Auf GitHub ansehen",
+        feat_section_badge: "MODERNE ARCHITEKTUR",
+        feat_section_title: "Fähigkeiten & Funktionen",
+        feat_section_desc: "Entwickelt für maximale Privatsphäre, Inferenzgeschwindigkeit und Dokumentenpräzision.",
+        card_1_title: "100% Lokal & Privat",
+        card_1_desc: "Keine Cloud-Übertragung. Alle Chats und Dokumente bleiben isoliert auf Ihrem PC.",
+        card_2_title: "RAG-Dokumenten-Sandbox",
+        card_2_desc: "Intelligente Indexierung für PDFs, Word, TXT und CSV mit präzisen Quellenangaben.",
+        card_3_title: "Optimierte LLaMA-Engine",
+        card_3_desc: "Flash Attention, KV-Cache-Quantisierung und dynamisches GPU-Layer-Offloading.",
+        card_4_title: "Hugging Face Explorer",
+        card_4_desc: "GGUF-Modelle herunterladen mit vorausschauender VRAM/RAM-Prüfung.",
+        card_5_title: "Echtzeit-Telemetrie",
+        card_5_desc: "Live-Geschwindigkeitsanzeige (Tokens/s) für Denken (🧠) und Antwort (⚡).",
+        card_6_title: "Mehrsprachig (6 Sprachen)",
+        card_6_desc: "Vollständig übersetzte Benutzeroberfläche in 6 europäischen Sprachen.",
+        dual_badge: "KOOPERATIVE PIPELINE",
+        dual_title: "Dual-KI-Architektur",
+        dual_desc: "SLM auf NPU/CPU für schnelle Abfragereformulierung, Haupt-LLM auf GPU für die Antwort.",
+        dual_step_1: "Schritt 1: SLM (NPU/CPU)",
+        dual_step_1_time: "~30ms (Reformulierung)",
+        dual_step_2: "Schritt 2: Vektor-Suche",
+        dual_step_2_time: "~15ms (Chunk-Matching)",
+        dual_step_3: "Schritt 3: Haupt-LLM (GPU)",
+        dual_step_3_time: "Streaming mit Flash Attention",
+        dl_title: "RAG Studio Herunterladen",
+        dl_desc: "Kompatibel mit Windows 10 & 11 (64-Bit):",
+        dl_recommended: "EMPFOHLEN",
+        dl_portable: "PORTABEL",
+        dl_installer_title: "Windows-Installer (.exe)",
+        dl_installer_desc: "Geführte Installation mit automatischer Desktop-Verknüpfung.",
+        btn_dl_installer: "Installer Herunterladen",
+        dl_portable_title: "Portable Version (.zip)",
+        dl_portable_desc: "Keine Installation nötig. Entpacken und sofort starten.",
+        btn_dl_portable: "Portable ZIP Herunterladen",
+        feedback_title: "Vorschläge & Feedback",
+        feedback_desc: "Haben Sie Ideen oder Feedback? Senden Sie eine private Nachricht direkt an den Entwickler.",
+        form_name_label: "Ihr Name (Optional)",
+        form_email_label: "Kontakt-E-Mail (Optional)",
+        form_msg_label: "Ihr Vorschlag *",
+        btn_send_feedback: "Privates Feedback Senden",
+        support_title: "Projekt Unterstützen",
+        support_desc: "RAG Studio ist kostenlos und Open Source. Unterstützen Sie die Weiterentwicklung mit einem Kaffee!",
+        btn_kofi: "Auf Ko-fi Unterstützen (Karte / Apple Pay / PayPal)",
+        footer_credits: "© 2026 RAG Studio • Entwickelt von Miguel mit absolutem Datenschutz-Fokus."
+      },
+      it: {
+        nav_features: "Funzionalità",
+        nav_dual_ai: "Motore Dual-IA",
+        nav_download: "Download",
+        nav_feedback: "Suggerimenti",
+        btn_support: "Supporta",
+        hero_badge: "100% Locale • Zero Telemetria • Accelerazione GPU & NPU",
+        hero_title_1: "Intelligenza Artificiale Locale e RAG Privato ad",
+        hero_title_highlight: " Alte Prestazioni",
+        hero_subtitle: "Esegui modelli GGUF avanzati sul tuo hardware, parla con i tuoi documenti in totale privacy e sfrutta il motore Dual-IA in tempo reale.",
+        btn_download_now: "Scarica Ora",
+        btn_view_github: "Visualizza su GitHub",
+        feat_section_badge: "ARCHITETTURA AVANZATA",
+        feat_section_title: "Capacità e Funzionalità",
+        feat_section_desc: "Progettato per unire la massima privacy, velocità di inferenza e precisione documentale.",
+        card_1_title: "100% Locale e Privato",
+        card_1_desc: "Nessun dato viene inviato al cloud. Tutte le chat e i documenti rimangono isolati sul tuo PC.",
+        card_2_title: "Sandbox Documentale RAG",
+        card_2_desc: "Indicizzazione di PDF, DOCX, TXT e CSV con suddivisione vettoriale e citazione delle fonti.",
+        card_3_title: "Motore LLaMA Ottimizzato",
+        card_3_desc: "Supporto Flash Attention, quantizzazione KV Cache e offloading dinamico su GPU.",
+        card_4_title: "Esploratore Hugging Face",
+        card_4_desc: "Scarica modelli GGUF con diagnosi predittiva di memoria VRAM/RAM.",
+        card_5_title: "Telemetria in Tempo Reale",
+        card_5_desc: "Tachimetro di Tokens/sec con distinzione tra Ragionamento (🧠) e Risposta (⚡).",
+        card_6_title: "Interfaccia in 6 Lingue",
+        card_6_desc: "Traduzione completa e intuitiva in 6 lingue europee.",
+        dual_badge: "PIPELINE COOPERATIVA",
+        dual_title: "Architettura Dual-IA",
+        dual_desc: "SLM su NPU/CPU per riformulare la ricerca e LLM principale su GPU per generare la risposta finale.",
+        dual_step_1: "Fase 1: SLM (NPU/CPU)",
+        dual_step_1_time: "~30ms (Riformulazione)",
+        dual_step_2: "Fase 2: Ricerca Vettoriale",
+        dual_step_2_time: "~15ms (Matching)",
+        dual_step_3: "Fase 3: LLM Principale (GPU)",
+        dual_step_3_time: "Streaming con Flash Attention",
+        dl_title: "Scarica RAG Studio",
+        dl_desc: "Compatibile con Windows 10 e Windows 11 (64-bit):",
+        dl_recommended: "CONSIGLIATO",
+        dl_portable: "PORTATILE",
+        dl_installer_title: "Installer Windows (.exe)",
+        dl_installer_desc: "Installazione rapida con creazione automatica delle scorciatoie sul Desktop.",
+        btn_dl_installer: "Scarica Installer",
+        dl_portable_title: "Versione Portatile (.zip)",
+        dl_portable_desc: "Nessuna installazione. Estrai ed esegui direttamente.",
+        btn_dl_portable: "Scarica ZIP Portatile",
+        feedback_title: "Suggerimenti e Feedback",
+        feedback_desc: "Hai idee o suggerimenti? Invia un messaggio privato direttamente allo sviluppatore.",
+        form_name_label: "Il tuo Nome (Opzionale)",
+        form_email_label: "Email di Contatto (Opzionale)",
+        form_msg_label: "Il tuo Suggerimento *",
+        btn_send_feedback: "Invia Suggerimento Privato",
+        support_title: "Supporta il Progetto",
+        support_desc: "RAG Studio è gratuito e open-source. Offri un caffè per supportare lo sviluppo continuo!",
+        btn_kofi: "Supporta su Ko-fi (Carta / Apple Pay / PayPal)",
+        footer_credits: "© 2026 RAG Studio • Sviluppato da Miguel con priorità assoluta alla privacy."
+      }
+    };
+
+    function changeLanguage(lang) {
+      const selected = translations[lang] ? lang : 'pt';
+      localStorage.setItem('rag_studio_lang', selected);
+      document.getElementById('currentLangLabel').textContent = selected.toUpperCase();
+      
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[selected] && translations[selected][key]) {
+          element.textContent = translations[selected][key];
+        }
+      });
+
+      // Fechar dropdown
+      document.getElementById('langMenu').classList.add('hidden');
+    }
+
+    // Toggle Dropdown Idioma
+    const langBtn = document.getElementById('langToggleBtn');
+    const langMenu = document.getElementById('langMenu');
+    
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      langMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', () => {
+      langMenu.classList.add('hidden');
+    });
+
+    // Inicialização
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      const savedLang = localStorage.getItem('rag_studio_lang') || 'pt';
+      changeLanguage(savedLang);
+    });
   </script>
 </body>
 </html>
