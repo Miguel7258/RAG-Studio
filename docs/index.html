@@ -12,10 +12,10 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap');
     
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans SC', 'Noto Sans JP', 'Noto Sans KR', sans-serif;
       background-color: #090a0b;
       color: #e3e3e3;
       scroll-behavior: smooth;
@@ -25,7 +25,7 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Glows e Efeitos Modernos */
+    /* Cards e Efeitos Modernos */
     .feature-card {
       background: radial-gradient(circle at 50% 0%, rgba(30, 32, 38, 0.7) 0%, rgba(16, 17, 20, 0.9) 100%);
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -38,6 +38,15 @@
     .glass-nav {
       background: rgba(9, 10, 11, 0.85);
       backdrop-filter: blur(14px);
+    }
+
+    /* Animação suave para carregamentos */
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
   </style>
 </head>
@@ -59,17 +68,18 @@
       </a>
 
       <!-- LINKS DE NAVEGAÇÃO -->
-      <nav class="hidden md:flex items-center gap-7 text-xs font-medium text-[#9aa0a6]">
+      <nav class="hidden lg:flex items-center gap-6 text-xs font-medium text-[#9aa0a6]">
         <a href="#capacidades" data-i18n="nav_features" class="hover:text-cyan-400 transition-colors">Capacidades</a>
         <a href="#motor-dual-ia" data-i18n="nav_dual_ai" class="hover:text-cyan-400 transition-colors">Motor Dual-IA</a>
+        <a href="#modelos" data-i18n="nav_models" class="hover:text-cyan-400 transition-colors">Modelos GGUF</a>
         <a href="#download" data-i18n="nav_download" class="hover:text-cyan-400 transition-colors">Download</a>
         <a href="#sugestoes" data-i18n="nav_feedback" class="hover:text-cyan-400 transition-colors">Sugestões</a>
       </nav>
 
       <!-- BOTÕES DE AÇÃO: IDIOMA, GITHUB E APOIAR -->
-      <div class="flex items-center gap-2.5">
+      <div class="flex items-center gap-2 sm:gap-3">
         
-        <!-- SELETOR DE IDIOMAS (i18n) -->
+        <!-- SELETOR DE 9 IDIOMAS (i18n) -->
         <div class="relative" id="langDropdownWrapper">
           <button 
             id="langToggleBtn" 
@@ -82,7 +92,7 @@
             <i data-lucide="chevron-down" class="w-3 h-3 text-[#6e7175]"></i>
           </button>
           
-          <div id="langMenu" class="hidden absolute right-0 mt-2 w-36 rounded-xl bg-[#141517] border border-[#2b2d31] shadow-2xl py-1 z-50">
+          <div id="langMenu" class="hidden absolute right-0 mt-2 w-44 rounded-xl bg-[#141517] border border-[#2b2d31] shadow-2xl py-1.5 z-50 max-h-80 overflow-y-auto">
             <button onclick="changeLanguage('pt')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between">
               <span>Português</span> <span class="font-mono text-[10px] text-[#6e7175]">PT</span>
             </button>
@@ -100,6 +110,15 @@
             </button>
             <button onclick="changeLanguage('it')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between">
               <span>Italiano</span> <span class="font-mono text-[10px] text-[#6e7175]">IT</span>
+            </button>
+            <button onclick="changeLanguage('zh')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between border-t border-[#22242a] pt-2">
+              <span>简体中文</span> <span class="font-mono text-[10px] text-[#6e7175]">ZH</span>
+            </button>
+            <button onclick="changeLanguage('ja')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between">
+              <span>日本語</span> <span class="font-mono text-[10px] text-[#6e7175]">JA</span>
+            </button>
+            <button onclick="changeLanguage('ko')" class="w-full text-left px-3 py-1.5 text-xs text-[#cbd5e1] hover:bg-cyan-500/10 hover:text-cyan-400 flex items-center justify-between">
+              <span>한국어</span> <span class="font-mono text-[10px] text-[#6e7175]">KO</span>
             </button>
           </div>
         </div>
@@ -129,7 +148,7 @@
     </div>
   </header>
 
-  <!-- HERO SECTION -->
+  <!-- HERO SECTION (Com botão único centrado) -->
   <section class="relative pt-20 pb-16 overflow-hidden">
     <div class="max-w-5xl mx-auto px-6 text-center">
       <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-6">
@@ -146,8 +165,9 @@
         Executa modelos GGUF avançados diretamente no teu hardware, conversa com os teus documentos com privacidade rigorosa e usufrui de orquestração Dual-IA em tempo real.
       </p>
 
+      <!-- BOTÃO ÚNICO PRINCIPAL CENTRADO -->
       <div class="flex items-center justify-center">
-        <a href="#download" class="w-full sm:w-auto px-10 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_25px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 active:scale-95">
+        <a href="#download" class="px-10 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_25px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2 active:scale-95">
           <i data-lucide="download" class="w-4 h-4"></i>
           <span data-i18n="btn_download_now">Descarregar Agora</span>
         </a>
@@ -236,9 +256,9 @@
           <div class="w-11 h-11 rounded-xl bg-rose-500/10 border border-rose-500/25 flex items-center justify-center text-rose-400 mb-5 group-hover:scale-110 transition-transform">
             <i data-lucide="globe" class="w-5 h-5"></i>
           </div>
-          <h3 class="text-base font-bold text-white mb-2 group-hover:text-rose-400 transition-colors" data-i18n="card_6_title">Interface Multilingue (6 Idiomas)</h3>
+          <h3 class="text-base font-bold text-white mb-2 group-hover:text-rose-400 transition-colors" data-i18n="card_6_title">Interface Multilingue (9 Idiomas)</h3>
           <p class="text-xs text-[#9aa0a6] leading-relaxed" data-i18n="card_6_desc">
-            Tradução completa e intuitiva disponível em Português, Inglês, Espanhol, Francês, Alemão e Italiano.
+            Tradução integral disponível em Português, Inglês, Espanhol, Francês, Alemão, Italiano, Chinês, Japonês e Coreano.
           </p>
         </div>
 
@@ -246,7 +266,7 @@
     </div>
   </section>
 
-  <!-- SECÇÃO DEDICADA: MOTOR DUAL-IA -->
+  <!-- MOTOR DUAL-IA -->
   <section id="motor-dual-ia" class="py-20 relative">
     <div class="max-w-6xl mx-auto px-6">
       
@@ -314,8 +334,88 @@
     </div>
   </section>
 
+  <!-- NOVA SECÇÃO: EXPLORADOR E DOWNLOADER HUGGING FACE GGUF WEB -->
+  <section id="modelos" class="py-20 bg-[#0d0e10] border-y border-[#1a1c1e]">
+    <div class="max-w-6xl mx-auto px-6">
+      
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[11px] font-mono mb-3">
+          <i data-lucide="cloud-download" class="w-3 h-3"></i>
+          <span data-i18n="hf_badge">HUB DE MODELOS GGUF</span>
+        </div>
+        <h2 class="text-3xl font-extrabold text-white mb-3" data-i18n="hf_title">Explorador & Downloader Hugging Face</h2>
+        <p class="text-xs sm:text-sm text-[#9aa0a6] max-w-2xl mx-auto" data-i18n="hf_desc">
+          Pesquisa e descarrega modelos `.gguf` diretamente dos servidores da Hugging Face para o teu computador sem sair do navegador.
+        </p>
+      </div>
+
+      <!-- BARRA DE PESQUISA E QUICK PICKS -->
+      <div class="max-w-3xl mx-auto mb-10 space-y-4">
+        <form id="hfSearchForm" class="flex gap-2">
+          <div class="relative flex-1">
+            <i data-lucide="search" class="w-4 h-4 text-[#6e7175] absolute left-3.5 top-3.5"></i>
+            <input 
+              type="text" 
+              id="hfSearchInput" 
+              placeholder="Pesquisar modelos GGUF (ex: Llama-3.2, Qwen2.5, Gemma-2)..." 
+              data-i18n-placeholder="hf_search_placeholder"
+              class="w-full pl-10 pr-4 py-3 rounded-xl bg-[#141517] border border-[#2b2d31] text-xs text-white placeholder-[#55585e] focus:outline-none focus:border-cyan-400 transition-colors"
+            />
+          </div>
+          <button 
+            type="submit" 
+            class="px-5 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold transition-all flex items-center gap-1.5 active:scale-95 shrink-0"
+          >
+            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+            <span data-i18n="hf_btn_search">Pesquisar</span>
+          </button>
+        </form>
+
+        <!-- Atalhos Rápidos -->
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <span class="text-[#6e7175]" data-i18n="hf_quick_picks">Populares:</span>
+          <button type="button" onclick="loadModelFiles('unsloth/Llama-3.2-3B-Instruct-GGUF')" class="px-2.5 py-1 rounded-lg bg-[#181a1f] hover:bg-[#23262d] border border-[#2b2d31] text-cyan-400 text-[11px] transition-all">Llama-3.2-3B</button>
+          <button type="button" onclick="loadModelFiles('Qwen/Qwen2.5-7B-Instruct-GGUF')" class="px-2.5 py-1 rounded-lg bg-[#181a1f] hover:bg-[#23262d] border border-[#2b2d31] text-purple-400 text-[11px] transition-all">Qwen-2.5-7B</button>
+          <button type="button" onclick="loadModelFiles('bartowski/gemma-2-2b-it-GGUF')" class="px-2.5 py-1 rounded-lg bg-[#181a1f] hover:bg-[#23262d] border border-[#2b2d31] text-emerald-400 text-[11px] transition-all">Gemma-2-2B</button>
+          <button type="button" onclick="loadModelFiles('microsoft/Phi-3.5-mini-instruct-gguf')" class="px-2.5 py-1 rounded-lg bg-[#181a1f] hover:bg-[#23262d] border border-[#2b2d31] text-amber-400 text-[11px] transition-all">Phi-3.5-mini</button>
+        </div>
+      </div>
+
+      <!-- ÁREA DE RESULTADOS DINÂMICOS -->
+      <div id="hfContainer" class="p-6 rounded-2xl bg-[#131518] border border-[#24262b]">
+        <!-- Cabeçalho do Modelo Selecionado -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-[#1f2126] gap-3">
+          <div>
+            <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-wider" data-i18n="hf_selected_model">Repositório Selecionado</span>
+            <h3 id="currentRepoTitle" class="text-base font-bold text-white font-mono flex items-center gap-2">
+              <i data-lucide="box" class="w-4 h-4 text-cyan-400"></i>
+              unsloth/Llama-3.2-3B-Instruct-GGUF
+            </h3>
+          </div>
+          <a 
+            id="hfExternalLink" 
+            href="https://huggingface.co/unsloth/Llama-3.2-3B-Instruct-GGUF" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="text-xs text-[#9aa0a6] hover:text-white flex items-center gap-1 transition-colors self-start sm:self-auto"
+          >
+            <span>Ver no Hugging Face</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+
+        <!-- Lista de Ficheiros GGUF -->
+        <div id="hfFilesList" class="space-y-2 max-h-96 overflow-y-auto pr-1">
+          <!-- Gerado via JavaScript -->
+          <div class="text-center py-8 text-xs text-[#6e7175] animate-pulse-subtle">A carregar ficheiros de quantização...</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- SECÇÃO DE DOWNLOAD -->
-  <section id="download" class="py-20 bg-[#0d0e10] border-y border-[#1a1c1e]">
+  <section id="download" class="py-20 relative">
     <div class="max-w-4xl mx-auto px-6 text-center">
       <h2 class="text-3xl font-extrabold text-white mb-3" data-i18n="dl_title">Transferir RAG Studio</h2>
       <p class="text-xs sm:text-sm text-[#9aa0a6] mb-12" data-i18n="dl_desc">Compatível com Windows 10 e Windows 11 (64-bit). Escolhe a tua versão preferida:</p>
@@ -368,8 +468,8 @@
     </div>
   </section>
 
-  <!-- FORMULÁRIO DE SUGESTÕES (TOKEN ANÓNIMO ATIVADO) -->
-  <section id="sugestoes" class="py-20">
+  <!-- FORMULÁRIO DE SUGESTÕES (Token Anónimo) -->
+  <section id="sugestoes" class="py-20 bg-[#0d0e10] border-y border-[#1a1c1e]">
     <div class="max-w-xl mx-auto px-6">
       
       <div class="text-center mb-8">
@@ -432,7 +532,7 @@
   </section>
 
   <!-- SECÇÃO DE APOIO -->
-  <section id="apoiar" class="py-20 bg-[#0d0e10] border-t border-[#1a1c1e] text-center">
+  <section id="apoiar" class="py-20 text-center">
     <div class="max-w-xl mx-auto px-6">
       
       <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 mx-auto mb-4">
@@ -470,12 +570,13 @@
     </div>
   </footer>
 
-  <!-- SISTEMA DE INTERNACIONALIZAÇÃO (i18n) EM JAVASCRIPT -->
+  <!-- SISTEMA COMPLETO DE TRADUÇÃO (9 IDIOMAS) E API HUGGING FACE -->
   <script>
     const translations = {
       pt: {
         nav_features: "Capacidades",
         nav_dual_ai: "Motor Dual-IA",
+        nav_models: "Modelos GGUF",
         nav_download: "Download",
         nav_feedback: "Sugestões",
         btn_support: "Apoiar",
@@ -497,8 +598,8 @@
         card_4_desc: "Pesquisa qualquer modelo GGUF no repositório oficial com diagnóstico preditivo de memória RAM/VRAM antes de iniciar o descarregamento.",
         card_5_title: "Telemetria em Tempo Real",
         card_5_desc: "Velocímetro de Tokens/segundo com distinção clara entre Raciocínio (🧠) e Resposta (⚡), além de monitorização de VRAM, RAM e temperatura.",
-        card_6_title: "Interface Multilingue (6 Idiomas)",
-        card_6_desc: "Tradução completa e intuitiva disponível em Português, Inglês, Espanhol, Francês, Alemão e Italiano.",
+        card_6_title: "Interface Multilingue (9 Idiomas)",
+        card_6_desc: "Tradução completa disponível em Português, Inglês, Espanhol, Francês, Alemão, Italiano, Chinês, Japonês e Coreano.",
         dual_badge: "PIPELINE COOPERATIVO",
         dual_title: "Arquitetura de Motor Dual-IA",
         dual_desc: "O RAG Studio orquestra dois modelos de IA em paralelo para atingir a máxima eficiência: enquanto a tua NPU ou CPU executa um modelo ultra-rápido (SLM de 1B a 3B) para reformular a pergunta e extrair termos de pesquisa, a GPU principal dedica-se a gerar a resposta de alta fidelidade com os documentos recuperados.",
@@ -508,6 +609,13 @@
         dual_step_2_time: "~15ms (Chunk Matching)",
         dual_step_3: "Etapa 3: LLM Principal (GPU)",
         dual_step_3_time: "Streaming com Flash Attention",
+        hf_badge: "HUB DE MODELOS GGUF",
+        hf_title: "Explorador & Downloader Hugging Face",
+        hf_desc: "Pesquisa e descarrega modelos .gguf diretamente dos servidores da Hugging Face para o teu computador sem sair do navegador.",
+        hf_search_placeholder: "Pesquisar modelos GGUF (ex: Llama-3.2, Qwen2.5, Gemma-2)...",
+        hf_btn_search: "Pesquisar",
+        hf_quick_picks: "Populares:",
+        hf_selected_model: "Repositório Selecionado",
         dl_title: "Transferir RAG Studio",
         dl_desc: "Compatível com Windows 10 e Windows 11 (64-bit). Escolhe a tua versão preferida:",
         dl_recommended: "RECOMENDADO",
@@ -532,6 +640,7 @@
       en: {
         nav_features: "Features",
         nav_dual_ai: "Dual-AI Engine",
+        nav_models: "GGUF Models",
         nav_download: "Download",
         nav_feedback: "Feedback",
         btn_support: "Support",
@@ -553,8 +662,8 @@
         card_4_desc: "Browse and download any GGUF model with predictive RAM/VRAM compatibility diagnostics before downloading.",
         card_5_title: "Real-Time Telemetry",
         card_5_desc: "Live Tokens/sec gauge distinguishing Reasoning (🧠) from Output (⚡) speeds, plus VRAM, RAM, and temperature tracking.",
-        card_6_title: "Multilingual UI (6 Languages)",
-        card_6_desc: "Fully localized interface in English, Portuguese, Spanish, French, German, and Italian.",
+        card_6_title: "Multilingual UI (9 Languages)",
+        card_6_desc: "Fully localized interface in English, Portuguese, Spanish, French, German, Italian, Chinese, Japanese, and Korean.",
         dual_badge: "COOPERATIVE PIPELINE",
         dual_title: "Dual-AI Engine Architecture",
         dual_desc: "RAG Studio orchestrates two AI models in parallel: while your NPU or CPU runs a lightning-fast SLM (1B-3B) to refine the query and extract RAG search terms, the main GPU generates the grounded final response.",
@@ -564,6 +673,13 @@
         dual_step_2_time: "~15ms (Chunk Matching)",
         dual_step_3: "Stage 3: Main LLM (GPU)",
         dual_step_3_time: "Streaming with Flash Attention",
+        hf_badge: "GGUF MODEL HUB",
+        hf_title: "Hugging Face Explorer & Downloader",
+        hf_desc: "Browse and download .gguf models directly from Hugging Face servers to your PC right from the browser.",
+        hf_search_placeholder: "Search GGUF models (e.g. Llama-3.2, Qwen2.5, Gemma-2)...",
+        hf_btn_search: "Search",
+        hf_quick_picks: "Popular:",
+        hf_selected_model: "Selected Repository",
         dl_title: "Download RAG Studio",
         dl_desc: "Compatible with Windows 10 and Windows 11 (64-bit). Choose your preferred format:",
         dl_recommended: "RECOMMENDED",
@@ -588,6 +704,7 @@
       es: {
         nav_features: "Funcionalidades",
         nav_dual_ai: "Motor Dual-IA",
+        nav_models: "Modelos GGUF",
         nav_download: "Descargar",
         nav_feedback: "Sugerencias",
         btn_support: "Apoyar",
@@ -609,8 +726,8 @@
         card_4_desc: "Descarga modelos GGUF con análisis predictivo de memoria VRAM/RAM.",
         card_5_title: "Telemetría en Tiempo Real",
         card_5_desc: "Velocímetro de Tokens/seg con desglose de Razonamiento (🧠) y Respuesta (⚡).",
-        card_6_title: "Interfaz Multilingüe",
-        card_6_desc: "Disponible en 6 idiomas con traducción completa.",
+        card_6_title: "Interfaz en 9 Idiomas",
+        card_6_desc: "Disponible en 9 idiomas con traducción completa y nativa.",
         dual_badge: "PIPELINE COOPERATIVO",
         dual_title: "Arquitectura Dual-IA",
         dual_desc: "Orquestación en paralelo: SLM en NPU/CPU para reformular búsquedas y GPU principal para responder.",
@@ -620,6 +737,13 @@
         dual_step_2_time: "~15ms (Recuperación)",
         dual_step_3: "Etapa 3: LLM Principal (GPU)",
         dual_step_3_time: "Streaming con Flash Attention",
+        hf_badge: "HUB DE MODELOS GGUF",
+        hf_title: "Explorador & Downloader Hugging Face",
+        hf_desc: "Busca y descarga modelos .gguf directamente desde Hugging Face.",
+        hf_search_placeholder: "Buscar modelos GGUF...",
+        hf_btn_search: "Buscar",
+        hf_quick_picks: "Populares:",
+        hf_selected_model: "Repositorio Seleccionado",
         dl_title: "Descargar RAG Studio",
         dl_desc: "Compatible con Windows 10 y Windows 11 (64-bit):",
         dl_recommended: "RECOMENDADO",
@@ -644,6 +768,7 @@
       fr: {
         nav_features: "Fonctionnalités",
         nav_dual_ai: "Moteur Dual-IA",
+        nav_models: "Modèles GGUF",
         nav_download: "Télécharger",
         nav_feedback: "Suggestions",
         btn_support: "Soutenir",
@@ -665,8 +790,8 @@
         card_4_desc: "Téléchargez des modèles GGUF avec diagnostic de mémoire RAM/VRAM en temps réel.",
         card_5_title: "Télémétrie en Temps Réel",
         card_5_desc: "Compteur de tokens/sec distinguant Raisonnement (🧠) et Réponse (⚡).",
-        card_6_title: "Interface en 6 Langues",
-        card_6_desc: "Traduction complète et fluide en 6 langues européennes.",
+        card_6_title: "Interface en 9 Langues",
+        card_6_desc: "Traduction complète et fluide en 9 langues.",
         dual_badge: "PIPELINE COOPÉRATIF",
         dual_title: "Architecture Dual-IA",
         dual_desc: "SLM ultra-rapide sur NPU/CPU pour reformuler la recherche et grand LLM sur GPU pour répondre.",
@@ -676,6 +801,13 @@
         dual_step_2_time: "~15ms (Matching)",
         dual_step_3: "Étape 3: LLM Principal (GPU)",
         dual_step_3_time: "Streaming avec Flash Attention",
+        hf_badge: "HUB DE MODÈLES GGUF",
+        hf_title: "Explorateur & Téléchargeur Hugging Face",
+        hf_desc: "Explorez et téléchargez des modèles .gguf directement depuis le navigateur.",
+        hf_search_placeholder: "Rechercher des modèles GGUF...",
+        hf_btn_search: "Rechercher",
+        hf_quick_picks: "Populaires :",
+        hf_selected_model: "Dépôt Sélectionné",
         dl_title: "Télécharger RAG Studio",
         dl_desc: "Compatible Windows 10 et Windows 11 (64-bit):",
         dl_recommended: "RECOMMANDÉ",
@@ -700,6 +832,7 @@
       de: {
         nav_features: "Funktionen",
         nav_dual_ai: "Dual-KI-Engine",
+        nav_models: "GGUF-Modelle",
         nav_download: "Download",
         nav_feedback: "Feedback",
         btn_support: "Unterstützen",
@@ -721,8 +854,8 @@
         card_4_desc: "GGUF-Modelle herunterladen mit vorausschauender VRAM/RAM-Prüfung.",
         card_5_title: "Echtzeit-Telemetrie",
         card_5_desc: "Live-Geschwindigkeitsanzeige (Tokens/s) für Denken (🧠) und Antwort (⚡).",
-        card_6_title: "Mehrsprachig (6 Sprachen)",
-        card_6_desc: "Vollständig übersetzte Benutzeroberfläche in 6 europäischen Sprachen.",
+        card_6_title: "Mehrsprachig (9 Sprachen)",
+        card_6_desc: "Vollständig übersetzte Benutzeroberfläche in 9 Sprachen.",
         dual_badge: "KOOPERATIVE PIPELINE",
         dual_title: "Dual-KI-Architektur",
         dual_desc: "SLM auf NPU/CPU für schnelle Abfragereformulierung, Haupt-LLM auf GPU für die Antwort.",
@@ -732,6 +865,13 @@
         dual_step_2_time: "~15ms (Chunk-Matching)",
         dual_step_3: "Schritt 3: Haupt-LLM (GPU)",
         dual_step_3_time: "Streaming mit Flash Attention",
+        hf_badge: "GGUF-MODELL-HUB",
+        hf_title: "Hugging Face Explorer & Downloader",
+        hf_desc: "GGUF-Modelle direkt über den Browser suchen und herunterladen.",
+        hf_search_placeholder: "GGUF-Modelle suchen...",
+        hf_btn_search: "Suchen",
+        hf_quick_picks: "Beliebt:",
+        hf_selected_model: "Ausgewähltes Repository",
         dl_title: "RAG Studio Herunterladen",
         dl_desc: "Kompatibel mit Windows 10 & 11 (64-Bit):",
         dl_recommended: "EMPFOHLEN",
@@ -756,13 +896,14 @@
       it: {
         nav_features: "Funzionalità",
         nav_dual_ai: "Motore Dual-IA",
+        nav_models: "Modelli GGUF",
         nav_download: "Download",
         nav_feedback: "Suggerimenti",
         btn_support: "Supporta",
         hero_badge: "100% Locale • Zero Telemetria • Accelerazione GPU & NPU",
         hero_title_1: "Intelligenza Artificiale Locale e RAG Privato ad",
         hero_title_highlight: " Alte Prestazioni",
-        hero_subtitle: "Esegui modelli GGUF avanzati sul tuo hardware, parla con i tuoi documentos in totale privacy e sfrutta il motore Dual-IA in tempo reale.",
+        hero_subtitle: "Esegui modelli GGUF avanzati sul tuo hardware, parla con i tuoi documenti in totale privacy e sfrutta il motore Dual-IA in tempo reale.",
         btn_download_now: "Scarica Ora",
         feat_section_badge: "ARCHITETTURA AVANZATA",
         feat_section_title: "Capacità e Funzionalità",
@@ -777,8 +918,8 @@
         card_4_desc: "Scarica modelli GGUF con diagnosi predittiva di memoria VRAM/RAM.",
         card_5_title: "Telemetria in Tempo Reale",
         card_5_desc: "Tachimetro di Tokens/sec con distinzione tra Ragionamento (🧠) e Risposta (⚡).",
-        card_6_title: "Interfaccia in 6 Lingue",
-        card_6_desc: "Traduzione completa e intuitiva in 6 lingue europee.",
+        card_6_title: "Interfaccia in 9 Lingue",
+        card_6_desc: "Traduzione completa e intuitiva in 9 lingue.",
         dual_badge: "PIPELINE COOPERATIVA",
         dual_title: "Architettura Dual-IA",
         dual_desc: "SLM su NPU/CPU per riformulare la ricerca e LLM principale su GPU per generare la risposta finale.",
@@ -788,6 +929,13 @@
         dual_step_2_time: "~15ms (Matching)",
         dual_step_3: "Fase 3: LLM Principale (GPU)",
         dual_step_3_time: "Streaming con Flash Attention",
+        hf_badge: "HUB MODELLI GGUF",
+        hf_title: "Esploratore & Downloader Hugging Face",
+        hf_desc: "Cerca e scarica modelli .gguf direttamente dal browser.",
+        hf_search_placeholder: "Cerca modelli GGUF...",
+        hf_btn_search: "Cerca",
+        hf_quick_picks: "Popolari:",
+        hf_selected_model: "Repository Selezionato",
         dl_title: "Scarica RAG Studio",
         dl_desc: "Compatibile con Windows 10 e Windows 11 (64-bit):",
         dl_recommended: "CONSIGLIATO",
@@ -808,9 +956,202 @@
         support_desc: "RAG Studio è gratuito e open-source. Offri un caffè per supportare lo sviluppo continuo!",
         btn_kofi: "Supporta su Ko-fi (Carta / Apple Pay / PayPal)",
         footer_credits: "© 2026 RAG Studio • Sviluppato da Miguel con priorità assoluta alla privacy."
+      },
+      zh: {
+        nav_features: "核心功能",
+        nav_dual_ai: "双AI引擎",
+        nav_models: "GGUF模型",
+        nav_download: "下载软件",
+        nav_feedback: "建议反馈",
+        btn_support: "赞助支持",
+        hero_badge: "100% 本地运行 • 零遥测监控 • GPU & NPU 硬件加速",
+        hero_title_1: "高性能本地人工智能与私密 RAG 知识库",
+        hero_title_highlight: " 平台",
+        hero_subtitle: "直接在你的电脑硬件上运行前沿 GGUF 模型，与本地文档进行极致隐私的交互，并体验实时的双 AI 协同引擎。",
+        btn_download_now: "立即下载",
+        feat_section_badge: "先进架构",
+        feat_section_title: "核心特性与优势",
+        feat_section_desc: "专为极致隐私、极速推理和精准文档知识检索而原生打造。",
+        card_1_title: "100% 本地与隐私安全",
+        card_1_desc: "完全零云端遥测。所有的聊天记录、文档数据和模型权重均加密保存在您的电脑中。",
+        card_2_title: "RAG 文档沙盒",
+        card_2_desc: "智能解析 PDF、Word、TXT 和 CSV 文件，利用向量分块提供附带精准来源引用的回答。",
+        card_3_title: "极致优化的 LLaMA 引擎",
+        card_3_desc: "原生支持 Flash Attention、KV 缓存量化（q8_0 节省显存）与动态 GPU 层卸载。",
+        card_4_title: "Hugging Face 探索器",
+        card_4_desc: "在线浏览并下载 GGUF 模型，下载前提供智能 RAM/VRAM 兼容性诊断。",
+        card_5_title: "实时性能遥测",
+        card_5_desc: "实时显示 Token/秒生成速度（区分思考 🧠 与输出 ⚡），并监控显存与温度。",
+        card_6_title: "多语言界面（支持 9 种语言）",
+        card_6_desc: "完整支持中文、英语、葡萄牙语、西班牙语、法语、德语、意大利语、日语和韩语。",
+        dual_badge: "协同计算流水线",
+        dual_title: "双 AI 引擎架构 (Dual-AI Engine)",
+        dual_desc: "RAG Studio 并行编排两个 AI 模型：利用 NPU/CPU 运行超轻量 SLM（1B-3B）极速重构检索词，同时主 GPU 专注于基于检索文档生成高精度回答。",
+        dual_step_1: "阶段 1: SLM (NPU/CPU)",
+        dual_step_1_time: "~30ms (检索词重构)",
+        dual_step_2: "阶段 2: 向量匹配检索",
+        dual_step_2_time: "~15ms (文本块匹配)",
+        dual_step_3: "阶段 3: 主 LLM (GPU)",
+        dual_step_3_time: "Flash Attention 流式生成",
+        hf_badge: "GGUF 模型中心",
+        hf_title: "Hugging Face 网页探索与下载器",
+        hf_desc: "直接从 Hugging Face 官方服务器搜索并高速下载 .gguf 模型文件到您的本地电脑。",
+        hf_search_placeholder: "搜索 GGUF 模型（例如：Llama-3.2, Qwen2.5, Gemma-2）...",
+        hf_btn_search: "搜索模型",
+        hf_quick_picks: "热门精选：",
+        hf_selected_model: "当前模型仓库",
+        dl_title: "下载 RAG Studio",
+        dl_desc: "完美兼容 Windows 10 与 Windows 11 (64位)：",
+        dl_recommended: "官方推荐",
+        dl_portable: "便携免安装",
+        dl_installer_title: "Windows 安装程序 (.exe)",
+        dl_installer_desc: "快速向导式安装，自动在桌面与开始菜单创建快捷方式。",
+        btn_dl_installer: "下载安装程序",
+        dl_portable_title: "便携版压缩包 (.zip)",
+        dl_portable_desc: "免安装。解压后即可在任意目录或移动硬盘中直接运行。",
+        btn_dl_portable: "下载便携版 ZIP",
+        feedback_title: "意见与反馈",
+        feedback_desc: "有功能建议或发现问题？直接向开发者发送私密反馈信息。",
+        form_name_label: "您的称呼（选填）",
+        form_email_label: "联系邮箱（选填，用于回复）",
+        form_msg_label: "您的建议或想法 *",
+        btn_send_feedback: "发送私密反馈",
+        support_title: "赞助与支持开发",
+        support_desc: "RAG Studio 是一个完全开源免费的独立项目。如果您觉得好用，欢迎请作者喝杯咖啡以支持持续更新！",
+        btn_kofi: "在 Ko-fi 上支持（信用卡 / Apple Pay / PayPal）",
+        footer_credits: "© 2026 RAG Studio • 由 Miguel 独立开发，专注于极致本地隐私保护。"
+      },
+      ja: {
+        nav_features: "機能",
+        nav_dual_ai: "Dual-AIエンジン",
+        nav_models: "GGUFモデル",
+        nav_download: "ダウンロード",
+        nav_feedback: "フィードバック",
+        btn_support: "支援する",
+        hero_badge: "100% ローカル • テレメトリ一切なし • GPU & NPU 高速化",
+        hero_title_1: "超高速ローカル AI & プライベート RAG",
+        hero_title_highlight: " Studio",
+        hero_subtitle: "クラウドを介さずにお使いの PC 上で最先端の GGUF モデルを実行。完全なプライバシー下でドキュメントと対話し、リアルタイムの Dual-AI 連携を体験。",
+        btn_download_now: "今すぐダウンロード",
+        feat_section_badge: "高度なアーキテクチャ",
+        feat_section_title: "主な機能と特長",
+        feat_section_desc: "最大限のプライバシー、推論速度、ドキュメント検索精度を融合した設計。",
+        card_1_title: "100% ローカル＆プライベート",
+        card_1_desc: "外部へのデータ送信は一切なし。すべてのチャットとモデルはお使いの端末内でのみ処理されます。",
+        card_2_title: "RAG ドキュメントサンドボックス",
+        card_2_desc: "PDF、Word、TXT、CSV を高速インデックス化し、正確な出典引用付きで高精度に回答します。",
+        card_3_title: "最適化された LLaMA エンジン",
+        card_3_desc: "Flash Attention、VRAM を節約する KV キャッシュ量子化、動的 GPU オフロードをネイティブサポート。",
+        card_4_title: "Hugging Face エクスプローラー",
+        card_4_desc: "GGUF モデルを検索し、ダウンロード前に RAM/VRAM 適合性を自動診断します。",
+        card_5_title: "リアルタイムテレメトリ",
+        card_5_desc: "思考速度（🧠）と出力速度（⚡）を分けたトークン/秒メーター、VRAM・温度をリアルタイム監視。",
+        card_6_title: "多言語対応（9言語）",
+        card_6_desc: "日本語、英語、ポルトガル語、中国語、韓国語など 9 言語に完全対応。",
+        dual_badge: "協調型パイプライン",
+        dual_title: "Dual-AI エンジンアーキテクチャ",
+        dual_desc: "2つの AI モデルを並列処理：NPU/CPU で軽量 SLM (1B-3B) を超高速実行して検索クエリを生成し、メイン GPU が正確な回答を生成します。",
+        dual_step_1: "ステップ 1: SLM (NPU/CPU)",
+        dual_step_1_time: "~30ms (クエリ再構築)",
+        dual_step_2: "ステップ 2: ベクトル検索",
+        dual_step_2_time: "~15ms (チャンクマッピング)",
+        dual_step_3: "ステップ 3: メイン LLM (GPU)",
+        dual_step_3_time: "Flash Attention ストリーミング",
+        hf_badge: "GGUF モデルハブ",
+        hf_title: "Hugging Face ダウンローダー",
+        hf_desc: "ブラウザから直接 Hugging Face 公式サーバーの .gguf モデルを検索して PC にダウンロード可能。",
+        hf_search_placeholder: "GGUF モデルを検索 (例: Llama-3.2, Qwen2.5, Gemma-2)...",
+        hf_btn_search: "検索",
+        hf_quick_picks: "人気モデル:",
+        hf_selected_model: "選択されたリポジトリ",
+        dl_title: "RAG Studio をダウンロード",
+        dl_desc: "Windows 10 / Windows 11 (64-bit) 対応:",
+        dl_recommended: "推奨",
+        dl_portable: "ポータブル版",
+        dl_installer_title: "Windows インストーラー (.exe)",
+        dl_installer_desc: "自動でデスクトップとスタートメニューにショートカットを作成するウィザード版。",
+        btn_dl_installer: "インストーラーをダウンロード",
+        dl_portable_title: "ポータブル版 (.zip)",
+        dl_portable_desc: "インストール不要。解凍してどこからでも直接起動できます。",
+        btn_dl_portable: "ZIP ポータブル版をダウンロード",
+        feedback_title: "ご意見・フィードバック",
+        feedback_desc: "新機能のアイデアやご意見をお寄せください。開発者に直接送信されます。",
+        form_name_label: "お名前・ハンドルネーム (任意)",
+        form_email_label: "返信用メールアドレス (任意)",
+        form_msg_label: "ご意見・ご提案 *",
+        btn_send_feedback: "フィードバックを送信",
+        support_title: "開発をサポート",
+        support_desc: "RAG Studio はオープンソースの無料アプリです。気に入っていただけたらコーヒー 1 杯のご支援をお願いします！",
+        btn_kofi: "Ko-fi で支援する (カード / Apple Pay / PayPal)",
+        footer_credits: "© 2026 RAG Studio • Miguel によって完全なローカルプライバシーを重視して開発されました。"
+      },
+      ko: {
+        nav_features: "주요 기능",
+        nav_dual_ai: "Dual-AI 엔진",
+        nav_models: "GGUF 모델",
+        nav_download: "다운로드",
+        nav_feedback: "피드백",
+        btn_support: "후원하기",
+        hero_badge: "100% 로컬 구동 • 텔레메트리 제로 • GPU 및 NPU 가속",
+        hero_title_1: "초고속 로컬 AI & 프라이빗 RAG",
+        hero_title_highlight: " Studio",
+        hero_subtitle: "최첨단 GGUF 모델을 PC 하드웨어에서 직접 실행하고, 완벽한 프라이버시 속에서 문서와 대화하며 실시간 Dual-AI 파이프라인을 경험하세요.",
+        btn_download_now: "지금 다운로드",
+        feat_section_badge: "첨단 아키텍처",
+        feat_section_title: "기능 및 성능",
+        feat_section_desc: "최고 수준의 프라이버시, 추론 속도 및 문서 검색 정확성을 위해 처음부터 설계되었습니다.",
+        card_1_title: "100% 로컬 및 개인정보 보호",
+        card_1_desc: "클라우드 전송 제로. 모든 대화와 파일, AI 가중치는 사용자 기기 내부에서만 안전하게 보관됩니다.",
+        card_2_title: "RAG 문서 샌드박스",
+        card_2_desc: "PDF, Word, TXT, CSV 문서를 벡터 단위로 인덱싱하여 정확한 출처 인용과 함께 답변합니다.",
+        card_3_title: "최적화된 LLaMA 엔진",
+        card_3_desc: "Flash Attention 지원, VRAM 절약을 위한 KV 캐시 양자화(q8_0), 동적 GPU 레이어 오프로딩 내장.",
+        card_4_title: "Hugging Face 탐색기",
+        card_4_desc: "GGUF 모델을 검색하고 다운로드 전 RAM/VRAM 호환성을 사전 진단합니다.",
+        card_5_title: "실시간 성능 텔레메트리",
+        card_5_desc: "추론 속도(🧠)와 응답 속도(⚡)를 구분하는 토큰/초 게이지 및 VRAM, 온도 실시간 모니터링.",
+        card_6_title: "9개 언어 다국어 지원",
+        card_6_desc: "한국어, 영어, 포르투갈어, 스페인어, 프랑스어, 독일어, 이탈리아어, 중국어, 일본어 지원.",
+        dual_badge: "협력형 파이프라인",
+        dual_title: "Dual-AI 엔진 아키텍처",
+        dual_desc: "2개의 AI 모델 병렬 구동: NPU/CPU가 초경량 SLM(1B-3B)으로 검색어를 빠르게 추출하고, 메인 GPU가 문서를 바탕으로 고품질 최종 답변을 생성합니다.",
+        dual_step_1: "1단계: SLM (NPU/CPU)",
+        dual_step_1_time: "~30ms (검색어 재구성)",
+        dual_step_2: "2단계: 벡터 검색",
+        dual_step_2_time: "~15ms (청크 매칭)",
+        dual_step_3: "3단계: 메인 LLM (GPU)",
+        dual_step_3_time: "Flash Attention 스트리밍",
+        hf_badge: "GGUF 모델 허브",
+        hf_title: "Hugging Face 웹 탐색 및 다운로더",
+        hf_desc: "브라우저에서 바로 Hugging Face 서버의 .gguf 모델을 검색하고 내 컴퓨터로 초고속 다운로드하세요.",
+        hf_search_placeholder: "GGUF 모델 검색 (예: Llama-3.2, Qwen2.5, Gemma-2)...",
+        hf_btn_search: "검색",
+        hf_quick_picks: "인기 모델:",
+        hf_selected_model: "선택된 저장소",
+        dl_title: "RAG Studio 다운로드",
+        dl_desc: "Windows 10 및 Windows 11 (64비트) 완벽 호환:",
+        dl_recommended: "권장 버전",
+        dl_portable: "포터블 무설치",
+        dl_installer_title: "Windows 설치 프로그램 (.exe)",
+        dl_installer_desc: "바탕화면 및 시작 메뉴 바로가기를 자동 생성하는 빠른 설치 마법사.",
+        btn_dl_installer: "설치 프로그램 다운로드",
+        dl_portable_title: "포터블 압축 파일 (.zip)",
+        dl_portable_desc: "설치 과정 없음. 압축을 풀고 원하는 위치에서 바로 실행 가능.",
+        btn_dl_portable: "포터블 ZIP 다운로드",
+        feedback_title: "제안 및 피드백",
+        feedback_desc: "새로운 기능이나 아이디어가 있으신가요? 개발자에게 직접 비공개 메시지를 보내주세요.",
+        form_name_label: "이름 또는 닉네임 (선택)",
+        form_email_label: "회신받을 이메일 (선택)",
+        form_msg_label: "제안 또는 피드백 *",
+        btn_send_feedback: "비공개 피드백 전송",
+        support_title: "프로젝트 후원하기",
+        support_desc: "RAG Studio는 무료 오픈소스 프로젝트입니다. 유용하게 사용하셨다면 커피 한 잔으로 독립 개발을 응원해주세요!",
+        btn_kofi: "Ko-fi에서 후원하기 (카드 / Apple Pay / PayPal)",
+        footer_credits: "© 2026 RAG Studio • Miguel 개발, 완벽한 로컬 프라이버시를 지향합니다."
       }
     };
 
+    // Função para alterar idioma
     function changeLanguage(lang) {
       const selected = translations[lang] ? lang : 'pt';
       localStorage.setItem('rag_studio_lang', selected);
@@ -823,11 +1164,17 @@
         }
       });
 
-      // Fechar dropdown
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        if (translations[selected] && translations[selected][key]) {
+          element.setAttribute('placeholder', translations[selected][key]);
+        }
+      });
+
       document.getElementById('langMenu').classList.add('hidden');
     }
 
-    // Toggle Dropdown Idioma
+    // Dropdown de Idioma
     const langBtn = document.getElementById('langToggleBtn');
     const langMenu = document.getElementById('langMenu');
     
@@ -840,11 +1187,137 @@
       langMenu.classList.add('hidden');
     });
 
-    // Inicialização
+    // ==========================================
+    // INTEGRAÇÃO COM A API PÚBLICA HUGGING FACE
+    // ==========================================
+    
+    function formatBytes(bytes) {
+      if (!bytes || bytes === 0) return 'Tamanho desconhecido';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function copyToClipboard(url, btnElement) {
+      navigator.clipboard.writeText(url).then(() => {
+        const originalHtml = btnElement.innerHTML;
+        btnElement.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Copiado!`;
+        lucide.createIcons();
+        setTimeout(() => {
+          btnElement.innerHTML = originalHtml;
+          lucide.createIcons();
+        }, 2000);
+      });
+    }
+
+    async function loadModelFiles(repoId) {
+      const titleElem = document.getElementById('currentRepoTitle');
+      const linkElem = document.getElementById('hfExternalLink');
+      const listElem = document.getElementById('hfFilesList');
+
+      titleElem.innerHTML = `<i data-lucide="box" class="w-4 h-4 text-cyan-400"></i> ${repoId}`;
+      linkElem.href = `https://huggingface.co/${repoId}`;
+      listElem.innerHTML = `<div class="text-center py-8 text-xs text-cyan-400 animate-pulse-subtle">A pesquisar ficheiros .gguf no repositório ${repoId}...</div>`;
+      lucide.createIcons();
+
+      try {
+        // Obter ficheiros da árvore do repositório
+        const res = await fetch(`https://huggingface.co/api/models/${repoId}/tree/main`);
+        if (!res.ok) throw new Error('Não foi possível obter os ficheiros.');
+        const files = await res.json();
+        
+        const ggufFiles = files.filter(f => f.path && f.path.toLowerCase().endsWith('.gguf'));
+
+        if (ggufFiles.length === 0) {
+          listElem.innerHTML = `<div class="text-center py-8 text-xs text-amber-400">Nenhum ficheiro com extensão .gguf encontrado na raiz deste repositório.</div>`;
+          return;
+        }
+
+        listElem.innerHTML = '';
+
+        ggufFiles.forEach(file => {
+          const downloadUrl = `https://huggingface.co/${repoId}/resolve/main/${encodeURIComponent(file.path)}`;
+          const sizeStr = file.size ? formatBytes(file.size) : '';
+
+          const fileCard = document.createElement('div');
+          fileCard.className = 'p-3 rounded-xl bg-[#181a1f] border border-[#26282e] hover:border-[#3b3e47] transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs';
+          
+          fileCard.innerHTML = `
+            <div class="flex items-center gap-2.5 overflow-hidden">
+              <i data-lucide="file-code" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+              <div class="truncate">
+                <p class="font-mono text-white font-medium truncate">${file.path}</p>
+                <p class="text-[10px] text-[#6e7175] font-mono">${sizeStr}</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+              <button 
+                type="button" 
+                onclick="copyToClipboard('${downloadUrl}', this)"
+                class="px-2.5 py-1.5 rounded-lg bg-[#22242a] hover:bg-[#2c2f37] text-white text-[11px] font-medium transition-all flex items-center gap-1.5"
+                title="Copiar URL direto"
+              >
+                <i data-lucide="copy" class="w-3.5 h-3.5 text-[#9aa0a6]"></i>
+                <span>Copiar URL</span>
+              </button>
+
+              <a 
+                href="${downloadUrl}" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black text-[11px] font-bold transition-all flex items-center gap-1.5 active:scale-95 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+              >
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>Download</span>
+              </a>
+            </div>
+          `;
+          listElem.appendChild(fileCard);
+        });
+
+        lucide.createIcons();
+
+      } catch (err) {
+        listElem.innerHTML = `<div class="text-center py-8 text-xs text-rose-400">Erro ao carregar ficheiros. Verifica se o repositório existe e é público no Hugging Face.</div>`;
+      }
+    }
+
+    // Pesquisa de repositórios
+    document.getElementById('hfSearchForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const query = document.getElementById('hfSearchInput').value.trim();
+      if (!query) return;
+
+      const listElem = document.getElementById('hfFilesList');
+      listElem.innerHTML = `<div class="text-center py-8 text-xs text-cyan-400 animate-pulse-subtle">A pesquisar modelos para "${query}"...</div>`;
+
+      try {
+        const res = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(query)}&filter=gguf&sort=downloads&direction=-1&limit=5`);
+        const repos = await res.json();
+
+        if (!repos || repos.length === 0) {
+          listElem.innerHTML = `<div class="text-center py-8 text-xs text-amber-400">Nenhum repositório GGUF encontrado com o termo "${query}".</div>`;
+          return;
+        }
+
+        // Carrega logo o primeiro resultado mais popular
+        loadModelFiles(repos[0].id);
+
+      } catch (err) {
+        listElem.innerHTML = `<div class="text-center py-8 text-xs text-rose-400">Falha ao ligar à API do Hugging Face.</div>`;
+      }
+    });
+
+    // INICIALIZAÇÃO
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       const savedLang = localStorage.getItem('rag_studio_lang') || 'pt';
       changeLanguage(savedLang);
+      
+      // Carregar modelo padrão no Hub
+      loadModelFiles('unsloth/Llama-3.2-3B-Instruct-GGUF');
     });
   </script>
 </body>
