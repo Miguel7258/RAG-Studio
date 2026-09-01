@@ -45,20 +45,20 @@
       height: 5px;
     }
     ::-webkit-scrollbar-track {
-      background: #0e0f12;
+      background: #0d0e11;
     }
     ::-webkit-scrollbar-thumb {
-      background: #262930;
+      background: #23262d;
       border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #3c404b;
+      background: #393d47;
     }
 
-    /* Item selecionado na lista estilo LM Studio */
     .lm-item-active {
       background-color: #171a21 !important;
-      border-color: rgba(6, 182, 212, 0.45) !important;
+      border-color: rgba(6, 182, 212, 0.5) !important;
+      box-shadow: 0 0 15px -3px rgba(6, 182, 212, 0.15);
     }
   </style>
 </head>
@@ -190,7 +190,7 @@
             <i data-lucide="shield-check" class="w-5 h-5"></i>
           </div>
           <h3 class="text-base font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors" data-i18n="card_1_title">100% Local e Privado</h3>
-          <p class="text-xs text-[#9aa0a6] leading-relaxed" data-i18n="card_1_desc">Zero telemetria ou envio de dados para a nuvem. Ficheiros e pesos de IA ficam isolados no teu computador.</p>
+          <p class="text-xs text-[#9aa0a6] leading-relaxed" data-i18n="card_1_desc">Zero telemetria ou envio de dados para a nuvem. Ficheiros e pesos de IA ficam isolados no teu PC.</p>
         </div>
 
         <div class="feature-card p-6 rounded-2xl border border-[#24262b] hover:border-emerald-500/50 relative overflow-hidden group">
@@ -292,7 +292,7 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- NOVO HUB HUGGING FACE GGUF ESTILO LM STUDIO (SPLIT-PANE PROFISSIONAL)     -->
+  <!-- NOVO HUB HUGGING FACE GGUF ESTILO LM STUDIO MODERNO                       -->
   <!-- ========================================================================= -->
   <section id="modelos" class="py-20 bg-[#0d0e10] border-y border-[#1a1c1e]">
     <div class="max-w-7xl mx-auto px-6">
@@ -312,9 +312,9 @@
       <div class="rounded-2xl bg-[#111215] border border-[#252830] shadow-2xl overflow-hidden flex flex-col min-h-[640px]">
         
         <!-- BARRA SUPERIOR DO STUDIO -->
-        <div class="p-4 bg-[#15171b] border-b border-[#23262d] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="p-4 bg-[#14161a] border-b border-[#23262d] flex flex-col sm:flex-row items-center justify-between gap-4">
           
-          <!-- BARRA DE PESQUISA -->
+          <!-- BARRA DE PESQUISA (Cor constante, sem flashes) -->
           <form id="hfSearchForm" class="w-full sm:w-96 relative">
             <i data-lucide="search" class="w-4 h-4 text-[#6e7175] absolute left-3.5 top-3"></i>
             <input 
@@ -322,11 +322,11 @@
               id="hfSearchInput" 
               placeholder="Pesquisar modelos no Hugging Face..." 
               data-i18n-placeholder="hf_input_ph"
-              class="w-full pl-10 pr-20 py-2 rounded-xl bg-[#0c0d0f] border border-[#2a2d34] text-xs text-white placeholder-[#55585e] focus:outline-none focus:border-cyan-400 transition-colors"
+              class="w-full pl-10 pr-24 py-2 rounded-xl bg-[#0c0d10] text-xs text-white placeholder-[#55585e] border border-[#262830] focus:outline-none focus:border-cyan-500 transition-colors"
             />
             <button 
               type="submit" 
-              class="absolute right-1.5 top-1.5 px-2.5 py-1 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black text-[11px] font-bold transition-all"
+              class="absolute right-1.5 top-1.5 px-3 py-1 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black text-[11px] font-bold transition-all shadow-[0_0_10px_rgba(6,182,212,0.25)]"
               data-i18n="hf_btn_search"
             >
               Pesquisar
@@ -339,6 +339,7 @@
             <button onclick="filterCategory('reasoning')" id="btnFilterReasoning" class="px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all">🧠 Raciocínio</button>
             <button onclick="filterCategory('slm')" id="btnFilterSLM" class="px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all">⚡ SLM Rápidos</button>
             <button onclick="filterCategory('coding')" id="btnFilterCoding" class="px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all">💻 Código</button>
+            <button onclick="filterCategory('vision')" id="btnFilterVision" class="px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all">👁️ Visão / Multimodal</button>
           </div>
 
         </div>
@@ -346,24 +347,29 @@
         <!-- CORPO PRINCIPAL (2 COLUNAS: LISTA + DETALHES) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 flex-1">
           
-          <!-- COLUNA ESQUERDA: LISTA DE MODELOS (ESTILO LM STUDIO) -->
-          <div class="lg:col-span-5 border-r border-[#202227] bg-[#0d0e11] p-3 overflow-y-auto max-h-[600px] space-y-2" id="hfModelList">
-            <!-- Os cards são inseridos via JavaScript -->
+          <!-- COLUNA ESQUERDA: LISTA DE MODELOS COM LOGOS DE MARCA -->
+          <div class="lg:col-span-5 border-r border-[#202227] bg-[#0c0d10] p-3 overflow-y-auto max-h-[620px] space-y-2" id="hfModelList">
+            <!-- Cards inseridos dinamicamente com SVG -->
           </div>
 
-          <!-- COLUNA DIREITA: PAINEL DE DETALHES, QUANTIZAÇÃO E DOWNLOAD -->
-          <div class="lg:col-span-7 bg-[#121317] p-6 flex flex-col justify-between overflow-y-auto max-h-[600px]" id="hfDetailPane">
+          <!-- COLUNA DIREITA: PAINEL DE DETALHES & DOWNLOAD -->
+          <div class="lg:col-span-7 bg-[#121317] p-6 flex flex-col justify-between overflow-y-auto max-h-[620px]" id="hfDetailPane">
             
             <div class="space-y-6">
               
               <!-- CABEÇALHO DO MODELO SELECIONADO -->
               <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#20232a]">
-                <div>
-                  <div class="flex items-center gap-2 flex-wrap mb-1">
-                    <h3 id="detModelName" class="text-xl font-bold text-white font-mono">Qwen2.5-7B-Instruct-GGUF</h3>
-                    <span id="detAuthorBadge" class="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-mono">Qwen</span>
+                <div class="flex items-start gap-3">
+                  <div id="detBrandIcon" class="w-10 h-10 rounded-xl bg-[#1a1c22] border border-[#2a2e38] flex items-center justify-center shrink-0 shadow-inner mt-0.5">
+                    <!-- SVG do Modelo -->
                   </div>
-                  <p id="detRepoPath" class="text-xs text-[#6e7175] font-mono">Qwen/Qwen2.5-7B-Instruct-GGUF</p>
+                  <div>
+                    <div class="flex items-center gap-2 flex-wrap mb-1">
+                      <h3 id="detModelName" class="text-lg sm:text-xl font-bold text-white font-mono">Qwen 2.5 7B Instruct</h3>
+                      <span id="detAuthorBadge" class="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-mono">Qwen</span>
+                    </div>
+                    <p id="detRepoPath" class="text-xs text-[#6e7175] font-mono">Qwen/Qwen2.5-7B-Instruct-GGUF</p>
+                  </div>
                 </div>
 
                 <a 
@@ -371,9 +377,9 @@
                   href="https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  class="px-3 py-1.5 rounded-xl bg-[#191b20] hover:bg-[#22252c] border border-[#2b2d34] text-[#cbd5e1] text-xs font-semibold flex items-center gap-1.5 transition-all shrink-0"
+                  class="px-3 py-1.5 rounded-xl bg-[#181a20] hover:bg-[#22252c] border border-[#2b2d34] text-[#cbd5e1] text-xs font-semibold flex items-center gap-1.5 transition-all shrink-0"
                 >
-                  <span class="text-xs">Ver no Hugging Face</span>
+                  <span class="text-xs">Hugging Face</span>
                   <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                 </a>
               </div>
@@ -383,13 +389,13 @@
                 <div class="p-2.5 rounded-xl bg-[#17191e] border border-[#242730]">
                   <span class="text-[10px] text-[#6e7175] block uppercase">Downloads</span>
                   <span id="detDownloads" class="font-bold text-white flex items-center gap-1">
-                    <i data-lucide="download" class="w-3 h-3 text-cyan-400"></i> 1.2M+
+                    <i data-lucide="download" class="w-3 h-3 text-cyan-400"></i> 1.8M+
                   </span>
                 </div>
                 <div class="p-2.5 rounded-xl bg-[#17191e] border border-[#242730]">
                   <span class="text-[10px] text-[#6e7175] block uppercase">Estrelas</span>
                   <span id="detLikes" class="font-bold text-amber-400 flex items-center gap-1">
-                    <i data-lucide="star" class="w-3 h-3 fill-amber-400"></i> 4.8k
+                    <i data-lucide="star" class="w-3 h-3 fill-amber-400"></i> 5.4k
                   </span>
                 </div>
                 <div class="p-2.5 rounded-xl bg-[#17191e] border border-[#242730]">
@@ -397,42 +403,51 @@
                   <span class="font-bold text-cyan-400">GGUF</span>
                 </div>
                 <div class="p-2.5 rounded-xl bg-[#17191e] border border-[#242730]">
-                  <span class="text-[10px] text-[#6e7175] block uppercase">Pipeline RAG</span>
+                  <span class="text-[10px] text-[#6e7175] block uppercase">Função RAG</span>
                   <span id="detRagSuitability" class="font-bold text-emerald-400">LLM Principal</span>
                 </div>
               </div>
 
               <!-- RESUMO DE CAPACIDADES -->
               <div class="p-3.5 rounded-xl bg-[#16181d] border border-[#242730] text-xs text-[#9aa0a6] leading-relaxed" id="detDescription">
-                Modelo altamente recomendado para análise documental e respostas com rigor factual no RAG Studio.
+                Excelente capacidade de raciocínio, escrita e seguimento de instruções estruturadas. Perfeito para o motor RAG principal.
               </div>
 
-              <!-- SELETOR DE QUANTIZAÇÕES & OPÇÃO DE DOWNLOAD (ESTILO LM STUDIO) -->
-              <div class="space-y-3">
+              <!-- NOVO SELETOR CUSTOMIZADO DE QUANTIZAÇÃO (MODERNO E REFINADO) -->
+              <div class="space-y-2 relative">
                 <div class="flex items-center justify-between">
                   <label class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5" data-i18n="hf_label_quant">
                     <i data-lucide="layers" class="w-3.5 h-3.5 text-cyan-400"></i>
-                    Opções de Quantização (GGUF)
+                    Opção de Quantização (GGUF)
                   </label>
-                  <span id="quantCount" class="text-[10px] text-[#6e7175] font-mono">0 ficheiros disponíveis</span>
+                  <span id="quantCount" class="text-[10px] text-[#6e7175] font-mono">A carregar...</span>
                 </div>
 
-                <!-- SELECT DROPDOWN -->
-                <div class="relative">
-                  <select 
-                    id="quantSelect" 
-                    class="w-full px-3.5 py-3 rounded-xl bg-[#0c0d10] border border-[#2b2d34] text-xs font-mono text-white focus:outline-none focus:border-cyan-400 appearance-none cursor-pointer pr-10"
-                    onchange="onQuantSelected()"
-                  >
-                    <option value="">A carregar quantizações...</option>
-                  </select>
-                  <i data-lucide="chevron-down" class="w-4 h-4 text-[#6e7175] absolute right-3 top-3.5 pointer-events-none"></i>
+                <!-- Botão Gatilho do Dropdown Moderno -->
+                <button 
+                  id="customQuantDropdownBtn" 
+                  type="button" 
+                  class="w-full px-4 py-3 rounded-xl bg-[#0b0c0f] border border-[#282b33] hover:border-cyan-500/50 text-xs font-mono text-left text-white flex items-center justify-between transition-all group"
+                >
+                  <div class="flex items-center gap-2 truncate">
+                    <span id="selectedQuantBadge" class="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 text-[10px] font-bold">Q4_K_M</span>
+                    <span id="selectedQuantLabel" class="truncate text-[#cbd5e1]">A carregar ficheiros...</span>
+                  </div>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-[#6e7175] group-hover:text-cyan-400 transition-colors shrink-0 ml-2"></i>
+                </button>
+
+                <!-- Menu Flutuante de Quantizações -->
+                <div 
+                  id="customQuantMenu" 
+                  class="hidden absolute left-0 right-0 top-full mt-1.5 max-h-56 rounded-xl bg-[#0e1014] border border-[#2a2d36] shadow-2xl py-1.5 z-40 overflow-y-auto space-y-1 p-1.5"
+                >
+                  <!-- Inserido dinamicamente via JS -->
                 </div>
 
-                <!-- DIAGNÓSTICO DE COMPATIBILIDADE DE HARDWARE -->
-                <div id="hardwareBadge" class="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs flex items-center gap-2">
+                <!-- DIAGNÓSTICO DE HARDWARE -->
+                <div id="hardwareBadge" class="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs flex items-center gap-2 mt-2">
                   <i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 shrink-0"></i>
-                  <span id="hardwareText">Excelente equilíbrio entre velocidade e precisão para GPUs de 8GB VRAM.</span>
+                  <span id="hardwareText">Excelente equilíbrio entre velocidade e precisão para GPUs de 6GB a 8GB VRAM.</span>
                 </div>
               </div>
 
@@ -448,7 +463,7 @@
                 class="w-full sm:flex-1 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(6,182,212,0.35)] active:scale-95"
               >
                 <i data-lucide="download" class="w-4 h-4 stroke-[2.5]"></i>
-                <span id="downloadBtnText">Descarregar GGUF</span>
+                <span id="downloadBtnText">Descarregar Q4_K_M (4.36 GB)</span>
               </a>
 
               <button 
@@ -464,6 +479,13 @@
 
           </div>
 
+        </div>
+
+        <!-- AVISO LEGAL DE MARCAS REGISTADAS (DISCLAIMER) -->
+        <div class="p-3 bg-[#0a0b0d] border-t border-[#1d1f25] text-center text-[11px] text-[#636873] px-6">
+          <p data-i18n="hf_disclaimer">
+            ⚖️ <strong>Aviso Legal de Marcas:</strong> Todas as marcas comerciais, logótipos e nomes de modelos (Google Gemma, Meta Llama, DeepSeek, Microsoft Phi, Alibaba Qwen, Mistral AI, Hugging Face) são propriedade exclusiva dos respetivos detentores. O RAG Studio é um software independente de código aberto e referencia estas marcas apenas para fins de identificação e acesso a pesos públicos.
+          </p>
         </div>
 
       </div>
@@ -628,7 +650,7 @@
   </footer>
 
   <!-- ========================================================================= -->
-  <!-- JAVASCRIPT: MOTOR COMPLETO DE IDIOMAS E HUB HUGGING FACE ESTILO LM STUDIO -->
+  <!-- JAVASCRIPT: MOTOR COMPLETO DE LOGOS SVG, DROPDOWN MODERNO E IDIOMAS      -->
   <!-- ========================================================================= -->
   <script>
     const translations = {
@@ -670,8 +692,9 @@
         hf_hub_desc: "Explora modelos de topo, analisa a compatibilidade do hardware e descarrega as quantizações .gguf diretamente dos servidores oficiais da Hugging Face.",
         hf_input_ph: "Pesquisar modelos no Hugging Face...",
         hf_btn_search: "Pesquisar",
-        hf_label_quant: "Opções de Quantização (GGUF)",
+        hf_label_quant: "Opção de Quantização (GGUF)",
         hf_btn_copy: "Copiar URL",
+        hf_disclaimer: "⚖️ Aviso Legal de Marcas: Todas as marcas comerciais, logótipos e nomes de modelos (Google Gemma, Meta Llama, DeepSeek, Microsoft Phi, Alibaba Qwen, Mistral AI, Hugging Face) são propriedade exclusiva dos respetivos detentores. O RAG Studio é um software independente de código aberto e referencia estas marcas apenas para fins de identificação e acesso a pesos públicos.",
         dl_title: "Transferir RAG Studio",
         dl_desc: "Compatível com Windows 10 e Windows 11 (64-bit). Escolhe a tua versão preferida:",
         dl_recommended: "RECOMENDADO",
@@ -731,8 +754,9 @@
         hf_hub_desc: "Discover top models, verify hardware compatibility, and download .gguf quantizations directly from Hugging Face servers.",
         hf_input_ph: "Search models on Hugging Face...",
         hf_btn_search: "Search",
-        hf_label_quant: "Quantization Options (GGUF)",
+        hf_label_quant: "Quantization Option (GGUF)",
         hf_btn_copy: "Copy URL",
+        hf_disclaimer: "⚖️ Trademark Notice: All trademarks, logos and model names (Google Gemma, Meta Llama, DeepSeek, Microsoft Phi, Alibaba Qwen, Mistral AI, Hugging Face) belong to their respective owners. RAG Studio is an independent open-source tool and references these brands solely for identification and public weights access.",
         dl_title: "Download RAG Studio",
         dl_desc: "Compatible with Windows 10 and Windows 11 (64-bit). Choose your preferred format:",
         dl_recommended: "RECOMMENDED",
@@ -754,13 +778,13 @@
         btn_kofi: "Support on Ko-fi (Card / Apple Pay / PayPal)",
         footer_credits: "© 2026 RAG Studio • Built by Miguel with absolute focus on local privacy."
       },
-      es: { nav_features: "Funcionalidades", nav_dual_ai: "Motor Dual-IA", nav_models: "Descargar Modelos IA", nav_feedback: "Sugerencias", btn_support: "Apoyar", hero_badge: "100% Local • Cero Telemetría • Aceleración GPU & NPU", hero_title_1: "Inteligencia Artificial Local y RAG Privado de", hero_title_highlight: " Alto Rendimiento", hero_subtitle: "Ejecuta modelos GGUF avanzados localmente y conversa con tus documentos con total privacidad.", btn_hero_app: "Descargar RAG Studio", btn_hero_models: "Descarga Modelos (gguf)", hf_hub_badge: "HUB GGUF", hf_hub_title: "Descargar Modelos de IA", hf_hub_desc: "Explora modelos y descarga quantizaciones .gguf directamente desde Hugging Face.", hf_input_ph: "Buscar modelos en Hugging Face...", hf_btn_search: "Buscar", hf_label_quant: "Opciones de Quantización (GGUF)", hf_btn_copy: "Copiar URL", dl_title: "Descargar RAG Studio", dl_desc: "Compatible con Windows 10 y Windows 11 (64-bit):", dl_recommended: "RECOMENDADO", dl_portable: "PORTÁTIL", dl_installer_title: "Instalador Windows (.exe)", dl_installer_desc: "Instalación guiada con accesos directos automáticos.", btn_dl_installer: "Descargar Instalador", dl_portable_title: "Versión Portátil (.zip)", dl_portable_desc: "Sin instalación. Descomprime y ejecuta directamente.", btn_dl_portable: "Descargar ZIP Portátil", feedback_title: "Sugerencias y Mejoras", feedback_desc: "Envía un mensaje privado directamente al desarrollador.", form_name_label: "Tu Nombre (Opcional)", form_email_label: "Email (Opcional)", form_msg_label: "Tu Sugerencia *", btn_send_feedback: "Enviar Sugerencia", support_title: "Apoyar el Proyecto", support_desc: "RAG Studio es gratuito y open-source.", btn_kofi: "Apoyar en Ko-fi", footer_credits: "© 2026 RAG Studio • Creado por Miguel." },
-      fr: { nav_features: "Fonctionnalités", nav_dual_ai: "Moteur Dual-IA", nav_models: "Télécharger Modèles IA", nav_feedback: "Suggestions", btn_support: "Soutenir", hero_badge: "100% Local • Zéro Télémétrie • Accélération GPU & NPU", hero_title_1: "IA Locale et RAG Privé de", hero_title_highlight: " Haute Performance", hero_subtitle: "Exécutez des modèles GGUF sur votre matériel en toute confidentialité.", btn_hero_app: "Télécharger RAG Studio", btn_hero_models: "Télécharge Modèles (gguf)", hf_hub_badge: "HUB MODÈLES GGUF", hf_hub_title: "Télécharger des Modèles IA", hf_hub_desc: "Explorez et téléchargez des modèles .gguf directement depuis Hugging Face.", hf_input_ph: "Rechercher des modèles...", hf_btn_search: "Rechercher", hf_label_quant: "Options de Quantification (GGUF)", hf_btn_copy: "Copier URL", dl_title: "Télécharger RAG Studio", dl_desc: "Compatible Windows 10 et 11 (64-bit):", dl_recommended: "RECOMMANDÉ", dl_portable: "PORTABLE", dl_installer_title: "Installateur Windows (.exe)", dl_installer_desc: "Installation guidée avec raccourcis.", btn_dl_installer: "Télécharger l'Installateur", dl_portable_title: "Version Portable (.zip)", dl_portable_desc: "Sans installation. Décompressez et lancez.", btn_dl_portable: "Télécharger le ZIP", feedback_title: "Suggestions", feedback_desc: "Envoyez un message privé au développeur.", form_name_label: "Nom (Facultatif)", form_email_label: "Email (Facultatif)", form_msg_label: "Suggestion *", btn_send_feedback: "Envoyer", support_title: "Soutenir le Projet", support_desc: "RAG Studio est gratuit et open-source.", btn_kofi: "Soutenir sur Ko-fi", footer_credits: "© 2026 RAG Studio • Développé par Miguel." },
-      de: { nav_features: "Funktionen", nav_dual_ai: "Dual-KI-Engine", nav_models: "KI-Modelle Herunterladen", nav_feedback: "Feedback", btn_support: "Unterstützen", hero_badge: "100% Lokal • Keine Telemetrie • GPU- & NPU-Beschleunigt", hero_title_1: "Lokale KI und Privates RAG mit", hero_title_highlight: " Höchstleistung", hero_subtitle: "Führen Sie GGUF-Modelle lokal aus mit absolutem Datenschutz.", btn_hero_app: "RAG Studio Herunterladen", btn_hero_models: "Modelle Herunterladen (gguf)", hf_hub_badge: "GGUF MODELL-HUB", hf_hub_title: "Künstliche Intelligenz Modelle Herunterladen", hf_hub_desc: "Entdecken Sie GGUF-Modelle und laden Sie diese direkt herunter.", hf_input_ph: "Modelle suchen...", hf_btn_search: "Suchen", hf_label_quant: "Quantisierungsoptionen (GGUF)", hf_btn_copy: "URL Kopieren", dl_title: "RAG Studio Herunterladen", dl_desc: "Kompatibel mit Windows 10 & 11 (64-Bit):", dl_recommended: "EMPFOHLEN", dl_portable: "PORTABEL", dl_installer_title: "Windows-Installer (.exe)", dl_installer_desc: "Geführte Installation mit Verknüpfungen.", btn_dl_installer: "Installer Herunterladen", dl_portable_title: "Portable Version (.zip)", dl_portable_desc: "Keine Installation nötig.", btn_dl_portable: "Portable ZIP Herunterladen", feedback_title: "Feedback", feedback_desc: "Senden Sie Feedback direkt an den Entwickler.", form_name_label: "Name (Optional)", form_email_label: "E-Mail (Optional)", form_msg_label: "Vorschlag *", btn_send_feedback: "Senden", support_title: "Projekt Unterstützen", support_desc: "RAG Studio ist kostenlos und Open Source.", btn_kofi: "Auf Ko-fi Unterstützen", footer_credits: "© 2026 RAG Studio • Entwickelt von Miguel." },
-      it: { nav_features: "Funzionalità", nav_dual_ai: "Motore Dual-IA", nav_models: "Scarica Modelli IA", nav_feedback: "Suggerimenti", btn_support: "Supporta", hero_badge: "100% Locale • Zero Telemetria • Accelerazione GPU & NPU", hero_title_1: "Intelligenza Artificiale Locale e RAG Privato ad", hero_title_highlight: " Alte Prestazioni", hero_subtitle: "Esegui modelli GGUF avanzati sul tuo hardware in totale privacy.", btn_hero_app: "Scarica RAG Studio", btn_hero_models: "Scarica Modelli (gguf)", hf_hub_badge: "HUB GGUF", hf_hub_title: "Scarica Modelli di IA", hf_hub_desc: "Esplora modelli GGUF e scaricali direttamente.", hf_input_ph: "Cerca modelli...", hf_btn_search: "Cerca", hf_label_quant: "Opzioni di Quantizzazione (GGUF)", hf_btn_copy: "Copia URL", dl_title: "Scarica RAG Studio", dl_desc: "Compatibile con Windows 10 e 11 (64-bit):", dl_recommended: "CONSIGLIATO", dl_portable: "PORTATILE", dl_installer_title: "Installer Windows (.exe)", dl_installer_desc: "Installazione rapida con icone.", btn_dl_installer: "Scarica Installer", dl_portable_title: "Versione Portatile (.zip)", dl_portable_desc: "Nessuna installazione.", btn_dl_portable: "Scarica ZIP", feedback_title: "Suggerimenti", feedback_desc: "Invia un messaggio al creatore.", form_name_label: "Nome (Opzionale)", form_email_label: "Email (Opzionale)", form_msg_label: "Suggerimento *", btn_send_feedback: "Invia", support_title: "Supporta il Progetto", support_desc: "RAG Studio è gratuito e open-source.", btn_kofi: "Supporta su Ko-fi", footer_credits: "© 2026 RAG Studio • Sviluppato da Miguel." },
-      zh: { nav_features: "核心功能", nav_dual_ai: "双AI引擎", nav_models: "下载 AI 模型", nav_feedback: "建议反馈", btn_support: "赞助支持", hero_badge: "100% 本地运行 • 零遥测监控 • GPU & NPU 硬件加速", hero_title_1: "高性能本地人工智能与私密 RAG 知识库", hero_title_highlight: " 平台", hero_subtitle: "直接在你的电脑硬件上运行前沿 GGUF 模型，与本地文档进行极致隐私的交互。", btn_hero_app: "下载 RAG Studio", btn_hero_models: "下载模型 (gguf)", hf_hub_badge: "GGUF 模型中心", hf_hub_title: "下载人工智能开源模型", hf_hub_desc: "探索顶级开源模型，直接高速下载 .gguf 量化权重到您的电脑。", hf_input_ph: "在 Hugging Face 上搜索模型...", hf_btn_search: "搜索", hf_label_quant: "量化规格选择 (GGUF)", hf_btn_copy: "复制下载链接", dl_title: "下载 RAG Studio", dl_desc: "兼容 Windows 10 与 11 (64位):", dl_recommended: "官方推荐", dl_portable: "便携免安装", dl_installer_title: "Windows 安装程序 (.exe)", dl_installer_desc: "快速向导安装。", btn_dl_installer: "下载安装程序", dl_portable_title: "便携版 (.zip)", dl_portable_desc: "解压即用。", btn_dl_portable: "下载便携版 ZIP", feedback_title: "意见反馈", feedback_desc: "向开发者发送私密反馈信息。", form_name_label: "您的称呼", form_email_label: "联系邮箱", form_msg_label: "建议内容 *", btn_send_feedback: "发送反馈", support_title: "赞助支持", support_desc: "RAG Studio 是免费开源项目。", btn_kofi: "在 Ko-fi 上支持", footer_credits: "© 2026 RAG Studio • Miguel 独立开发。" },
-      ja: { nav_features: "機能", nav_dual_ai: "Dual-AIエンジン", nav_models: "AIモデルをダウンロード", nav_feedback: "フィードバック", btn_support: "支援する", hero_badge: "100% ローカル • テレメトリ一切なし • GPU & NPU 高速化", hero_title_1: "超高速ローカル AI & プライベート RAG", hero_title_highlight: " Studio", hero_subtitle: "クラウドを介さず PC 上で GGUF モデルを実行しドキュメントと対話。", btn_hero_app: "RAG Studio をダウンロード", btn_hero_models: "モデルをダウンロード (gguf)", hf_hub_badge: "GGUF モデルハブ", hf_hub_title: "AIモデルをダウンロード", hf_hub_desc: "Hugging Face から直接 .gguf 量子化ファイルを高速ダウンロード。", hf_input_ph: "モデルを検索...", hf_btn_search: "検索", hf_label_quant: "量子化オプション (GGUF)", hf_btn_copy: "URLをコピー", dl_title: "RAG Studio をダウンロード", dl_desc: "Windows 10 / 11 (64-bit) 対応:", dl_recommended: "推奨", dl_portable: "ポータブル版", dl_installer_title: "インストーラー (.exe)", dl_installer_desc: "自動ショートカット作成。", btn_dl_installer: "ダウンロード", dl_portable_title: "ポータブル版 (.zip)", dl_portable_desc: "解凍してすぐ実行可能。", btn_dl_portable: "ZIP をダウンロード", feedback_title: "フィードバック", feedback_desc: "開発者へメッセージを送信。", form_name_label: "お名前", form_email_label: "メール", form_msg_label: "ご意見 *", btn_send_feedback: "送信", support_title: "開発を支援", support_desc: "オープンソースプロジェクトです。", btn_kofi: "Ko-fi で支援", footer_credits: "© 2026 RAG Studio • Miguel 開発。" },
-      ko: { nav_features: "주요 기능", nav_dual_ai: "Dual-AI 엔진", nav_models: "AI 모델 다운로드", nav_feedback: "피드백", btn_support: "후원하기", hero_badge: "100% 로컬 구동 • 텔레메트리 제로 • GPU 및 NPU 가속", hero_title_1: "초고속 로컬 AI & 프라이빗 RAG", hero_title_highlight: " Studio", hero_subtitle: "최첨단 GGUF 모델을 PC에서 직접 실행하고 완벽한 프라이버시 속에서 대화하세요.", btn_hero_app: "RAG Studio 다운로드", btn_hero_models: "모델 다운로드 (gguf)", hf_hub_badge: "GGUF 모델 허브", hf_hub_title: "인공지능 모델 다운로드", hf_hub_desc: "Hugging Face 공식 서버에서 .gguf 양자화 모델을 직접 다운로드하세요.", hf_input_ph: "Hugging Face 모델 검색...", hf_btn_search: "검색", hf_label_quant: "양자화 옵션 선택 (GGUF)", hf_btn_copy: "URL 복사", dl_title: "RAG Studio 다운로드", dl_desc: "Windows 10 및 11 (64비트) 호환:", dl_recommended: "권장 버전", dl_portable: "포터블 무설치", dl_installer_title: "설치 프로그램 (.exe)", dl_installer_desc: "빠른 설치 마법사.", btn_dl_installer: "설치 파일 다운로드", dl_portable_title: "포터블 압축 파일 (.zip)", dl_portable_desc: "압축 해제 후 즉시 실행.", btn_dl_portable: "ZIP 다운로드", feedback_title: "피드백", feedback_desc: "개발자에게 비공개 메시지 전달.", form_name_label: "이름", form_email_label: "이메일", form_msg_label: "제안 내용 *", btn_send_feedback: "피드백 전송", support_title: "프로젝트 후원", support_desc: "무료 오픈소스 프로젝트입니다.", btn_kofi: "Ko-fi에서 후원", footer_credits: "© 2026 RAG Studio • Miguel 개발." }
+      es: { nav_features: "Funcionalidades", nav_dual_ai: "Motor Dual-IA", nav_models: "Descargar Modelos IA", nav_feedback: "Sugerencias", btn_support: "Apoyar", hero_badge: "100% Local • Cero Telemetría • Aceleración GPU & NPU", hero_title_1: "Inteligencia Artificial Local y RAG Privado de", hero_title_highlight: " Alto Rendimiento", hero_subtitle: "Ejecuta modelos GGUF avanzados localmente y conversa con tus documentos con total privacidad.", btn_hero_app: "Descargar RAG Studio", btn_hero_models: "Descarga Modelos (gguf)", hf_hub_badge: "HUB GGUF", hf_hub_title: "Descargar Modelos de IA", hf_hub_desc: "Explora modelos y descarga quantizaciones .gguf directamente desde Hugging Face.", hf_input_ph: "Buscar modelos en Hugging Face...", hf_btn_search: "Buscar", hf_label_quant: "Opción de Quantización (GGUF)", hf_btn_copy: "Copiar URL", hf_disclaimer: "⚖️ Aviso de Marcas: Todas las marcas comerciales y nombres de modelos pertenecen a sus respectivos propietarios. RAG Studio es independiente.", dl_title: "Descargar RAG Studio", dl_desc: "Compatible con Windows 10 y Windows 11 (64-bit):", dl_recommended: "RECOMENDADO", dl_portable: "PORTÁTIL", dl_installer_title: "Instalador Windows (.exe)", dl_installer_desc: "Instalación guiada.", btn_dl_installer: "Descargar Instalador", dl_portable_title: "Versión Portátil (.zip)", dl_portable_desc: "Sin instalación.", btn_dl_portable: "Descargar ZIP Portátil", feedback_title: "Sugerencias", feedback_desc: "Envía un mensaje privado al desarrollador.", form_name_label: "Nombre", form_email_label: "Email", form_msg_label: "Sugerencia *", btn_send_feedback: "Enviar", support_title: "Apoyar el Proyecto", support_desc: "RAG Studio es gratuito y open-source.", btn_kofi: "Apoyar en Ko-fi", footer_credits: "© 2026 RAG Studio • Creado por Miguel." },
+      fr: { nav_features: "Fonctionnalités", nav_dual_ai: "Moteur Dual-IA", nav_models: "Télécharger Modèles IA", nav_feedback: "Suggestions", btn_support: "Soutenir", hero_badge: "100% Local • Zéro Télémétrie • Accélération GPU & NPU", hero_title_1: "IA Locale et RAG Privé de", hero_title_highlight: " Haute Performance", hero_subtitle: "Exécutez des modèles GGUF sur votre matériel en toute confidentialité.", btn_hero_app: "Télécharger RAG Studio", btn_hero_models: "Télécharge Modèles (gguf)", hf_hub_badge: "HUB MODÈLES GGUF", hf_hub_title: "Télécharger des Modèles IA", hf_hub_desc: "Explorez et téléchargez des modèles .gguf directement depuis Hugging Face.", hf_input_ph: "Rechercher des modèles...", hf_btn_search: "Rechercher", hf_label_quant: "Option de Quantification (GGUF)", hf_btn_copy: "Copier URL", hf_disclaimer: "⚖️ Mentions de Marques : Toutes les marques déposées appartiennent à leurs propriétaires respectifs. RAG Studio est un outil open-source indépendant.", dl_title: "Télécharger RAG Studio", dl_desc: "Compatible Windows 10 et 11 (64-bit):", dl_recommended: "RECOMMANDÉ", dl_portable: "PORTABLE", dl_installer_title: "Installateur Windows (.exe)", dl_installer_desc: "Installation guidée.", btn_dl_installer: "Télécharger l'Installateur", dl_portable_title: "Version Portable (.zip)", dl_portable_desc: "Sans installation.", btn_dl_portable: "Télécharger le ZIP", feedback_title: "Suggestions", feedback_desc: "Envoyez un message au développeur.", form_name_label: "Nom", form_email_label: "Email", form_msg_label: "Suggestion *", btn_send_feedback: "Envoyer", support_title: "Soutenir le Projet", support_desc: "RAG Studio est gratuit.", btn_kofi: "Soutenir sur Ko-fi", footer_credits: "© 2026 RAG Studio • Développé par Miguel." },
+      de: { nav_features: "Funktionen", nav_dual_ai: "Dual-KI-Engine", nav_models: "KI-Modelle Herunterladen", nav_feedback: "Feedback", btn_support: "Unterstützen", hero_badge: "100% Lokal • Keine Telemetrie • GPU- & NPU-Beschleunigt", hero_title_1: "Lokale KI und Privates RAG mit", hero_title_highlight: " Höchstleistung", hero_subtitle: "Führen Sie GGUF-Modelle lokal aus mit absolutem Datenschutz.", btn_hero_app: "RAG Studio Herunterladen", btn_hero_models: "Modelle Herunterladen (gguf)", hf_hub_badge: "GGUF MODELL-HUB", hf_hub_title: "KI-Modelle Herunterladen", hf_hub_desc: "GGUF-Modelle direkt von Hugging Face herunterladen.", hf_input_ph: "Modelle suchen...", hf_btn_search: "Suchen", hf_label_quant: "Quantisierungsoption (GGUF)", hf_btn_copy: "URL Kopieren", hf_disclaimer: "⚖️ Markenhinweis: Alle Marken und Modellnamen sind Eigentum ihrer jeweiligen Inhaber.", dl_title: "RAG Studio Herunterladen", dl_desc: "Kompatibel mit Windows 10 & 11:", dl_recommended: "EMPFOHLEN", dl_portable: "PORTABEL", dl_installer_title: "Windows-Installer (.exe)", dl_installer_desc: "Geführte Installation.", btn_dl_installer: "Installer Herunterladen", dl_portable_title: "Portable Version (.zip)", dl_portable_desc: "Keine Installation nötig.", btn_dl_portable: "Portable ZIP Herunterladen", feedback_title: "Feedback", feedback_desc: "Senden Sie Feedback direkt an den Entwickler.", form_name_label: "Name", form_email_label: "E-Mail", form_msg_label: "Vorschlag *", btn_send_feedback: "Senden", support_title: "Projekt Unterstützen", support_desc: "RAG Studio ist kostenlos.", btn_kofi: "Auf Ko-fi Unterstützen", footer_credits: "© 2026 RAG Studio • Entwickelt von Miguel." },
+      it: { nav_features: "Funzionalità", nav_dual_ai: "Motore Dual-IA", nav_models: "Scarica Modelli IA", nav_feedback: "Suggerimenti", btn_support: "Supporta", hero_badge: "100% Locale • Zero Telemetria • Accelerazione GPU & NPU", hero_title_1: "Intelligenza Artificiale Locale e RAG Privato ad", hero_title_highlight: " Alte Prestazioni", hero_subtitle: "Esegui modelli GGUF avanzati in totale privacy.", btn_hero_app: "Scarica RAG Studio", btn_hero_models: "Scarica Modelli (gguf)", hf_hub_badge: "HUB GGUF", hf_hub_title: "Scarica Modelli di IA", hf_hub_desc: "Esplora modelli GGUF e scaricali direttamente.", hf_input_ph: "Cerca modelli...", hf_btn_search: "Cerca", hf_label_quant: "Opzione di Quantizzazione (GGUF)", hf_btn_copy: "Copia URL", hf_disclaimer: "⚖️ Marchi Registrati: Tutti i marchi appartengono ai rispettivi proprietari.", dl_title: "Scarica RAG Studio", dl_desc: "Compatibile con Windows 10 e 11:", dl_recommended: "CONSIGLIATO", dl_portable: "PORTATILE", dl_installer_title: "Installer Windows (.exe)", dl_installer_desc: "Installazione rapida.", btn_dl_installer: "Scarica Installer", dl_portable_title: "Versione Portatile (.zip)", dl_portable_desc: "Nessuna installazione.", btn_dl_portable: "Scarica ZIP", feedback_title: "Suggerimenti", feedback_desc: "Invia un messaggio al creatore.", form_name_label: "Nome", form_email_label: "Email", form_msg_label: "Suggerimento *", btn_send_feedback: "Invia", support_title: "Supporta il Progetto", support_desc: "RAG Studio è gratuito.", btn_kofi: "Supporta su Ko-fi", footer_credits: "© 2026 RAG Studio • Sviluppato da Miguel." },
+      zh: { nav_features: "核心功能", nav_dual_ai: "双AI引擎", nav_models: "下载 AI 模型", nav_feedback: "建议反馈", btn_support: "赞助支持", hero_badge: "100% 本地运行 • 零遥测监控 • GPU & NPU 硬件加速", hero_title_1: "高性能本地人工智能与私密 RAG 知识库", hero_title_highlight: " 平台", hero_subtitle: "直接在硬件上运行前沿 GGUF 模型，进行极致隐私的文档交互。", btn_hero_app: "下载 RAG Studio", btn_hero_models: "下载模型 (gguf)", hf_hub_badge: "GGUF 模型中心", hf_hub_title: "下载人工智能开源模型", hf_hub_desc: "探索顶级开源模型，直接高速下载 .gguf 量化权重到您的电脑。", hf_input_ph: "在 Hugging Face 上搜索模型...", hf_btn_search: "搜索", hf_label_quant: "量化规格选择 (GGUF)", hf_btn_copy: "复制下载链接", hf_disclaimer: "⚖️ 商标声明：所有商标、徽标和模型名称均为其各自所有者的财产。RAG Studio 为独立开源工具。", dl_title: "下载 RAG Studio", dl_desc: "兼容 Windows 10 与 11 (64位):", dl_recommended: "官方推荐", dl_portable: "便携免安装", dl_installer_title: "Windows 安装程序 (.exe)", dl_installer_desc: "快速向导安装。", btn_dl_installer: "下载安装程序", dl_portable_title: "便携版 (.zip)", dl_portable_desc: "解压即用。", btn_dl_portable: "下载便携版 ZIP", feedback_title: "意见反馈", feedback_desc: "向开发者发送私密反馈信息。", form_name_label: "您的称呼", form_email_label: "联系邮箱", form_msg_label: "建议内容 *", btn_send_feedback: "发送反馈", support_title: "赞助支持", support_desc: "RAG Studio 是免费开源项目。", btn_kofi: "在 Ko-fi 上支持", footer_credits: "© 2026 RAG Studio • Miguel 独立开发。" },
+      ja: { nav_features: "機能", nav_dual_ai: "Dual-AIエンジン", nav_models: "AIモデルをダウンロード", nav_feedback: "フィードバック", btn_support: "支援する", hero_badge: "100% ローカル • テレメトリ一切なし • GPU & NPU 高速化", hero_title_1: "超高速ローカル AI & プライベート RAG", hero_title_highlight: " Studio", hero_subtitle: "クラウドを介さず PC 上で GGUF モデルを実行しドキュメントと対話。", btn_hero_app: "RAG Studio をダウンロード", btn_hero_models: "モデルをダウンロード (gguf)", hf_hub_badge: "GGUF モデルハブ", hf_hub_title: "AIモデルをダウンロード", hf_hub_desc: "Hugging Face から直接 .gguf 量子化ファイルを高速ダウンロード。", hf_input_ph: "モデルを検索...", hf_btn_search: "検索", hf_label_quant: "量子化オプション (GGUF)", hf_btn_copy: "URLをコピー", hf_disclaimer: "⚖️ 商標に関する通知：すべての商標およびモデル名はそれぞれの所有者に帰属します。", dl_title: "RAG Studio をダウンロード", dl_desc: "Windows 10 / 11 対応:", dl_recommended: "推奨", dl_portable: "ポータブル版", dl_installer_title: "インストーラー (.exe)", dl_installer_desc: "自動ショートカット作成。", btn_dl_installer: "ダウンロード", dl_portable_title: "ポータブル版 (.zip)", dl_portable_desc: "解凍してすぐ実行可能。", btn_dl_portable: "ZIP をダウンロード", feedback_title: "フィードバック", feedback_desc: "開発者へメッセージを送信。", form_name_label: "お名前", form_email_label: "メール", form_msg_label: "ご意見 *", btn_send_feedback: "送信", support_title: "開発を支援", support_desc: "オープンソースプロジェクトです。", btn_kofi: "Ko-fi で支援", footer_credits: "© 2026 RAG Studio • Miguel 開発。" },
+      ko: { nav_features: "주요 기능", nav_dual_ai: "Dual-AI 엔진", nav_models: "AI 모델 다운로드", nav_feedback: "피드백", btn_support: "후원하기", hero_badge: "100% 로컬 구동 • 텔레메트리 제로 • GPU 및 NPU 가속", hero_title_1: "초고속 로컬 AI & 프라이빗 RAG", hero_title_highlight: " Studio", hero_subtitle: "최첨단 GGUF 모델을 PC에서 직접 실행하고 완벽한 프라이버시 속에서 대화하세요.", btn_hero_app: "RAG Studio 다운로드", btn_hero_models: "모델 다운로드 (gguf)", hf_hub_badge: "GGUF 모델 허브", hf_hub_title: "인공지능 모델 다운로드", hf_hub_desc: "Hugging Face 공식 서버에서 .gguf 양자화 모델을 직접 다운로드하세요.", hf_input_ph: "Hugging Face 모델 검색...", hf_btn_search: "검색", hf_label_quant: "양자화 옵션 선택 (GGUF)", hf_btn_copy: "URL 복사", hf_disclaimer: "⚖️ 상표권 고지: 모든 상표 및 모델명은 해당 소유자의 자산입니다. RAG Studio는 독립적인 오픈소스 소프트웨어입니다.", dl_title: "RAG Studio 다운로드", dl_desc: "Windows 10 및 11 호환:", dl_recommended: "권장 버전", dl_portable: "포터블 무설치", dl_installer_title: "설치 프로그램 (.exe)", dl_installer_desc: "빠른 설치 마법사.", btn_dl_installer: "설치 파일 다운로드", dl_portable_title: "포터블 압축 파일 (.zip)", dl_portable_desc: "압축 해제 후 즉시 실행.", btn_dl_portable: "ZIP 다운로드", feedback_title: "피드백", feedback_desc: "개발자에게 비공개 메시지 전달.", form_name_label: "이름", form_email_label: "이메일", form_msg_label: "제안 내용 *", btn_send_feedback: "피드백 전송", support_title: "프로젝트 후원", support_desc: "무료 오픈소스 프로젝트입니다.", btn_kofi: "Ko-fi에서 후원", footer_credits: "© 2026 RAG Studio • Miguel 개발." }
     };
 
     function changeLanguage(lang) {
@@ -787,86 +811,200 @@
     document.addEventListener('click', () => { langMenu.classList.add('hidden'); });
 
     // =========================================================================
-    // BASE DE MODELOS CURADOS + PESQUISA GLOBAL HUGGING FACE
+    // LOGÓTIPOS OFICIAIS DAS MARCAS EM VETOR (SVG)
     // =========================================================================
-    
+
+    function getBrandSVG(brandName, repoId = "") {
+      const b = (brandName + " " + repoId).toLowerCase();
+
+      // Google (Gemma)
+      if (b.includes("google") || b.includes("gemma")) {
+        return `<svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>`;
+      }
+
+      // Meta (Llama)
+      if (b.includes("meta") || b.includes("llama")) {
+        return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="#0668E1"><path d="M12 1.95c-5.52 0-10 4.48-10 10 0 4.69 3.23 8.63 7.6 9.68v-6.9H7.1v-2.78h2.5V9.82c0-2.47 1.47-3.83 3.72-3.83 1.08 0 2.2.19 2.2.19v2.42h-1.24c-1.22 0-1.6.76-1.6 1.54v1.8h2.72l-.43 2.78h-2.29V21.63c4.37-1.05 7.6-4.99 7.6-9.68 0-5.52-4.48-10-10-10z"/></svg>`;
+      }
+
+      // DeepSeek (Baleia Azul)
+      if (b.includes("deepseek")) {
+        return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="#3B82F6"><path d="M2.5 13c1.5 4.5 6 7.5 11 7.5 4.5 0 8.5-2.5 10-6.5-1.2.8-2.8 1.2-4.5 1-2.5-.3-4.5-2.1-5.2-4.5-.4-1.3-.3-2.6.2-3.8-3.5.5-6.5 2.8-8 6.3h-3.5z"/><circle cx="17.5" cy="11.5" r="1.5" fill="#93C5FD"/></svg>`;
+      }
+
+      // Microsoft (Phi)
+      if (b.includes("microsoft") || b.includes("phi")) {
+        return `<svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#F25022" d="M1 1h10v10H1z"/><path fill="#7FBA00" d="M13 1h10v10H13z"/><path fill="#00A4EF" d="M1 13h10v10H1z"/><path fill="#FFB900" d="M13 13h10v10H13z"/></svg>`;
+      }
+
+      // Qwen / Alibaba
+      if (b.includes("qwen") || b.includes("alibaba")) {
+        return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="#6366F1"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`;
+      }
+
+      // Mistral AI
+      if (b.includes("mistral") || b.includes("mixtral") || b.includes("codestral")) {
+        return `<svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#FF7000" d="M3 3h4v4H3zm14 0h4v4h-4zm-7 7h4v4h-4zm-7 7h4v4H3zm14 0h4v4h-4z"/></svg>`;
+      }
+
+      // Hugging Face Default (🤗)
+      return `<span class="text-lg">🤗</span>`;
+    }
+
+    // =========================================================================
+    // CATÁLOGO EXPANDIDO DE MODELOS POPULARES
+    // =========================================================================
+
     const curatedModels = [
+      // POPULARES & GERAIS
       {
         id: "Qwen/Qwen2.5-7B-Instruct-GGUF",
         name: "Qwen 2.5 7B Instruct",
         brand: "Qwen",
-        icon: "🧠",
         category: "popular",
-        downloads: "1.8M",
-        stars: "5.4k",
+        downloads: "2.4M",
+        stars: "6.8k",
         role: "LLM Principal (GPU)",
-        desc: "Excelente capacidade de raciocínio, escrita e seguimento de instruções estruturadas. Perfeito para o motor RAG principal.",
+        desc: "Líder de categoria em seguimento de instruções, raciocínio lógico e análise de documentos complexos.",
         tags: ["🧠 Raciocínio", "📚 RAG Top", "⚡ 128k Contexto"]
       },
       {
         id: "unsloth/Llama-3.2-3B-Instruct-GGUF",
         name: "Llama 3.2 3B Instruct",
         brand: "Meta",
-        icon: "⚡",
         category: "slm",
-        downloads: "2.4M",
-        stars: "6.1k",
+        downloads: "3.2M",
+        stars: "8.1k",
         role: "Motor Dual-IA (NPU/CPU)",
-        desc: "Modelo ultrarrápido e leve. Ideal para operar como SLM na reformulação de pesquisas e extração de termos no pipeline Dual-IA.",
-        tags: ["⚡ Ultra Rápido", "🧠 NPU/CPU", "🪶 2.2GB"]
+        desc: "Modelo ultrarrápido desenhado para portáteis. Excelente na reformulação de pesquisas e orquestração Dual-IA.",
+        tags: ["⚡ Ultra Rápido", "🧠 NPU/CPU", "🪶 2.2 GB"]
       },
       {
         id: "bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF",
         name: "DeepSeek R1 Distill 7B",
         brand: "DeepSeek",
-        icon: "🐋",
         category: "reasoning",
-        downloads: "3.1M",
-        stars: "12.8k",
+        downloads: "4.5M",
+        stars: "14.2k",
         role: "Raciocínio Profundo",
-        desc: "Treinado com cadeias de pensamento explícitas (<think>). Resolve problemas lógicos complexos e análise matemática com precisão.",
+        desc: "Capacidades de raciocínio matemático e dedutivo com blocos de pensamento explícitos (<think>).",
         tags: ["🧠 Cadeia Raciocínio", "🎯 Alta Lógica", "⚡ 7B"]
+      },
+      {
+        id: "bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF",
+        name: "DeepSeek R1 Distill 14B",
+        brand: "DeepSeek",
+        category: "reasoning",
+        downloads: "2.1M",
+        stars: "9.6k",
+        role: "Raciocínio Avançado",
+        desc: "Máxima precisão analítica e resolução de problemas estruturados de engenharia e ciência de dados.",
+        tags: ["🧠 Raciocínio 14B", "🔬 Investigação", "🔥 Alta Precisão"]
+      },
+      {
+        id: "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+        name: "DeepSeek R1 Distill 1.5B",
+        brand: "DeepSeek",
+        category: "slm",
+        downloads: "1.8M",
+        stars: "4.9k",
+        role: "SLM Raciocínio Leve",
+        desc: "Raciocínio analítico ultra-compacto. Funciona com extrema rapidez em qualquer CPU ou NPU local.",
+        tags: ["⚡ SLM Raciocínio", "🪶 1.1 GB", "🧠 NPU/CPU"]
       },
       {
         id: "bartowski/gemma-2-2b-it-GGUF",
         name: "Gemma 2 2B Instruct",
         brand: "Google",
-        icon: "💎",
         category: "slm",
-        downloads: "1.1M",
-        stars: "3.2k",
+        downloads: "1.6M",
+        stars: "4.2k",
         role: "Motor Dual-IA (SLM)",
-        desc: "Arquitetura compacta de altíssima eficiência desenvolvida pela Google. Excelente para portáteis e hardware mais modesto.",
-        tags: ["⚡ Leve", "💎 Google", "🔋 Poupança Bateria"]
+        desc: "Arquitetura ultra-eficiente da Google. Consumo de VRAM mínimo com excelente fidelidade linguística.",
+        tags: ["⚡ Google Leve", "🔋 Poupança Bateria", "🪶 1.6 GB"]
+      },
+      {
+        id: "bartowski/gemma-2-9b-it-GGUF",
+        name: "Gemma 2 9B Instruct",
+        brand: "Google",
+        category: "popular",
+        downloads: "2.8M",
+        stars: "7.9k",
+        role: "LLM Principal (GPU)",
+        desc: "Um dos modelos de 9B mais capazes do mundo. Excelente para escrita, resumo e síntese documental RAG.",
+        tags: ["💎 Google 9B", "📚 RAG Excelente", "⚡ Alto Desempenho"]
+      },
+      {
+        id: "microsoft/Phi-3.5-mini-instruct-gguf",
+        name: "Phi 3.5 Mini 3.8B",
+        brand: "Microsoft",
+        category: "reasoning",
+        downloads: "1.9M",
+        stars: "5.8k",
+        role: "Raciocínio Compacto",
+        desc: "Densidade de conhecimento de topo para o tamanho de 3.8B com contexto estendido de 128k tokens.",
+        tags: ["🔬 Microsoft", "🧠 Lógica 128k", "⚡ 3.8B"]
       },
       {
         id: "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF",
         name: "Qwen 2.5 Coder 7B",
         brand: "Qwen",
-        icon: "💻",
         category: "coding",
-        downloads: "950k",
-        stars: "4.1k",
+        downloads: "1.4M",
+        stars: "5.1k",
         role: "Assistente de Programação",
-        desc: "Especialista em geração, refatoração, depuração de código Python, Rust, JavaScript, C++ e arquitetura de software.",
+        desc: "Especialista em geração, refatoração, depuração e arquitetura de software (Python, JS, Rust, C++).",
         tags: ["💻 Código & Python", "🛠️ Engenharia", "⚡ 7B"]
       },
       {
-        id: "microsoft/Phi-3.5-mini-instruct-gguf",
-        name: "Phi 3.5 Mini Instruct",
-        brand: "Microsoft",
-        icon: "🔬",
-        category: "reasoning",
-        downloads: "1.4M",
+        id: "Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+        name: "Qwen 2.5 Coder 1.5B",
+        brand: "Qwen",
+        category: "coding",
+        downloads: "890k",
+        stars: "3.1k",
+        role: "Autocomplete de Código",
+        desc: "Assistente de programação leve para autocompletação em tempo real com baixíssimo impacto na memória.",
+        tags: ["💻 Autocomplete", "⚡ Ultrarrápido", "🪶 1.2 GB"]
+      },
+      {
+        id: "bartowski/Mistral-Nemo-Instruct-2407-GGUF",
+        name: "Mistral NeMo 12B",
+        brand: "Mistral AI",
+        category: "popular",
+        downloads: "1.3M",
         stars: "4.7k",
-        role: "Raciocínio Compacto",
-        desc: "Modelo de 3.8B com capacidades lógicas comparáveis a modelos muito maiores. Excelente densidade de conhecimento.",
-        tags: ["🔬 Microsoft", "🧠 Lógica Compacta", "⚡ 3.8B"]
+        role: "LLM Multilingue",
+        desc: "Criado em parceria com a NVIDIA. Excelente compreensão multilingue europeia e escrita criativa.",
+        tags: ["🌪️ Mistral / NVIDIA", "🌐 Multilingue Top", "⚡ 12B"]
+      },
+      {
+        id: "bartowski/Llama-3.2-11B-Vision-Instruct-GGUF",
+        name: "Llama 3.2 11B Vision",
+        brand: "Meta",
+        category: "vision",
+        downloads: "940k",
+        stars: "3.9k",
+        role: "Visão & OCR Documental",
+        desc: "Capaz de analisar imagens, gráficos, capturas de ecrã e tabelas em conjunto com texto.",
+        tags: ["👁️ Multimodal", "🖼️ Análise Imagem", "⚡ 11B"]
+      },
+      {
+        id: "Qwen/Qwen2-VL-7B-Instruct-GGUF",
+        name: "Qwen 2 VL 7B Vision",
+        brand: "Qwen",
+        category: "vision",
+        downloads: "1.1M",
+        stars: "4.4k",
+        role: "Visão Computacional",
+        desc: "Compreensão visual profunda de documentos técnicos, esquemas eletrónicos e interfaces gráficas.",
+        tags: ["👁️ Visão Técnica", "📊 Esquemas & OCR", "⚡ 7B"]
       }
     ];
 
     let currentModelId = "Qwen/Qwen2.5-7B-Instruct-GGUF";
     let currentGgufFiles = [];
+    let currentSelectedFile = null;
 
     function formatBytes(bytes) {
       if (!bytes || bytes === 0) return '';
@@ -876,7 +1014,13 @@
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    // Renderiza a lista lateral de modelos estilo LM Studio
+    // Extrai o nome limpo da quantização (ex: Q4_K_M)
+    function extractQuantName(path) {
+      const match = path.match(/(Q[0-9]_[A-Z0-9_]+|IQ[0-9]_[A-Z0-9_]+|FP16|BF16|Q[0-9]_[0-9])/i);
+      return match ? match[0].toUpperCase() : 'GGUF';
+    }
+
+    // Renderiza a lista lateral com os logótipos SVG oficiais
     function renderModelList(models) {
       const container = document.getElementById('hfModelList');
       container.innerHTML = '';
@@ -887,20 +1031,20 @@
         card.className = `p-3 rounded-xl border cursor-pointer transition-all ${
           isActive 
             ? 'lm-item-active' 
-            : 'bg-[#131519] border-[#22252c] hover:bg-[#181a20] hover:border-[#2f323a]'
+            : 'bg-[#121418] border-[#20232a] hover:bg-[#181a20] hover:border-[#2f323a]'
         }`;
 
-        const tagsHtml = (model.tags || ['GGUF']).map(t => `<span class="px-1.5 py-0.5 rounded bg-[#1c1e24] text-[#8e939d] text-[10px] font-mono">${t}</span>`).join(' ');
+        const tagsHtml = (model.tags || ['GGUF']).map(t => `<span class="px-1.5 py-0.5 rounded bg-[#1b1d24] text-[#8e939d] text-[10px] font-mono">${t}</span>`).join(' ');
 
         card.innerHTML = `
           <div class="flex items-start gap-3">
-            <div class="w-9 h-9 rounded-xl bg-[#1c1f26] border border-[#2d313b] flex items-center justify-center text-lg shrink-0 shadow-inner">
-              ${model.icon || '📦'}
+            <div class="w-9 h-9 rounded-xl bg-[#1a1c22] border border-[#2a2e38] flex items-center justify-center shrink-0 shadow-inner mt-0.5">
+              ${getBrandSVG(model.brand, model.id)}
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between gap-1">
                 <h4 class="font-bold text-xs text-white truncate">${model.name || model.id}</h4>
-                <span class="text-[10px] text-[#6e7175] font-mono shrink-0">↓ ${model.downloads || 'Popular'}</span>
+                <span class="text-[10px] text-[#6e7175] font-mono shrink-0">↓ ${model.downloads || 'N/A'}</span>
               </div>
               <p class="text-[11px] text-[#717682] truncate font-mono">${model.id}</p>
               <div class="flex items-center gap-1.5 flex-wrap mt-2">
@@ -920,36 +1064,36 @@
       lucide.createIcons();
     }
 
-    // Seleciona e carrega os detalhes e ficheiros do modelo
+    // Seleciona e carrega os detalhes do modelo e os seus ficheiros
     async function selectModel(repoId, modelMeta = null) {
       currentModelId = repoId;
-      
-      // Atualizar destaque visual
       renderModelList(window.currentFilteredList || curatedModels);
 
-      // Preencher painel direito
+      const brandIconElem = document.getElementById('detBrandIcon');
       const nameElem = document.getElementById('detModelName');
       const authorElem = document.getElementById('detAuthorBadge');
       const pathElem = document.getElementById('detRepoPath');
       const hfLink = document.getElementById('detHfLink');
       const descElem = document.getElementById('detDescription');
       const roleElem = document.getElementById('detRagSuitability');
-      const quantSelect = document.getElementById('quantSelect');
       const quantCount = document.getElementById('quantCount');
 
       const parts = repoId.split('/');
       const author = parts[0] || 'HuggingFace';
       const modelShortName = parts[1] || repoId;
+      const brand = modelMeta?.brand || author;
 
+      brandIconElem.innerHTML = getBrandSVG(brand, repoId);
       nameElem.textContent = modelMeta?.name || modelShortName;
       authorElem.textContent = author;
       pathElem.textContent = repoId;
       hfLink.href = `https://huggingface.co/${repoId}`;
-      descElem.textContent = modelMeta?.desc || `Repositório GGUF verificado da comunidade Hugging Face (${repoId}). Compatível com aceleração por GPU/NPU no RAG Studio.`;
+      descElem.textContent = modelMeta?.desc || `Repositório GGUF da comunidade Hugging Face (${repoId}). Compatível com aceleração por GPU/NPU no RAG Studio.`;
       roleElem.textContent = modelMeta?.role || "GGUF Otimizado";
 
-      quantSelect.innerHTML = `<option value="">A carregar ficheiros de quantização da Hugging Face...</option>`;
-      quantCount.textContent = "A pesquisar...";
+      document.getElementById('selectedQuantBadge').textContent = '...';
+      document.getElementById('selectedQuantLabel').textContent = 'A pesquisar quantizações...';
+      quantCount.textContent = "A carregar...";
 
       try {
         const res = await fetch(`https://huggingface.co/api/models/${repoId}/tree/main`);
@@ -959,59 +1103,102 @@
         currentGgufFiles = files.filter(f => f.path && f.path.toLowerCase().endsWith('.gguf'));
 
         if (currentGgufFiles.length === 0) {
-          quantSelect.innerHTML = `<option value="">Nenhum ficheiro .gguf encontrado na raiz deste repositório</option>`;
+          document.getElementById('selectedQuantBadge').textContent = 'N/A';
+          document.getElementById('selectedQuantLabel').textContent = 'Nenhum ficheiro .gguf encontrado na raiz.';
           quantCount.textContent = "0 ficheiros GGUF";
           return;
         }
 
         quantCount.textContent = `${currentGgufFiles.length} quantizações disponíveis`;
-        quantSelect.innerHTML = '';
 
-        // Ordenar quantizações prioritárias (Q4_K_M primeiro, depois Q8, etc.)
+        // Ordenar prioritariamente (Q4_K_M primeiro, depois por tamanho ascendente)
         currentGgufFiles.sort((a, b) => {
           if (a.path.includes('Q4_K_M')) return -1;
           if (b.path.includes('Q4_K_M')) return 1;
           return (a.size || 0) - (b.size || 0);
         });
 
-        currentGgufFiles.forEach((f, idx) => {
-          const opt = document.createElement('option');
-          opt.value = f.path;
-          const sizeText = f.size ? `[${formatBytes(f.size)}]` : '';
-          opt.textContent = `${f.path} ${sizeText}`;
-          quantSelect.appendChild(opt);
-        });
-
-        onQuantSelected();
+        buildCustomQuantDropdown(currentGgufFiles);
+        selectQuantFile(currentGgufFiles[0]);
 
       } catch (e) {
-        quantSelect.innerHTML = `<option value="">Erro ao obter ficheiros do modelo</option>`;
+        document.getElementById('selectedQuantBadge').textContent = 'ERRO';
+        document.getElementById('selectedQuantLabel').textContent = 'Erro ao consultar ficheiros da Hugging Face';
         quantCount.textContent = "Erro de ligação";
       }
     }
 
-    // Ao mudar a quantização no menu dropdown
-    function onQuantSelected() {
-      const select = document.getElementById('quantSelect');
-      const selectedPath = select.value;
-      if (!selectedPath) return;
+    // Constrói o Seletor de Quantizações Moderno (Custom Dropdown)
+    function buildCustomQuantDropdown(files) {
+      const menu = document.getElementById('customQuantMenu');
+      menu.innerHTML = '';
 
-      const fileObj = currentGgufFiles.find(f => f.path === selectedPath);
-      const downloadUrl = `https://huggingface.co/${currentModelId}/resolve/main/${encodeURIComponent(selectedPath)}`;
-      
+      files.forEach(file => {
+        const quantName = extractQuantName(file.path);
+        const sizeStr = file.size ? formatBytes(file.size) : '';
+
+        // Definir tag de recomendação
+        let tagText = "Equilibrado";
+        let tagColor = "bg-[#1f222a] text-[#8e939d]";
+
+        if (file.path.includes("Q4_K_M")) {
+          tagText = "⭐ Recomendado";
+          tagColor = "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30";
+        } else if (file.path.includes("Q8_0") || file.path.includes("fp16")) {
+          tagText = "💎 Alta Precisão";
+          tagColor = "bg-purple-500/20 text-purple-300 border border-purple-500/30";
+        } else if (file.path.includes("Q2") || file.path.includes("IQ2") || file.path.includes("Q3")) {
+          tagText = "⚡ Ultraleve";
+          tagColor = "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        }
+
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = "w-full p-2.5 rounded-lg text-left hover:bg-[#161820] flex items-center justify-between transition-colors group";
+        
+        item.innerHTML = `
+          <div class="flex items-center gap-2 truncate">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-[#1c1e26] text-white group-hover:text-cyan-400">${quantName}</span>
+            <span class="text-xs text-[#cbd5e1] truncate font-mono text-[11px]">${file.path}</span>
+          </div>
+          <div class="flex items-center gap-2 shrink-0 ml-2">
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-mono ${tagColor}">${tagText}</span>
+            <span class="text-[10px] font-mono text-[#717682]">${sizeStr}</span>
+          </div>
+        `;
+
+        item.addEventListener('click', () => {
+          selectQuantFile(file);
+          menu.classList.add('hidden');
+        });
+
+        menu.appendChild(item);
+      });
+    }
+
+    // Seleciona um ficheiro de quantização e atualiza o botão de download limpo
+    function selectQuantFile(file) {
+      currentSelectedFile = file;
+      const quantName = extractQuantName(file.path);
+      const sizeStr = file.size ? formatBytes(file.size) : '';
+
+      document.getElementById('selectedQuantBadge').textContent = quantName;
+      document.getElementById('selectedQuantLabel').textContent = `${file.path} ${sizeStr ? `(${sizeStr})` : ''}`;
+
+      const downloadUrl = `https://huggingface.co/${currentModelId}/resolve/main/${encodeURIComponent(file.path)}`;
       const downloadBtn = document.getElementById('mainDownloadBtn');
       const downloadText = document.getElementById('downloadBtnText');
       const hardwareText = document.getElementById('hardwareText');
-      const sizeStr = fileObj && fileObj.size ? formatBytes(fileObj.size) : '';
 
       downloadBtn.href = downloadUrl;
-      downloadText.textContent = sizeStr ? `Descarregar ${selectedPath.split('/').pop()} (${sizeStr})` : `Descarregar GGUF`;
+      // NOME DE DOWNLOAD CURTO E ELEGANTE (SEM O FICHEIRO ENORME)
+      downloadText.textContent = sizeStr ? `Descarregar ${quantName} (${sizeStr})` : `Descarregar ${quantName}`;
 
-      // Avaliação de Hardware
-      if (fileObj && fileObj.size) {
-        const gb = fileObj.size / (1024 * 1024 * 1024);
-        if (gb <= 3.5) {
-          hardwareText.textContent = `⚡ Ficheiro leve (${gb.toFixed(1)} GB): Ideal para SLM no pipeline Dual-IA, NPU, CPU ou qualquer portátil com 4GB-8GB VRAM.`;
+      // Diagnóstico de Hardware Inteligente
+      if (file.size) {
+        const gb = file.size / (1024 * 1024 * 1024);
+        if (gb <= 3.2) {
+          hardwareText.textContent = `⚡ Ficheiro Leve (${gb.toFixed(1)} GB): Ideal para SLM no pipeline Dual-IA, NPU, CPU ou qualquer portátil com 4GB-8GB VRAM.`;
         } else if (gb <= 6.5) {
           hardwareText.textContent = `🎯 Excelente Equilíbrio (${gb.toFixed(1)} GB): Funciona com máxima velocidade em GPUs de 6GB a 8GB VRAM (como RTX 3060/4060/5050).`;
         } else if (gb <= 12) {
@@ -1020,17 +1207,25 @@
           hardwareText.textContent = `⚠️ Modelo Pesado (${gb.toFixed(1)} GB): Requer 16GB+ VRAM dedicada ou 32GB+ de memória RAM do sistema.`;
         }
       }
-      
+
       lucide.createIcons();
     }
 
-    // Copiar URL selecionado
-    function copySelectedUrl() {
-      const select = document.getElementById('quantSelect');
-      const selectedPath = select.value;
-      if (!selectedPath) return;
+    // Toggle Dropdown Customizado de Quantização
+    const customQuantBtn = document.getElementById('customQuantDropdownBtn');
+    const customQuantMenu = document.getElementById('customQuantMenu');
+    customQuantBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      customQuantMenu.classList.toggle('hidden');
+    });
+    document.addEventListener('click', () => {
+      customQuantMenu.classList.add('hidden');
+    });
 
-      const downloadUrl = `https://huggingface.co/${currentModelId}/resolve/main/${encodeURIComponent(selectedPath)}`;
+    // Copiar URL direto
+    function copySelectedUrl() {
+      if (!currentSelectedFile) return;
+      const downloadUrl = `https://huggingface.co/${currentModelId}/resolve/main/${encodeURIComponent(currentSelectedFile.path)}`;
       const btn = document.getElementById('copyUrlBtn');
 
       navigator.clipboard.writeText(downloadUrl).then(() => {
@@ -1044,17 +1239,18 @@
       });
     }
 
-    // Filtrar categorias rápidas
+    // Filtrar categorias
     function filterCategory(cat) {
-      ['btnFilterPopular', 'btnFilterReasoning', 'btnFilterSLM', 'btnFilterCoding'].forEach(id => {
+      ['btnFilterPopular', 'btnFilterReasoning', 'btnFilterSLM', 'btnFilterCoding', 'btnFilterVision'].forEach(id => {
         const b = document.getElementById(id);
-        b.className = 'px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all';
+        if (b) b.className = 'px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all';
       });
 
       if (cat === 'popular') document.getElementById('btnFilterPopular').className = 'px-3 py-1.5 rounded-lg bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 text-[11px] font-medium shrink-0 transition-all';
       if (cat === 'reasoning') document.getElementById('btnFilterReasoning').className = 'px-3 py-1.5 rounded-lg bg-purple-500/15 border border-purple-500/40 text-purple-300 text-[11px] font-medium shrink-0 transition-all';
       if (cat === 'slm') document.getElementById('btnFilterSLM').className = 'px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-[11px] font-medium shrink-0 transition-all';
       if (cat === 'coding') document.getElementById('btnFilterCoding').className = 'px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[11px] font-medium shrink-0 transition-all';
+      if (cat === 'vision') document.getElementById('btnFilterVision').className = 'px-3 py-1.5 rounded-lg bg-blue-500/15 border border-blue-500/40 text-blue-300 text-[11px] font-medium shrink-0 transition-all';
 
       let list = curatedModels;
       if (cat !== 'popular') {
@@ -1065,7 +1261,7 @@
       if (list.length > 0) selectModel(list[0].id, list[0]);
     }
 
-    // Pesquisa Dinâmica no Hugging Face (Com suporte total à API)
+    // Pesquisa Dinâmica na API da Hugging Face
     document.getElementById('hfSearchForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const q = document.getElementById('hfSearchInput').value.trim();
@@ -1078,16 +1274,16 @@
       container.innerHTML = `<div class="text-center py-10 text-xs text-cyan-400 font-mono animate-pulse">A pesquisar modelos GGUF no Hugging Face...</div>`;
 
       try {
-        const res = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(q)}&filter=gguf&sort=downloads&direction=-1&limit=15`);
+        const res = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(q)}&filter=gguf&sort=downloads&direction=-1&limit=20`);
         let results = await res.json();
 
         if (!results || results.length === 0) {
-          const fallbackRes = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(q + ' GGUF')}&sort=downloads&direction=-1&limit=15`);
+          const fallbackRes = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(q + ' GGUF')}&sort=downloads&direction=-1&limit=20`);
           results = await fallbackRes.json();
         }
 
         if (!results || results.length === 0) {
-          container.innerHTML = `<div class="text-center py-10 text-xs text-amber-400">Nenhum repositório GGUF encontrado para "${q}".</div>`;
+          container.innerHTML = `<div class="text-center py-10 text-xs text-amber-400">Nenhum modelo GGUF encontrado para "${q}".</div>`;
           return;
         }
 
@@ -1095,11 +1291,10 @@
           id: r.id,
           name: r.id.split('/')[1] || r.id,
           brand: r.id.split('/')[0] || 'Community',
-          icon: '📦',
           downloads: r.downloads ? r.downloads.toLocaleString() : 'N/A',
           stars: r.likes ? r.likes.toString() : '0',
-          role: 'GGUF Community Model',
-          desc: `Modelo GGUF descarregável diretamente da Hugging Face (${r.id}).`,
+          role: 'GGUF Hugging Face Model',
+          desc: `Repositório da comunidade Hugging Face (${r.id}).`,
           tags: ['GGUF', 'Hugging Face']
         }));
 
@@ -1108,7 +1303,7 @@
         selectModel(formatted[0].id, formatted[0]);
 
       } catch (err) {
-        container.innerHTML = `<div class="text-center py-10 text-xs text-rose-400">Erro ao consultar a API do Hugging Face.</div>`;
+        container.innerHTML = `<div class="text-center py-10 text-xs text-rose-400">Erro ao consultar a API da Hugging Face.</div>`;
       }
     });
 
