@@ -314,6 +314,7 @@
 
           <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 text-xs">
             <button onclick="filterCategory('popular')" id="btnFilterPopular" data-i18n="hf_filter_popular" class="px-3 py-1.5 rounded-lg bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 text-[11px] font-medium shrink-0 transition-all">Populares</button>
+            <button onclick="filterCategory('recent')" id="btnFilterRecent" data-i18n="hf_filter_recent" class="px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all">Recentes</button>
             <button onclick="filterCategory('reasoning')" id="btnFilterReasoning" data-i18n="hf_filter_reasoning" class="px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all">🧠 Raciocínio</button>
             <button onclick="filterCategory('slm')" id="btnFilterSLM" data-i18n="hf_filter_slm" class="px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all">⚡ SLM Rápidos</button>
             <button onclick="filterCategory('coding')" id="btnFilterCoding" data-i18n="hf_filter_coding" class="px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all">💻 Código</button>
@@ -335,16 +336,16 @@
                   <div id="detBrandIcon" class="w-10 h-10 rounded-xl bg-[#1a1c22] border border-[#2a2e38] flex items-center justify-center shrink-0 shadow-inner mt-0.5"></div>
                   <div>
                     <div class="flex items-center gap-2 flex-wrap mb-1">
-                      <h3 id="detModelName" class="text-lg sm:text-xl font-bold text-white font-mono">Qwen 2.5 7B Instruct</h3>
-                      <span id="detAuthorBadge" class="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-mono">Qwen</span>
+                      <h3 id="detModelName" class="text-lg sm:text-xl font-bold text-white font-mono">...</h3>
+                      <span id="detAuthorBadge" class="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-mono">Hugging Face</span>
                     </div>
-                    <p id="detRepoPath" class="text-xs text-[#6e7175] font-mono">Qwen/Qwen2.5-7B-Instruct-GGUF</p>
+                    <p id="detRepoPath" class="text-xs text-[#6e7175] font-mono">...</p>
                   </div>
                 </div>
 
                 <a 
                   id="detHfLink" 
-                  href="https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-GGUF" 
+                  href="#" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   class="px-3 py-1.5 rounded-xl bg-[#181a20] hover:bg-[#22252c] border border-[#2b2d34] text-[#cbd5e1] text-xs font-semibold flex items-center gap-1.5 transition-all shrink-0"
@@ -358,13 +359,13 @@
                 <div class="p-2.5 rounded-xl bg-[#17191e] border border-[#242730]">
                   <span class="text-[10px] text-[#6e7175] block uppercase" data-i18n="hf_stat_downloads">Downloads</span>
                   <span id="detDownloads" class="font-bold text-white flex items-center gap-1">
-                    <i data-lucide="download" class="w-3 h-3 text-cyan-400"></i> 1.8M+
+                    <i data-lucide="download" class="w-3 h-3 text-cyan-400"></i> ...
                   </span>
                 </div>
                 <div class="p-2.5 rounded-xl bg-[#17191e] border border-[#242730]">
                   <span class="text-[10px] text-[#6e7175] block uppercase" data-i18n="hf_stat_stars">Estrelas</span>
                   <span id="detLikes" class="font-bold text-amber-400 flex items-center gap-1">
-                    <i data-lucide="star" class="w-3 h-3 fill-amber-400"></i> 5.4k
+                    <i data-lucide="star" class="w-3 h-3 fill-amber-400"></i> ...
                   </span>
                 </div>
                 <div class="p-2.5 rounded-xl bg-[#17191e] border border-[#242730]">
@@ -373,12 +374,12 @@
                 </div>
                 <div class="p-2.5 rounded-xl bg-[#17191e] border border-[#242730]">
                   <span class="text-[10px] text-[#6e7175] block uppercase" data-i18n="hf_stat_role">Função RAG</span>
-                  <span id="detRagSuitability" class="font-bold text-emerald-400">LLM Principal</span>
+                  <span id="detRagSuitability" class="font-bold text-emerald-400">GGUF Model</span>
                 </div>
               </div>
 
               <div class="p-3.5 rounded-xl bg-[#16181d] border border-[#242730] text-xs text-[#9aa0a6] leading-relaxed" id="detDescription">
-                Excelente capacidade de raciocínio, escrita e seguimento de instruções estruturadas. Perfeito para o motor RAG principal.
+                A carregar informações detalhadas do modelo...
               </div>
 
               <div class="space-y-2 relative">
@@ -396,8 +397,8 @@
                   class="w-full px-4 py-3 rounded-xl bg-[#0b0c0f] border border-[#282b33] hover:border-cyan-500/50 text-xs font-mono text-left text-white flex items-center justify-between transition-all group"
                 >
                   <div class="flex items-center gap-2 truncate">
-                    <span id="selectedQuantBadge" class="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 text-[10px] font-bold">Q4_K_M</span>
-                    <span id="selectedQuantLabel" class="truncate text-[#cbd5e1]">A carregar ficheiros...</span>
+                    <span id="selectedQuantBadge" class="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 text-[10px] font-bold">GGUF</span>
+                    <span id="selectedQuantLabel" class="truncate text-[#cbd5e1]">A consultar quantizações...</span>
                   </div>
                   <i data-lucide="chevron-down" class="w-4 h-4 text-[#6e7175] group-hover:text-cyan-400 transition-colors shrink-0 ml-2"></i>
                 </button>
@@ -409,7 +410,7 @@
 
                 <div id="hardwareBadge" class="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs flex items-center gap-2 mt-2">
                   <i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400 shrink-0"></i>
-                  <span id="hardwareText">Excelente equilíbrio entre velocidade e precisão para GPUs de 6GB a 8GB VRAM.</span>
+                  <span id="hardwareText">A calcular estimativa de hardware...</span>
                 </div>
               </div>
 
@@ -424,7 +425,7 @@
                 class="w-full sm:flex-1 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(6,182,212,0.35)] active:scale-95"
               >
                 <i data-lucide="download" class="w-4 h-4 stroke-[2.5]"></i>
-                <span id="downloadBtnText">Descarregar Q4_K_M (4.36 GB)</span>
+                <span id="downloadBtnText">Descarregar GGUF</span>
               </a>
 
               <button 
@@ -644,6 +645,7 @@
         hf_input_ph: "Pesquisar modelos no Hugging Face...",
         hf_btn_search: "Pesquisar",
         hf_filter_popular: "Populares",
+        hf_filter_recent: "Recentes",
         hf_filter_reasoning: "🧠 Raciocínio",
         hf_filter_slm: "⚡ SLM Rápidos",
         hf_filter_coding: "💻 Código",
@@ -681,7 +683,8 @@
         hw_light: "⚡ Ficheiro Leve: Ideal para SLM no pipeline Dual-IA, NPU, CPU ou qualquer portátil com 4GB-8GB VRAM.",
         hw_balanced: "🎯 Excelente Equilíbrio: Funciona com máxima velocidade em GPUs de 6GB a 8GB VRAM (ex: RTX 3060/4060/5050).",
         hw_heavy: "🔥 Alta Precisão: Recomendado para GPUs com 12GB-16GB VRAM ou sistema com 32GB RAM.",
-        hw_very_heavy: "⚠️ Modelo Pesado: Requer 16GB+ VRAM dedicada ou 32GB+ de memória RAM do sistema."
+        hw_very_heavy: "⚠️ Modelo Pesado: Requer 16GB+ VRAM dedicada ou 32GB+ de memória RAM do sistema.",
+        loading_models: "A consultar modelos no Hugging Face..."
       },
       en: {
         nav_features: "Features",
@@ -722,6 +725,7 @@
         hf_input_ph: "Search models on Hugging Face...",
         hf_btn_search: "Search",
         hf_filter_popular: "Popular",
+        hf_filter_recent: "Recent",
         hf_filter_reasoning: "🧠 Reasoning",
         hf_filter_slm: "⚡ Fast SLMs",
         hf_filter_coding: "💻 Coding",
@@ -759,7 +763,8 @@
         hw_light: "⚡ Lightweight: Ideal for SLM Dual-AI pipeline, NPU, CPU or 4GB-8GB VRAM laptops.",
         hw_balanced: "🎯 Sweet Spot: Runs at full speed on 6GB to 8GB VRAM GPUs (e.g. RTX 3060/4060/5050).",
         hw_heavy: "🔥 High Accuracy: Recommended for 12GB-16GB VRAM GPUs or 32GB system RAM.",
-        hw_very_heavy: "⚠️ Heavy Model: Requires 16GB+ dedicated VRAM or 32GB+ system RAM."
+        hw_very_heavy: "⚠️ Heavy Model: Requires 16GB+ dedicated VRAM or 32GB+ system RAM.",
+        loading_models: "Loading models from Hugging Face..."
       },
       es: {
         nav_features: "Funcionalidades",
@@ -773,33 +778,13 @@
         hero_subtitle: "Ejecuta modelos GGUF avanzados localmente y conversa con tus documentos con total privacidad.",
         btn_hero_app: "Descargar RAG Studio",
         btn_hero_models: "Descargar Modelos GGUF en la Web",
-        feat_section_badge: "ARQUITECTURA AVANZADA",
-        feat_section_title: "Capacidades y Funcionalidades",
-        feat_section_desc: "Diseñado para unir la máxima privacidad, velocidad de inferencia y precisión documental.",
-        card_1_title: "100% Local y Privado",
-        card_1_desc: "Cero telemetría. Todas las conversaciones y documentos permanecen aislados en tu equipo.",
-        card_2_title: "Sandbox Documental RAG",
-        card_2_desc: "Indexación inteligente de PDFs, Word, TXT y CSV con recuperación vectorial precisa.",
-        card_3_title: "Motor LLaMA Optimizado",
-        card_3_desc: "Flash Attention, cuantización de KV Cache y descarga dinámica de capas GPU.",
-        card_4_title: "Explorador Hugging Face",
-        card_4_desc: "Descarga modelos GGUF con análisis predictivo de memoria VRAM/RAM.",
-        card_5_title: "Telemetría en Tiempo Real",
-        card_5_desc: "Velocímetro de Tokens/seg con desglose de Razonamiento (🧠) y Respuesta (⚡).",
-        card_6_title: "Interfaz en 9 Idiomas",
-        card_6_desc: "Disponible en 9 idiomas con traducción completa y nativa.",
-        dual_badge: "PIPELINE COOPERATIVO",
-        dual_title: "Arquitectura Dual-IA",
-        dual_desc: "Orquestación en paralelo: SLM en NPU/CPU para reformular búsquedas y GPU principal para responder.",
-        dual_step_1: "Etapa 1: SLM (NPU/CPU)",
-        dual_step_2: "Etapa 2: Búsqueda Vectorial",
-        dual_step_3: "Etapa 3: LLM Principal (GPU)",
         hf_hub_badge: "HUB GGUF",
         hf_hub_title: "Descargar Modelos de IA",
         hf_hub_desc: "Además de estar integrado en la app RAG Studio, también puedes buscar, verificar la compatibilidad de hardware y descargar modelos .gguf directamente desde este sitio web.",
         hf_input_ph: "Buscar modelos en Hugging Face...",
         hf_btn_search: "Buscar",
         hf_filter_popular: "Populares",
+        hf_filter_recent: "Recientes",
         hf_filter_reasoning: "🧠 Razonamiento",
         hf_filter_slm: "⚡ SLM Rápidos",
         hf_filter_coding: "💻 Código",
@@ -829,7 +814,7 @@
         form_msg_label: "Tu Sugerencia o Idea *",
         btn_send_feedback: "Enviar Sugerencia",
         support_title: "Apoyar el Proyecto",
-        support_desc: "RAG Studio es gratuito y open-source. ¡Apoya el desarrollo invitando a un café!",
+        support_desc: "RAG Studio es gratuito y open-source.",
         btn_kofi: "Apoyar en Ko-fi",
         footer_credits: "© 2026 RAG Studio • Creado por Miguel enfocado en la privacidad.",
         dl_btn_prefix: "Descargar",
@@ -837,7 +822,8 @@
         hw_light: "⚡ Ligero: Ideal para SLM en Dual-IA, NPU, CPU o portátiles de 4GB-8GB VRAM.",
         hw_balanced: "🎯 Gran Equilibrio: Funciona a máxima velocidad en GPUs de 6GB a 8GB VRAM.",
         hw_heavy: "🔥 Alta Precisión: Recomendado para GPUs de 12GB-16GB VRAM o 32GB RAM.",
-        hw_very_heavy: "⚠️ Modelo Pesado: Requiere 16GB+ VRAM dedicada o 32GB+ RAM del sistema."
+        hw_very_heavy: "⚠️ Modelo Pesado: Requiere 16GB+ VRAM dedicada o 32GB+ RAM del sistema.",
+        loading_models: "Cargando modelos desde Hugging Face..."
       },
       fr: {
         nav_features: "Fonctionnalités",
@@ -851,33 +837,13 @@
         hero_subtitle: "Exécutez des modèles GGUF sur votre matériel, interrogez vos documents en toute confidentialité et profitez du moteur Dual-IA en temps réel.",
         btn_hero_app: "Télécharger RAG Studio",
         btn_hero_models: "Télécharger Modèles GGUF sur le Site",
-        feat_section_badge: "ARCHITECTURE AVANCÉE",
-        feat_section_title: "Capacités et Fonctionnalités",
-        feat_section_desc: "Conçu pour allier confidentialité absolue, vitesse d'inférence et précision documentaire.",
-        card_1_title: "100% Local et Privé",
-        card_1_desc: "Aucune donnée n'est envoyée dans le cloud. Vos conversations et fichiers restent sur votre PC.",
-        card_2_title: "Sandbox Documentaire RAG",
-        card_2_desc: "Indexation de PDF, DOCX, TXT et CSV avec découpage vectoriel et citations de sources.",
-        card_3_title: "Moteur LLaMA Optimisé",
-        card_3_desc: "Flash Attention, quantification KV Cache et déchargement dynamique sur GPU.",
-        card_4_title: "Explorateur Hugging Face",
-        card_4_desc: "Téléchargez des modèles GGUF avec diagnostic de mémoire RAM/VRAM en temps réel.",
-        card_5_title: "Télémétrie en Temps Réel",
-        card_5_desc: "Compteur de tokens/sec distinguant Raisonnement (🧠) et Réponse (⚡).",
-        card_6_title: "Interface en 9 Langues",
-        card_6_desc: "Traduction complète et fluide en 9 langues.",
-        dual_badge: "PIPELINE COOPÉRATIF",
-        dual_title: "Architecture Dual-IA",
-        dual_desc: "SLM ultra-rapide sur NPU/CPU pour reformuler la recherche et grand LLM sur GPU pour répondre.",
-        dual_step_1: "Étape 1: SLM (NPU/CPU)",
-        dual_step_2: "Étape 2: Recherche Vectorielle",
-        dual_step_3: "Étape 3: LLM Principal (GPU)",
         hf_hub_badge: "HUB MODÈLES GGUF",
         hf_hub_title: "Télécharger des Modèles IA",
         hf_hub_desc: "En plus d'être intégré à l'application RAG Studio, vous pouvez également rechercher, vérifier la compatibilité matérielle et télécharger des modèles .gguf directement ici sur le site.",
         hf_input_ph: "Rechercher des modèles...",
         hf_btn_search: "Rechercher",
         hf_filter_popular: "Populaires",
+        hf_filter_recent: "Récents",
         hf_filter_reasoning: "🧠 Raisonnement",
         hf_filter_slm: "⚡ SLM Rapides",
         hf_filter_coding: "💻 Code",
@@ -908,14 +874,15 @@
         btn_send_feedback: "Envoyer",
         support_title: "Soutenir le Projet",
         support_desc: "RAG Studio est gratuit et open-source. Offrez un café pour soutenir le développement continu !",
-        btn_kofi: "Soutenir sur Ko-fi (Carte / Apple Pay / PayPal)",
-        footer_credits: "© 2026 RAG Studio • Développé par Miguel avec priorité absolue à la vie privée.",
+        btn_kofi: "Soutenir sur Ko-fi",
+        footer_credits: "© 2026 RAG Studio • Développé par Miguel.",
         dl_btn_prefix: "Télécharger",
         quant_available_suffix: "quantifications disponibles",
         hw_light: "⚡ Léger : Idéal pour SLM Dual-IA, NPU, CPU ou PC portables avec 4Go-8Go VRAM.",
-        hw_balanced: "🎯 Équilibré : Vitesse maximale sur GPU de 6Go à 8Go VRAM (ex : RTX 3060/4060).",
+        hw_balanced: "🎯 Équilibré : Vitesse maximale sur GPU de 6Go à 8Go VRAM.",
         hw_heavy: "🔥 Haute Précision : Recommandé pour GPU de 12Go-16Go VRAM ou 32Go RAM.",
-        hw_very_heavy: "⚠️ Modèle Lourd : Nécessite 16Go+ VRAM dédiée ou 32Go+ RAM système."
+        hw_very_heavy: "⚠️ Modèle Lourd : Nécessite 16Go+ VRAM dédiée ou 32Go+ RAM système.",
+        loading_models: "Chargement des modèles depuis Hugging Face..."
       },
       de: {
         nav_features: "Funktionen",
@@ -929,33 +896,13 @@
         hero_subtitle: "Führen Sie GGUF-Modelle lokal aus, chatten Sie mit Ihren Dokumenten in absoluter Privatsphäre und nutzen Sie Dual-KI-Orchestrierung.",
         btn_hero_app: "RAG Studio Herunterladen",
         btn_hero_models: "GGUF-Modelle im Web Herunterladen",
-        feat_section_badge: "MODERNE ARCHITEKTUR",
-        feat_section_title: "Fähigkeiten & Funktionen",
-        feat_section_desc: "Entwickelt für maximale Privatsphäre, Inferenzgeschwindigkeit und Dokumentenpräzision.",
-        card_1_title: "100% Lokal & Privat",
-        card_1_desc: "Keine Cloud-Übertragung. Alle Chats und Dokumente bleiben isoliert auf Ihrem PC.",
-        card_2_title: "RAG-Dokumenten-Sandbox",
-        card_2_desc: "Intelligente Indexierung für PDFs, Word, TXT und CSV mit präzisen Quellenangaben.",
-        card_3_title: "Optimierte LLaMA-Engine",
-        card_3_desc: "Flash Attention, KV-Cache-Quantisierung und dynamisches GPU-Layer-Offloading.",
-        card_4_title: "Hugging Face Explorer",
-        card_4_desc: "GGUF-Modelle herunterladen mit vorausschauender VRAM/RAM-Prüfung.",
-        card_5_title: "Echtzeit-Telemetrie",
-        card_5_desc: "Live-Geschwindigkeitsanzeige (Tokens/s) für Denken (🧠) und Antwort (⚡).",
-        card_6_title: "Mehrsprachig (9 Sprachen)",
-        card_6_desc: "Vollständig übersetzte Benutzeroberfläche in 9 Sprachen.",
-        dual_badge: "KOOPERATIVE PIPELINE",
-        dual_title: "Dual-KI-Architektur",
-        dual_desc: "SLM auf NPU/CPU für schnelle Abfragereformulierung, Haupt-LLM auf GPU für die Antwort.",
-        dual_step_1: "Schritt 1: SLM (NPU/CPU)",
-        dual_step_2: "Schritt 2: Vektor-Suche",
-        dual_step_3: "Schritt 3: Haupt-LLM (GPU)",
         hf_hub_badge: "GGUF MODELL-HUB",
         hf_hub_title: "KI-Modelle Herunterladen",
         hf_hub_desc: "Zusätzlich zur Integration in die RAG Studio Desktop-App können Sie hier auf der Website direkt GGUF-Modelle suchen, die Hardware-Kompatibilität prüfen und herunterladen.",
         hf_input_ph: "Modelle suchen...",
         hf_btn_search: "Suchen",
         hf_filter_popular: "Beliebt",
+        hf_filter_recent: "Kürzlich",
         hf_filter_reasoning: "🧠 Logik & Denken",
         hf_filter_slm: "⚡ Schnelle SLMs",
         hf_filter_coding: "💻 Code",
@@ -976,7 +923,7 @@
         dl_installer_desc: "Geführte Installation mit automatischer Desktop-Verknüpfung.",
         btn_dl_installer: "Installer Herunterladen",
         dl_portable_title: "Portable Version (.zip)",
-        dl_portable_desc: "Keine Installation nötig. Entpacken und sofort starten.",
+        dl_portable_desc: "Keine Installation nötig.",
         btn_dl_portable: "Portable ZIP Herunterladen",
         feedback_title: "Vorschläge & Feedback",
         feedback_desc: "Haben Sie Ideen oder Feedback? Senden Sie eine private Nachricht direkt an den Entwickler.",
@@ -985,15 +932,16 @@
         form_msg_label: "Ihr Vorschlag *",
         btn_send_feedback: "Senden",
         support_title: "Projekt Unterstützen",
-        support_desc: "RAG Studio ist kostenlos und Open Source. Unterstützen Sie die Weiterentwicklung mit einem Kaffee!",
+        support_desc: "RAG Studio ist kostenlos.",
         btn_kofi: "Auf Ko-fi Unterstützen",
-        footer_credits: "© 2026 RAG Studio • Entwickelt von Miguel mit absolutem Datenschutz-Fokus.",
+        footer_credits: "© 2026 RAG Studio • Entwickelt von Miguel.",
         dl_btn_prefix: "Herunterladen",
         quant_available_suffix: "Quantisierungen verfügbar",
         hw_light: "⚡ Leicht: Ideal für SLM Dual-KI, NPU, CPU oder Laptops mit 4GB-8GB VRAM.",
         hw_balanced: "🎯 Ausgewogen: Maximale Geschwindigkeit auf GPUs mit 6GB bis 8GB VRAM.",
         hw_heavy: "🔥 Hohe Präzision: Empfohlen für 12GB-16GB VRAM GPUs oder 32GB RAM.",
-        hw_very_heavy: "⚠️ Schweres Modell: Erfordert 16GB+ VRAM oder 32GB+ System-RAM."
+        hw_very_heavy: "⚠️ Schweres Modell: Erfordert 16GB+ VRAM oder 32GB+ System-RAM.",
+        loading_models: "Modelle von Hugging Face werden geladen..."
       },
       it: {
         nav_features: "Funzionalità",
@@ -1002,38 +950,18 @@
         nav_feedback: "Suggerimenti e Miglioramenti",
         btn_support: "Supporta",
         hero_badge: "100% Locale • Zero Telemetria • Accelerazione GPU & NPU",
-        hero_title_1: "Intelligenza Artificiale Locale e RAG Privato ad",
+        hero_title_1: "Inteligência Artificial Local e RAG Privado ad",
         hero_title_highlight: " Alte Prestazioni",
         hero_subtitle: "Esegui modelli GGUF avanzati sul tuo hardware, parla con i tuoi documenti in totale privacy e sfrutta il motore Dual-IA in tempo reale.",
         btn_hero_app: "Scarica RAG Studio",
         btn_hero_models: "Scarica Modelli GGUF sul Sito",
-        feat_section_badge: "ARCHITETTURA AVANZATA",
-        feat_section_title: "Capacità e Funzionalità",
-        feat_section_desc: "Progettato per unire la massima privacy, velocità di inferenza e precisione documentale.",
-        card_1_title: "100% Locale e Privato",
-        card_1_desc: "Nessun dato viene inviato al cloud. Tutte le chat e i documenti rimangono isolati sul tuo PC.",
-        card_2_title: "Sandbox Documentale RAG",
-        card_2_desc: "Indicizzazione di PDF, DOCX, TXT e CSV con suddivisione vettoriale e citazione delle fonti.",
-        card_3_title: "Motore LLaMA Ottimizzato",
-        card_3_desc: "Supporto Flash Attention, quantizzazione KV Cache e offloading dinamico su GPU.",
-        card_4_title: "Esploratore Hugging Face",
-        card_4_desc: "Scarica modelli GGUF con diagnosi predittiva di memoria VRAM/RAM.",
-        card_5_title: "Telemetria in Tempo Reale",
-        card_5_desc: "Tachimetro di Tokens/sec con distinzione tra Ragionamento (🧠) e Risposta (⚡).",
-        card_6_title: "Interfaccia in 9 Lingue",
-        card_6_desc: "Traduzione completa e intuitiva in 9 lingue.",
-        dual_badge: "PIPELINE COOPERATIVA",
-        dual_title: "Architettura Dual-IA",
-        dual_desc: "SLM su NPU/CPU per riformulare la ricerca e LLM principale su GPU per generare la risposta finale.",
-        dual_step_1: "Fase 1: SLM (NPU/CPU)",
-        dual_step_2: "Fase 2: Ricerca Vettoriale",
-        dual_step_3: "Fase 3: LLM Principale (GPU)",
         hf_hub_badge: "HUB GGUF",
         hf_hub_title: "Scarica Modelli di IA",
         hf_hub_desc: "Oltre a essere integrato nell'applicazione RAG Studio, puoi anche cercare, verificare la compatibilità hardware e scaricare modelli .gguf direttamente qui dal sito web.",
         hf_input_ph: "Cerca modelli...",
         hf_btn_search: "Cerca",
         hf_filter_popular: "Popolari",
+        hf_filter_recent: "Recenti",
         hf_filter_reasoning: "🧠 Ragionamento",
         hf_filter_slm: "⚡ SLM Veloci",
         hf_filter_coding: "💻 Codice",
@@ -1063,15 +991,16 @@
         form_msg_label: "Il tuo Suggerimento *",
         btn_send_feedback: "Invia",
         support_title: "Supporta il Progetto",
-        support_desc: "RAG Studio è gratuito e open-source. Offri un caffè per supportare lo sviluppo continuo!",
+        support_desc: "RAG Studio è gratuito e open-source.",
         btn_kofi: "Supporta su Ko-fi",
-        footer_credits: "© 2026 RAG Studio • Sviluppato da Miguel con priorità assoluta alla privacy.",
+        footer_credits: "© 2026 RAG Studio • Sviluppato da Miguel.",
         dl_btn_prefix: "Scarica",
         quant_available_suffix: "quantizzazioni disponibili",
         hw_light: "⚡ Leggero: Ideale per SLM Dual-IA, NPU, CPU o laptop con 4GB-8GB VRAM.",
-        hw_balanced: "🎯 Ottimo Equilibrio: Massima velocità su GPU da 6GB a 8GB VRAM (es: RTX 3060/4060).",
+        hw_balanced: "🎯 Ottimo Equilibrio: Massima velocità su GPU da 6GB a 8GB VRAM.",
         hw_heavy: "🔥 Alta Precisione: Consigliato per GPU da 12GB-16GB VRAM o 32GB RAM.",
-        hw_very_heavy: "⚠️ Modello Pesante: Richiede 16GB+ VRAM o 32GB+ RAM di sistema."
+        hw_very_heavy: "⚠️ Modello Pesante: Richiede 16GB+ VRAM o 32GB+ RAM di sistema.",
+        loading_models: "Caricamento modelli da Hugging Face..."
       },
       zh: {
         nav_features: "核心功能",
@@ -1085,33 +1014,13 @@
         hero_subtitle: "直接在你的电脑硬件上运行前沿 GGUF 模型，与本地文档进行极致隐私的交互，并体验实时的双 AI 协同引擎。",
         btn_hero_app: "下载 RAG Studio",
         btn_hero_models: "在网页端直接下载 GGUF 模型",
-        feat_section_badge: "先进架构",
-        feat_section_title: "核心特性与优势",
-        feat_section_desc: "专为极致隐私、极速推理和精准文档知识检索而原生打造。",
-        card_1_title: "100% 本地与隐私安全",
-        card_1_desc: "完全零云端遥测。所有的聊天记录、文档数据和模型权重均加密保存在您的电脑中。",
-        card_2_title: "RAG 文档沙盒",
-        card_2_desc: "智能解析 PDF、Word、TXT 和 CSV 文件，利用向量分块提供附带精准来源引用的回答。",
-        card_3_title: "极致优化的 LLaMA 引擎",
-        card_3_desc: "原生支持 Flash Attention、KV 缓存量化（q8_0 节省显存）与动态 GPU 层卸载。",
-        card_4_title: "Hugging Face 探索器",
-        card_4_desc: "在线浏览并下载 GGUF 模型，下载前提供智能 RAM/VRAM 兼容性诊断。",
-        card_5_title: "实时性能遥测",
-        card_5_desc: "实时显示 Token/秒生成速度（区分思考 🧠 与输出 ⚡），并监控显存与温度。",
-        card_6_title: "多语言界面（支持 9 种语言）",
-        card_6_desc: "完整支持中文、英语、葡萄牙语、西班牙语、法语、德语、意大利语、日语和韩语。",
-        dual_badge: "协同计算流水线",
-        dual_title: "双 AI 引擎架构 (Dual-AI Engine)",
-        dual_desc: "RAG Studio 并行编排两个 AI 模型：利用 NPU/CPU 运行超轻量 SLM（1B-3B）极速重构检索词，同时主 GPU 专注于基于检索文档生成高精度回答。",
-        dual_step_1: "阶段 1: SLM (NPU/CPU)",
-        dual_step_2: "阶段 2: 向量匹配检索",
-        dual_step_3: "阶段 3: 主 LLM (GPU)",
         hf_hub_badge: "GGUF 模型中心",
         hf_hub_title: "下载人工智能开源模型",
         hf_hub_desc: "除了内置于 RAG Studio 桌面客户端之外，您还可以直接在网页端搜索、检测硬件兼容性并下载 Hugging Face 上的 .gguf 模型。",
         hf_input_ph: "在 Hugging Face 上搜索模型...",
         hf_btn_search: "搜索",
         hf_filter_popular: "热门精选",
+        hf_filter_recent: "最新发布",
         hf_filter_reasoning: "🧠 深度推理",
         hf_filter_slm: "⚡ 超轻量 SLM",
         hf_filter_coding: "💻 编程代码",
@@ -1143,13 +1052,14 @@
         support_title: "赞助与支持开发",
         support_desc: "RAG Studio 是一个完全开源免费的独立项目。如果您觉得好用，欢迎请作者喝杯咖啡以支持持续更新！",
         btn_kofi: "在 Ko-fi 上支持",
-        footer_credits: "© 2026 RAG Studio • 由 Miguel 独立开发，专注于极致本地隐私保护。",
+        footer_credits: "© 2026 RAG Studio • 由 Miguel 独立开发。",
         dl_btn_prefix: "下载",
         quant_available_suffix: "个量化规格可用",
         hw_light: "⚡ 超轻量：非常适合双 AI 协同引擎中的 SLM、NPU/CPU 或 4GB-8GB 显存笔记本。",
         hw_balanced: "🎯 黄金平衡：在 6GB-8GB 显存显卡上全速飞快运行（如 RTX 3060/4060/5050）。",
         hw_heavy: "🔥 高精度：推荐具备 12GB-16GB 显存的显卡或 32GB 系统内存使用。",
-        hw_very_heavy: "⚠️ 超大模型：需要 16GB+ 独立显存或 32GB+ 系统内存支持。"
+        hw_very_heavy: "⚠️ 超大模型：需要 16GB+ 独立显存或 32GB+ 系统内存支持。",
+        loading_models: "正在从 Hugging Face 获取最新模型..."
       },
       ja: {
         nav_features: "機能",
@@ -1163,33 +1073,13 @@
         hero_subtitle: "クラウドを介さずにお使いの PC 上で最先端の GGUF モデルを実行。完全なプライバシー下でドキュメントと対話し、リアルタイムの Dual-AI 連携を体験。",
         btn_hero_app: "RAG Studio をダウンロード",
         btn_hero_models: "WebでGGUFモデルを直接ダウンロード",
-        feat_section_badge: "高度なアーキテクチャ",
-        feat_section_title: "主な機能と特長",
-        feat_section_desc: "最大限のプライバシー、推論速度、ドキュメント検索精度を融合した設計。",
-        card_1_title: "100% ローカル＆プライベート",
-        card_1_desc: "外部へのデータ送信は一切なし。すべてのチャットとモデルはお使いの端末内でのみ処理されます。",
-        card_2_title: "RAG ドキュメントサンドボックス",
-        card_2_desc: "PDF、Word、TXT、CSV を高速インデックス化し、正確な出典引用付きで高精度に回答します。",
-        card_3_title: "最適化された LLaMA エンジン",
-        card_3_desc: "Flash Attention、VRAM を節約する KV キャッシュ量子化、動的 GPU オフロードをネイティブサポート。",
-        card_4_title: "Hugging Face エクスプローラー",
-        card_4_desc: "GGUF モデルを検索し、ダウンロード前に RAM/VRAM 適合性を自動診断します。",
-        card_5_title: "リアルタイムテレメトリ",
-        card_5_desc: "思考速度（🧠）と出力速度（⚡）を分けたトークン/秒メーター、VRAM・温度をリアルタイム監視。",
-        card_6_title: "多言語対応（9言語）",
-        card_6_desc: "日本語、英語、ポルトガル語、中国語、韓国語など 9 言語に完全対応。",
-        dual_badge: "協調型パイプライン",
-        dual_title: "Dual-AI エンジンアーキテクチャ",
-        dual_desc: "2つの AI モデルを並列処理：NPU/CPU で軽量 SLM (1B-3B) を超高速実行して検索クエリを生成し、メイン GPU が正確な回答を生成します。",
-        dual_step_1: "ステップ 1: SLM (NPU/CPU)",
-        dual_step_2: "ステップ 2: ベクトル検索",
-        dual_step_3: "ステップ 3: メイン LLM (GPU)",
         hf_hub_badge: "GGUF モデルハブ",
         hf_hub_title: "AIモデルをダウンロード",
         hf_hub_desc: "RAG Studio デスクトップアプリに内蔵されているだけでなく、このWebサイト上でも直接 GGUF モデルを検索し、ハードウェア適合性を確認してダウンロードできます。",
         hf_input_ph: "モデルを検索...",
         hf_btn_search: "検索",
         hf_filter_popular: "人気モデル",
+        hf_filter_recent: "最新モデル",
         hf_filter_reasoning: "🧠 推論・思考",
         hf_filter_slm: "⚡ 高速 SLM",
         hf_filter_coding: "💻 コーディング",
@@ -1227,7 +1117,8 @@
         hw_light: "⚡ 軽量：Dual-AI の SLM、NPU、CPU、または 4GB〜8GB VRAM 搭載ノート PC に最適。",
         hw_balanced: "🎯 最適バランス：6GB〜8GB VRAM GPU（RTX 3060/4060/5050 等）で超高速動作。",
         hw_heavy: "🔥 高精度：12GB〜16GB VRAM GPU または 32GB システム RAM 推奨。",
-        hw_very_heavy: "⚠️ 超大型：16GB 以上の専用 VRAM または 32GB 以上のシステム RAM が必要。"
+        hw_very_heavy: "⚠️ 超大型：16GB 以上の専用 VRAM または 32GB 以上のシステム RAM が必要。",
+        loading_models: "Hugging Face からモデルを取得中..."
       },
       ko: {
         nav_features: "주요 기능",
@@ -1241,33 +1132,13 @@
         hero_subtitle: "최첨단 GGUF 모델을 PC 하드웨어에서 직접 실행하고, 완벽한 프라이버시 속에서 문서와 대화하며 실시간 Dual-AI 파이프라인을 경험하세요.",
         btn_hero_app: "RAG Studio 다운로드",
         btn_hero_models: "웹에서 GGUF 모델 바로 다운로드",
-        feat_section_badge: "첨단 아키텍처",
-        feat_section_title: "기능 및 성능",
-        feat_section_desc: "최고 수준의 프라이버시, 추론 속도 및 문서 검색 정확성을 위해 처음부터 설계되었습니다.",
-        card_1_title: "100% 로컬 및 개인정보 보호",
-        card_1_desc: "클라우드 전송 제로. 모든 대화와 파일, AI 가중치는 사용자 기기 내부에서만 안전하게 보관됩니다.",
-        card_2_title: "RAG 문서 샌드박스",
-        card_2_desc: "PDF, Word, TXT, CSV 문서를 벡터 단위로 인덱싱하여 정확한 출처 인용과 함께 답변합니다.",
-        card_3_title: "최적화된 LLaMA 엔진",
-        card_3_desc: "Flash Attention 지원, VRAM 절약을 위한 KV 캐시 양자화(q8_0), 동적 GPU 레이어 오프로딩 내장.",
-        card_4_title: "Hugging Face 탐색기",
-        card_4_desc: "GGUF 모델을 검색하고 다운로드 전 RAM/VRAM 호환성을 사전 진단합니다.",
-        card_5_title: "실시간 성능 텔레메트리",
-        card_5_desc: "추론 속도(🧠)와 응답 속도(⚡)를 구분하는 토큰/초 게이지 및 VRAM, 온도 실시간 모니터링.",
-        card_6_title: "9개 언어 다국어 지원",
-        card_6_desc: "한국어, 영어, 포르투갈어, 스페인어, 프랑스어, 독일어, 이탈리아어, 중국어, 일본어 지원.",
-        dual_badge: "협력형 파이프라인",
-        dual_title: "Dual-AI 엔진 아키텍처",
-        dual_desc: "2개의 AI 모델 병렬 구동: NPU/CPU가 초경량 SLM(1B-3B)으로 검색어를 빠르게 추출하고, 메인 GPU가 문서를 바탕으로 고품질 최종 답변을 생성합니다.",
-        dual_step_1: "1단계: SLM (NPU/CPU)",
-        dual_step_2: "2단계: 벡터 검색",
-        dual_step_3: "3단계: 메인 LLM (GPU)",
         hf_hub_badge: "GGUF 모델 허브",
         hf_hub_title: "인공지능 모델 다운로드",
         hf_hub_desc: "RAG Studio 데스크톱 앱 내장 기능 외에도, 이 웹사이트에서 직접 .gguf 모델을 검색하고 하드웨어 호환성을 확인하여 다운로드할 수 있습니다.",
         hf_input_ph: "Hugging Face 모델 검색...",
         hf_btn_search: "검색",
         hf_filter_popular: "인기 모델",
+        hf_filter_recent: "최신 모델",
         hf_filter_reasoning: "🧠 추론·사고",
         hf_filter_slm: "⚡ 초경량 SLM",
         hf_filter_coding: "💻 코딩",
@@ -1299,13 +1170,14 @@
         support_title: "프로젝트 후원",
         support_desc: "무료 오픈소스 프로젝트입니다. 커피 한 잔으로 독립 개발을 응원해주세요!",
         btn_kofi: "Ko-fi에서 후원",
-        footer_credits: "© 2026 RAG Studio • Miguel 개발, 완벽한 로컬 프라이버시를 지향합니다.",
+        footer_credits: "© 2026 RAG Studio • Miguel 개발.",
         dl_btn_prefix: "다운로드",
         quant_available_suffix: "개 양자화 파일 제공",
         hw_light: "⚡ 초경량: Dual-AI SLM, NPU/CPU 또는 4GB-8GB VRAM 노트북에 최적.",
         hw_balanced: "🎯 최고 밸런스: 6GB~8GB VRAM GPU(RTX 3060/4060/5050 등)에서 초고속 구동.",
         hw_heavy: "🔥 고정밀도: 12GB~16GB VRAM GPU 또는 32GB 시스템 RAM 권장.",
-        hw_very_heavy: "⚠️ 대형 모델: 16GB+ 전용 VRAM 또는 32GB+ 시스템 메모리 필요."
+        hw_very_heavy: "⚠️ 대형 모델: 16GB+ 전용 VRAM 또는 32GB+ 시스템 메모리 필요.",
+        loading_models: "Hugging Face에서 모델 목록 가져오는 중..."
       }
     };
 
@@ -1338,8 +1210,8 @@
 
       document.getElementById('langMenu').classList.add('hidden');
 
-      if (window.currentFilteredList) {
-        renderModelList(window.currentFilteredList);
+      if (window.currentFetchedModels) {
+        renderModelList(window.currentFetchedModels);
       }
       if (currentSelectedFile) {
         selectQuantFile(currentSelectedFile);
@@ -1351,6 +1223,9 @@
     langBtn.addEventListener('click', (e) => { e.stopPropagation(); langMenu.classList.toggle('hidden'); });
     document.addEventListener('click', () => { langMenu.classList.add('hidden'); });
 
+    // =========================================================================
+    // LOGÓTIPOS OFICIAIS EM VETOR (SVG)
+    // =========================================================================
     function getBrandSVG(brandName, repoId = "") {
       const b = (brandName + " " + repoId).toLowerCase();
 
@@ -1381,153 +1256,10 @@
       return `<span class="text-lg">🤗</span>`;
     }
 
-    const curatedModels = [
-      {
-        id: "Qwen/Qwen2.5-7B-Instruct-GGUF",
-        name: "Qwen 2.5 7B Instruct",
-        brand: "Qwen",
-        category: "popular",
-        downloads: "2.4M",
-        stars: "6.8k",
-        role: "LLM Principal (GPU)",
-        desc: "Líder de categoria em seguimento de instruções, raciocínio lógico e análise de documentos complexos.",
-        tags: ["🧠 Raciocínio", "📚 RAG Top", "⚡ 128k Contexto"]
-      },
-      {
-        id: "unsloth/Llama-3.2-3B-Instruct-GGUF",
-        name: "Llama 3.2 3B Instruct",
-        brand: "Meta",
-        category: "slm",
-        downloads: "3.2M",
-        stars: "8.1k",
-        role: "Motor Dual-IA (NPU/CPU)",
-        desc: "Modelo ultrarrápido desenhado para portáteis. Excelente na reformulação de pesquisas e orquestração Dual-IA.",
-        tags: ["⚡ Ultra Rápido", "🧠 NPU/CPU", "🪶 2.2 GB"]
-      },
-      {
-        id: "bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF",
-        name: "DeepSeek R1 Distill 7B",
-        brand: "DeepSeek",
-        category: "reasoning",
-        downloads: "4.5M",
-        stars: "14.2k",
-        role: "Raciocínio Profundo",
-        desc: "Capacidades de raciocínio matemático e dedutivo com blocos de pensamento explícitos (<think>).",
-        tags: ["🧠 Cadeia Raciocínio", "🎯 Alta Lógica", "⚡ 7B"]
-      },
-      {
-        id: "bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF",
-        name: "DeepSeek R1 Distill 14B",
-        brand: "DeepSeek",
-        category: "reasoning",
-        downloads: "2.1M",
-        stars: "9.6k",
-        role: "Raciocínio Avançado",
-        desc: "Máxima precisão analítica e resolução de problemas estruturados de engenharia e ciência de dados.",
-        tags: ["🧠 Raciocínio 14B", "🔬 Investigação", "🔥 Alta Precisão"]
-      },
-      {
-        id: "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
-        name: "DeepSeek R1 Distill 1.5B",
-        brand: "DeepSeek",
-        category: "slm",
-        downloads: "1.8M",
-        stars: "4.9k",
-        role: "SLM Raciocínio Leve",
-        desc: "Raciocínio analítico ultra-compacto. Funciona com extrema rapidez em qualquer CPU ou NPU local.",
-        tags: ["⚡ SLM Raciocínio", "🪶 1.1 GB", "🧠 NPU/CPU"]
-      },
-      {
-        id: "bartowski/gemma-2-2b-it-GGUF",
-        name: "Gemma 2 2B Instruct",
-        brand: "Google",
-        category: "slm",
-        downloads: "1.6M",
-        stars: "4.2k",
-        role: "Motor Dual-IA (SLM)",
-        desc: "Arquitetura ultra-eficiente da Google. Consumo de VRAM mínimo com excelente fidelidade linguística.",
-        tags: ["⚡ Google Leve", "🔋 Poupança Bateria", "🪶 1.6 GB"]
-      },
-      {
-        id: "bartowski/gemma-2-9b-it-GGUF",
-        name: "Gemma 2 9B Instruct",
-        brand: "Google",
-        category: "popular",
-        downloads: "2.8M",
-        stars: "7.9k",
-        role: "LLM Principal (GPU)",
-        desc: "Um dos modelos de 9B mais capazes do mundo. Excelente para escrita, resumo e síntese documental RAG.",
-        tags: ["💎 Google 9B", "📚 RAG Excelente", "⚡ Alto Desempenho"]
-      },
-      {
-        id: "microsoft/Phi-3.5-mini-instruct-gguf",
-        name: "Phi 3.5 Mini 3.8B",
-        brand: "Microsoft",
-        category: "reasoning",
-        downloads: "1.9M",
-        stars: "5.8k",
-        role: "Raciocínio Compacto",
-        desc: "Densidade de conhecimento de topo para o tamanho de 3.8B com contexto estendido de 128k tokens.",
-        tags: ["🔬 Microsoft", "🧠 Lógica 128k", "⚡ 3.8B"]
-      },
-      {
-        id: "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF",
-        name: "Qwen 2.5 Coder 7B",
-        brand: "Qwen",
-        category: "coding",
-        downloads: "1.4M",
-        stars: "5.1k",
-        role: "Assistente de Programação",
-        desc: "Especialista em geração, refatoração, depuração e arquitetura de software (Python, JS, Rust, C++).",
-        tags: ["💻 Código & Python", "🛠️ Engenharia", "⚡ 7B"]
-      },
-      {
-        id: "Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF",
-        name: "Qwen 2.5 Coder 1.5B",
-        brand: "Qwen",
-        category: "coding",
-        downloads: "890k",
-        stars: "3.1k",
-        role: "Autocomplete de Código",
-        desc: "Assistente de programação leve para autocompletação em tempo real com baixíssimo impacto na memória.",
-        tags: ["💻 Autocomplete", "⚡ Ultrarrápido", "🪶 1.2 GB"]
-      },
-      {
-        id: "bartowski/Mistral-Nemo-Instruct-2407-GGUF",
-        name: "Mistral NeMo 12B",
-        brand: "Mistral AI",
-        category: "popular",
-        downloads: "1.3M",
-        stars: "4.7k",
-        role: "LLM Multilingue",
-        desc: "Criado em parceria com a NVIDIA. Excelente compreensão multilingue europeia e escrita criativa.",
-        tags: ["🌪️ Mistral / NVIDIA", "🌐 Multilingue Top", "⚡ 12B"]
-      },
-      {
-        id: "bartowski/Llama-3.2-11B-Vision-Instruct-GGUF",
-        name: "Llama 3.2 11B Vision",
-        brand: "Meta",
-        category: "vision",
-        downloads: "940k",
-        stars: "3.9k",
-        role: "Visão & OCR Documental",
-        desc: "Capaz de analisar imagens, gráficos, capturas de ecrã e tabelas em conjunto com texto.",
-        tags: ["👁️ Multimodal", "🖼️ Análise Imagem", "⚡ 11B"]
-      },
-      {
-        id: "Qwen/Qwen2-VL-7B-Instruct-GGUF",
-        name: "Qwen 2 VL 7B Vision",
-        brand: "Qwen",
-        category: "vision",
-        downloads: "1.1M",
-        stars: "4.4k",
-        role: "Visão Computacional",
-        desc: "Compreensão visual profunda de documentos técnicos, esquemas eletrónicos e interfaces gráficas.",
-        tags: ["👁️ Visão Técnica", "📊 Esquemas & OCR", "⚡ 7B"]
-      }
-    ];
-
-    let currentModelId = "Qwen/Qwen2.5-7B-Instruct-GGUF";
+    // =========================================================================
+    // CLIENTE API HUGGING FACE 100% DINÂMICO
+    // =========================================================================
+    let currentModelId = "";
     let currentGgufFiles = [];
     let currentSelectedFile = null;
 
@@ -1548,6 +1280,11 @@
       const container = document.getElementById('hfModelList');
       container.innerHTML = '';
 
+      if (!models || models.length === 0) {
+        container.innerHTML = `<div class="text-center py-16 text-xs text-amber-400 font-mono">Nenhum modelo GGUF encontrado nesta categoria.</div>`;
+        return;
+      }
+
       models.forEach(model => {
         const isActive = model.id === currentModelId;
         const card = document.createElement('div');
@@ -1557,7 +1294,7 @@
             : 'bg-[#121418] border-[#20232a] hover:bg-[#181a20] hover:border-[#2f323a]'
         }`;
 
-        const tagsHtml = (model.tags || ['GGUF']).map(t => `<span class="px-1.5 py-0.5 rounded bg-[#1b1d24] text-[#8e939d] text-[10px] font-mono">${t}</span>`).join(' ');
+        const tagsHtml = (model.tags || ['GGUF']).slice(0, 3).map(t => `<span class="px-1.5 py-0.5 rounded bg-[#1b1d24] text-[#8e939d] text-[10px] font-mono">${t}</span>`).join(' ');
 
         card.innerHTML = `
           <div class="flex items-start gap-3">
@@ -1567,7 +1304,7 @@
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between gap-1">
                 <h4 class="font-bold text-xs text-white truncate">${model.name || model.id}</h4>
-                <span class="text-[10px] text-[#6e7175] font-mono shrink-0">↓ ${model.downloads || 'N/A'}</span>
+                <span class="text-[10px] text-[#6e7175] font-mono shrink-0">↓ ${model.downloads || '0'}</span>
               </div>
               <p class="text-[11px] text-[#717682] truncate font-mono">${model.id}</p>
               <div class="flex items-center gap-1.5 flex-wrap mt-2">
@@ -1589,7 +1326,7 @@
 
     async function selectModel(repoId, modelMeta = null) {
       currentModelId = repoId;
-      renderModelList(window.currentFilteredList || curatedModels);
+      renderModelList(window.currentFetchedModels || []);
 
       const brandIconElem = document.getElementById('detBrandIcon');
       const nameElem = document.getElementById('detModelName');
@@ -1597,7 +1334,8 @@
       const pathElem = document.getElementById('detRepoPath');
       const hfLink = document.getElementById('detHfLink');
       const descElem = document.getElementById('detDescription');
-      const roleElem = document.getElementById('detRagSuitability');
+      const downloadsElem = document.getElementById('detDownloads');
+      const likesElem = document.getElementById('detLikes');
       const quantCount = document.getElementById('quantCount');
 
       const parts = repoId.split('/');
@@ -1610,11 +1348,12 @@
       authorElem.textContent = author;
       pathElem.textContent = repoId;
       hfLink.href = `https://huggingface.co/${repoId}`;
-      descElem.textContent = modelMeta?.desc || `Repositório GGUF da comunidade Hugging Face (${repoId}). Compatível com aceleração por GPU/NPU no RAG Studio.`;
-      roleElem.textContent = modelMeta?.role || "GGUF Otimizado";
+      downloadsElem.innerHTML = `<i data-lucide="download" class="w-3 h-3 text-cyan-400"></i> ${modelMeta?.downloads || '...'}`;
+      likesElem.innerHTML = `<i data-lucide="star" class="w-3 h-3 fill-amber-400"></i> ${modelMeta?.stars || '...'}`;
+      descElem.textContent = `Repositório oficial GGUF (${repoId}) no Hugging Face. Compatível com aceleração local de GPU e NPU no RAG Studio.`;
 
       document.getElementById('selectedQuantBadge').textContent = '...';
-      document.getElementById('selectedQuantLabel').textContent = '...';
+      document.getElementById('selectedQuantLabel').textContent = 'A carregar ficheiros...';
       quantCount.textContent = "...";
 
       try {
@@ -1647,6 +1386,8 @@
         document.getElementById('selectedQuantLabel').textContent = 'Erro ao consultar ficheiros da Hugging Face';
         quantCount.textContent = "Erro";
       }
+
+      lucide.createIcons();
     }
 
     function buildCustomQuantDropdown(files) {
@@ -1754,27 +1495,80 @@
       });
     }
 
-    function filterCategory(cat) {
-      ['btnFilterPopular', 'btnFilterReasoning', 'btnFilterSLM', 'btnFilterCoding', 'btnFilterVision'].forEach(id => {
+    // =========================================================================
+    // CONSULTAS DINÂMICAS POR CATEGORIA (API HUGGING FACE)
+    // =========================================================================
+    async function filterCategory(cat) {
+      ['btnFilterPopular', 'btnFilterRecent', 'btnFilterReasoning', 'btnFilterSLM', 'btnFilterCoding', 'btnFilterVision'].forEach(id => {
         const b = document.getElementById(id);
         if (b) b.className = 'px-3 py-1.5 rounded-lg bg-[#1a1c21] hover:bg-[#22252c] border border-[#2a2d34] text-[#cbd5e1] text-[11px] font-medium shrink-0 transition-all';
       });
 
-      if (cat === 'popular') document.getElementById('btnFilterPopular').className = 'px-3 py-1.5 rounded-lg bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 text-[11px] font-medium shrink-0 transition-all';
-      if (cat === 'reasoning') document.getElementById('btnFilterReasoning').className = 'px-3 py-1.5 rounded-lg bg-purple-500/15 border border-purple-500/40 text-purple-300 text-[11px] font-medium shrink-0 transition-all';
-      if (cat === 'slm') document.getElementById('btnFilterSLM').className = 'px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-[11px] font-medium shrink-0 transition-all';
-      if (cat === 'coding') document.getElementById('btnFilterCoding').className = 'px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[11px] font-medium shrink-0 transition-all';
-      if (cat === 'vision') document.getElementById('btnFilterVision').className = 'px-3 py-1.5 rounded-lg bg-blue-500/15 border border-blue-500/40 text-blue-300 text-[11px] font-medium shrink-0 transition-all';
+      const activeBtnMap = {
+        popular: 'btnFilterPopular',
+        recent: 'btnFilterRecent',
+        reasoning: 'btnFilterReasoning',
+        slm: 'btnFilterSLM',
+        coding: 'btnFilterCoding',
+        vision: 'btnFilterVision'
+      };
 
-      let list = curatedModels;
-      if (cat !== 'popular') {
-        list = curatedModels.filter(m => m.category === cat);
+      const activeBtn = document.getElementById(activeBtnMap[cat]);
+      if (activeBtn) {
+        activeBtn.className = 'px-3 py-1.5 rounded-lg bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 text-[11px] font-medium shrink-0 transition-all';
       }
-      window.currentFilteredList = list;
-      renderModelList(list);
-      if (list.length > 0) selectModel(list[0].id, list[0]);
+
+      const container = document.getElementById('hfModelList');
+      container.innerHTML = `<div class="text-center py-16 text-xs text-cyan-400 font-mono animate-pulse">${t('loading_models')}</div>`;
+
+      // Mapeamento dinâmico de endpoints da Hugging Face
+      let apiUrl = '';
+      if (cat === 'popular') {
+        apiUrl = `https://huggingface.co/api/models?filter=gguf&sort=downloads&direction=-1&limit=25`;
+      } else if (cat === 'recent') {
+        apiUrl = `https://huggingface.co/api/models?filter=gguf&sort=lastModified&direction=-1&limit=25`;
+      } else if (cat === 'reasoning') {
+        apiUrl = `https://huggingface.co/api/models?search=reasoning&filter=gguf&sort=downloads&direction=-1&limit=25`;
+      } else if (cat === 'slm') {
+        apiUrl = `https://huggingface.co/api/models?search=3B&filter=gguf&sort=downloads&direction=-1&limit=25`;
+      } else if (cat === 'coding') {
+        apiUrl = `https://huggingface.co/api/models?search=coder&filter=gguf&sort=downloads&direction=-1&limit=25`;
+      } else if (cat === 'vision') {
+        apiUrl = `https://huggingface.co/api/models?search=vision&filter=gguf&sort=downloads&direction=-1&limit=25`;
+      }
+
+      try {
+        const res = await fetch(apiUrl);
+        if (!res.ok) throw new Error("Erro na API da Hugging Face");
+        const results = await res.json();
+
+        const formatted = results.map(r => {
+          const parts = r.id.split('/');
+          const brand = parts[0] || 'Community';
+          const name = parts[1] || r.id;
+
+          return {
+            id: r.id,
+            name: name,
+            brand: brand,
+            downloads: r.downloads ? r.downloads.toLocaleString() : '0',
+            stars: r.likes ? r.likes.toString() : '0',
+            tags: ['GGUF', cat.toUpperCase()]
+          };
+        });
+
+        window.currentFetchedModels = formatted;
+        renderModelList(formatted);
+        if (formatted.length > 0) {
+          selectModel(formatted[0].id, formatted[0]);
+        }
+
+      } catch (err) {
+        container.innerHTML = `<div class="text-center py-16 text-xs text-rose-400 font-mono">Falha ao ligar à API do Hugging Face. Verifica a tua ligação à Internet.</div>`;
+      }
     }
 
+    // Pesquisa Livre via Input
     document.getElementById('hfSearchForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const q = document.getElementById('hfSearchInput').value.trim();
@@ -1784,50 +1578,51 @@
       }
 
       const container = document.getElementById('hfModelList');
-      container.innerHTML = `<div class="text-center py-10 text-xs text-cyan-400 font-mono animate-pulse">...</div>`;
+      container.innerHTML = `<div class="text-center py-16 text-xs text-cyan-400 font-mono animate-pulse">A pesquisar "${q}" no Hugging Face...</div>`;
 
       try {
-        const res = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(q)}&filter=gguf&sort=downloads&direction=-1&limit=20`);
+        const res = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(q)}&filter=gguf&sort=downloads&direction=-1&limit=25`);
         let results = await res.json();
 
         if (!results || results.length === 0) {
-          const fallbackRes = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(q + ' GGUF')}&sort=downloads&direction=-1&limit=20`);
-          results = await fallbackRes.json();
+          const fallback = await fetch(`https://huggingface.co/api/models?search=${encodeURIComponent(q + ' GGUF')}&sort=downloads&direction=-1&limit=25`);
+          results = await fallback.json();
         }
 
         if (!results || results.length === 0) {
-          container.innerHTML = `<div class="text-center py-10 text-xs text-amber-400">Nenhum modelo encontrado.</div>`;
+          container.innerHTML = `<div class="text-center py-16 text-xs text-amber-400 font-mono">Nenhum modelo GGUF encontrado para "${q}".</div>`;
           return;
         }
 
-        const formatted = results.map(r => ({
-          id: r.id,
-          name: r.id.split('/')[1] || r.id,
-          brand: r.id.split('/')[0] || 'Community',
-          downloads: r.downloads ? r.downloads.toLocaleString() : 'N/A',
-          stars: r.likes ? r.likes.toString() : '0',
-          role: 'GGUF Hugging Face Model',
-          desc: `Repositório da comunidade Hugging Face (${r.id}).`,
-          tags: ['GGUF', 'Hugging Face']
-        }));
+        const formatted = results.map(r => {
+          const parts = r.id.split('/');
+          return {
+            id: r.id,
+            name: parts[1] || r.id,
+            brand: parts[0] || 'Community',
+            downloads: r.downloads ? r.downloads.toLocaleString() : '0',
+            stars: r.likes ? r.likes.toString() : '0',
+            tags: ['GGUF', 'Pesquisa']
+          };
+        });
 
-        window.currentFilteredList = formatted;
+        window.currentFetchedModels = formatted;
         renderModelList(formatted);
         selectModel(formatted[0].id, formatted[0]);
 
       } catch (err) {
-        container.innerHTML = `<div class="text-center py-10 text-xs text-rose-400">Erro na pesquisa.</div>`;
+        container.innerHTML = `<div class="text-center py-16 text-xs text-rose-400 font-mono">Erro ao consultar a API da Hugging Face.</div>`;
       }
     });
 
+    // INICIALIZAÇÃO AUTOMÁTICA
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       const savedLang = localStorage.getItem('rag_studio_lang') || 'pt';
       changeLanguage(savedLang);
       
-      window.currentFilteredList = curatedModels;
-      renderModelList(curatedModels);
-      selectModel(curatedModels[0].id, curatedModels[0]);
+      // Carrega os modelos populares diretamente da API ao arrancar a página
+      filterCategory('popular');
     });
   </script>
 </body>
